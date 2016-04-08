@@ -34,6 +34,8 @@ namespace CasinoSimulator {
 				delete components;
 			}
 		}
+	private: System::Windows::Forms::Button^  startButton;
+	protected:
 
 	private:
 		/// <summary>
@@ -48,11 +50,28 @@ namespace CasinoSimulator {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			this->components = gcnew System::ComponentModel::Container();
-			this->Size = System::Drawing::Size(300,300);
-			this->Text = L"MyForm";
-			this->Padding = System::Windows::Forms::Padding(0);
+			this->startButton = (gcnew System::Windows::Forms::Button());
+			this->SuspendLayout();
+			// 
+			// startButton
+			// 
+			this->startButton->Location = System::Drawing::Point(301, 146);
+			this->startButton->Name = L"startButton";
+			this->startButton->Size = System::Drawing::Size(119, 51);
+			this->startButton->TabIndex = 0;
+			this->startButton->Text = L"Start";
+			this->startButton->UseVisualStyleBackColor = true;
+			// 
+			// MyForm
+			// 
+			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+			this->ClientSize = System::Drawing::Size(800, 370);
+			this->Controls->Add(this->startButton);
+			this->Name = L"MyForm";
+			this->Text = L"MyForm";
+			this->ResumeLayout(false);
+
 		}
 #pragma endregion
 	};

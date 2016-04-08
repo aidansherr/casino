@@ -23,5 +23,14 @@
     <ClInclude Include="MyForm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Card.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Location.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Deck.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
