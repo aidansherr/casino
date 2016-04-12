@@ -12,10 +12,10 @@ ref class PokerTemplate
 public:
 	PokerTemplate()
 	{
-		postions[0] = gcnew Position(true, false, false, false);
-		postions[1] = gcnew Position(false, true, false, false);
-		postions[2] = gcnew Position(false, false, true, false);
-		postions[3] = gcnew Position(false, false, false, true);
+		positions[0] = gcnew Position(true, false, false, false);
+		positions[1] = gcnew Position(false, true, false, false);
+		positions[2] = gcnew Position(false, false, true, false);
+		positions[3] = gcnew Position(false, false, false, true);
 
 	};
 
