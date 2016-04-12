@@ -73,7 +73,6 @@ namespace CasinoSimulator {
 			this->panel1->Name = L"panel1";
 			this->panel1->Size = System::Drawing::Size(798, 273);
 			this->panel1->TabIndex = 1;
-			this->panel1->Visible = false;
 			this->panel1->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MyForm::panel1_Paint);
 			// 
 			// button1
@@ -89,6 +88,7 @@ namespace CasinoSimulator {
 			this->button1->TabIndex = 4;
 			this->button1->Text = L"Start Game";
 			this->button1->UseVisualStyleBackColor = false;
+			this->button1->Click += gcnew System::EventHandler(this, &MyForm::button1_Click);
 			// 
 			// textBox1
 			// 
@@ -101,6 +101,7 @@ namespace CasinoSimulator {
 			this->textBox1->TabIndex = 2;
 			this->textBox1->Text = L"$2000.00";
 			this->textBox1->TextAlign = System::Windows::Forms::HorizontalAlignment::Right;
+			this->textBox1->TextChanged += gcnew System::EventHandler(this, &MyForm::textBox1_TextChanged);
 			// 
 			// label1
 			// 
@@ -153,10 +154,17 @@ namespace CasinoSimulator {
 
 		}
 #pragma endregion
-	private: System::Void startButton_Click(System::Object^  sender, System::EventArgs^  e) {
-		panel1->Visible = false;
-		button2->Enabled = true;
-	}
+		Graphics ^g;
+		Pen^ myPen = gcnew Pen(Color::Black);
+		//Function to initialize game after start to show cards
+		void DrawCard()
+		{
+			int x;
+			int y;
+			Rectangle card = Rectangle(x, y, 100, 136);
+			g->DrawRectangle(myPen, card);
+		}
+	
 	private: System::Void MyForm_Load(System::Object^  sender, System::EventArgs^  e) {
 	}
 	private: System::Void panel1_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e) {
@@ -165,6 +173,14 @@ namespace CasinoSimulator {
 	}
 private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
 		
+}
+private: System::Void textBox1_TextChanged(System::Object^  sender, System::EventArgs^  e) {
+}
+private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
+	//Hides panel containing start button
+	panel1->Visible = false;
+	//To enable quitting 
+	button2->Enabled = true;
 }
 };
 }
