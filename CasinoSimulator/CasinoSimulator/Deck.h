@@ -2,6 +2,7 @@
 #include "Card.h"
 #include <cstdlib>
 #include <ctime>
+#include "Location.h"
 
 ref class Deck
 {
@@ -9,6 +10,7 @@ ref class Deck
 	int topCard=0;
 	//the deck of cards comprised of an array of card objects
 	array<Card^, 1> ^cardDeck = gcnew array<Card^, 1>(52);
+	Location2^ deckLoc;
 
 public:
 	Deck()
@@ -52,5 +54,13 @@ public:
 		topCard++;
 		//returns the drawn card
 		return drawn;
+	}
+	void setLocation(Location2^ loc)
+	{
+		deckLoc = loc;
+	}
+	Location2^ getLocation()
+	{
+		return deckLoc;
 	}
 };

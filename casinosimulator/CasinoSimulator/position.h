@@ -13,17 +13,17 @@ public:
 		if (bottom == true)
 		{
 			x = 199;
-			y = 273-50;
+			y = 650;
 			for (int i = 0; i < 8;i++)
 			{
 				locations[i] = gcnew Location2(x , y);
-				x += 100;
+				x += 50;
 			}
 		}
 		if (top == true)
 		{
 			x = 199;
-			y = 273-150;
+			y = 273-100;
 			for (int i = 0; i < 8; i++)
 			{
 				locations[i] = gcnew Location2(x, y);
@@ -33,7 +33,7 @@ public:
 		if (left == true)
 		{
 			x = 78;
-			y = 173;
+			y = 173+50;
 			for (int i = 0; i < 8; i++)
 			{
 				locations[i] = gcnew Location2(x, y);
@@ -42,8 +42,8 @@ public:
 		}
 		if (right == true)
 		{
-			x = 798-78;
-			y = 173;
+			x = 798-108;
+			y = 173+50;
 			for (int i = 0; i < 8; i++)
 			{
 				locations[i] = gcnew Location2(x, y);
@@ -51,7 +51,7 @@ public:
 			}
 		}
 	}
-	Location2^ getlocation()
+	Location2^ getLocation()
 	{
 		pointer++;
 		return locations[pointer-1] ;
