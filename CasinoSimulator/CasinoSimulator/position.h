@@ -5,25 +5,28 @@ ref class Position
 private:
 	bool top, bottom, left, right;
 	array<Location2^, 1> ^locations = gcnew array<Location2^, 1>(8);
-	int pointer=0;
+	
+	int mid = 4;
+	int evenOdd = 0;
+
 public:
 	Position(bool top, bool bottom, bool left, bool right)
 	{
 		int x, y;
 		if (bottom == true)
 		{
-			x = 199;
-			y = 273-50;
+			x = 99;
+			y = 550;
 			for (int i = 0; i < 8;i++)
 			{
 				locations[i] = gcnew Location2(x , y);
-				x += 100;
+				x += 75;
 			}
 		}
 		if (top == true)
 		{
 			x = 199;
-			y = 273-150;
+			y = 100;
 			for (int i = 0; i < 8; i++)
 			{
 				locations[i] = gcnew Location2(x, y);
@@ -32,8 +35,8 @@ public:
 		}
 		if (left == true)
 		{
-			x = 78;
-			y = 173;
+			x = 28;
+			y = 175;
 			for (int i = 0; i < 8; i++)
 			{
 				locations[i] = gcnew Location2(x, y);
@@ -42,8 +45,8 @@ public:
 		}
 		if (right == true)
 		{
-			x = 798-78;
-			y = 173;
+			x = 798-88;
+			y = 175;
 			for (int i = 0; i < 8; i++)
 			{
 				locations[i] = gcnew Location2(x, y);
@@ -51,10 +54,19 @@ public:
 			}
 		}
 	}
-	Location2^ getlocation()
+	Location2^ getLocation()
 	{
-		pointer++;
-		return locations[pointer-1] ;
+		if (evenOdd % 2 != 0)
+		{
+			mid += evenOdd;
+		}
+		else
+		{
+			mid -= evenOdd;
+
+		}
+		evenOdd++;
+		return locations[mid];
 	}
 	
 };
