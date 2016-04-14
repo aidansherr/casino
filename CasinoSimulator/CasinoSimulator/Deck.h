@@ -10,6 +10,10 @@ ref class Deck
 	int topCard=0;
 	//the deck of cards comprised of an array of card objects
 	array<Card^, 1> ^cardDeck = gcnew array<Card^, 1>(52);
+	//an array of the cards Icons
+	array<System::Drawing::Icon^, 1> ^icons = gcnew array<System::Drawing::Icon^, 1>(52);
+	//a pointer for the next imcon to be given to a card
+	int facePoint = 0;
 	Location2^ deckLoc;
 
 public:
@@ -25,7 +29,9 @@ public:
 			{
 				//initilizes a new card with a face value and suit value
 				//only one face value for each suit value
-				cardDeck[point] = gcnew Card(j, i);
+				 System::Drawing::Icon^ back = gcnew System::Drawing::Icon("cardback.ico");
+				cardDeck[point] = gcnew Card(j, i,back);
+				facePoint++;
 				point++;
 			}
 		}
