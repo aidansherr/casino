@@ -145,11 +145,71 @@
     <ClInclude Include="MyForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="PokerTemplate.h" />
+    <ClInclude Include="position.h" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MyForm.resx">
       <DependentUpon>MyForm.h</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="cardbackside.ico" />
+    <Image Include="icons\aclub.ico" />
+    <Image Include="icons\adiamond.ico" />
+    <Image Include="icons\aheart.ico" />
+    <Image Include="icons\aspade.ico" />
+    <Image Include="icons\background.png" />
+    <Image Include="icons\cardback.ico" />
+    <Image Include="icons\eightclub.ico" />
+    <Image Include="icons\eightdiamond.ico" />
+    <Image Include="icons\eightheart.ico" />
+    <Image Include="icons\eightspade.ico" />
+    <Image Include="icons\fiveclub.ico" />
+    <Image Include="icons\fivediamond.ico" />
+    <Image Include="icons\fiveheart.ico" />
+    <Image Include="icons\fivespade.ico" />
+    <Image Include="icons\fourclub.ico" />
+    <Image Include="icons\fourdiamond.ico" />
+    <Image Include="icons\fourheart.ico" />
+    <Image Include="icons\fourspade.ico" />
+    <Image Include="icons\jclub.ico" />
+    <Image Include="icons\jdiamond.ico" />
+    <Image Include="icons\jheart.ico" />
+    <Image Include="icons\jspade.ico" />
+    <Image Include="icons\kclub.ico" />
+    <Image Include="icons\kdiamond.ico" />
+    <Image Include="icons\kheart.ico" />
+    <Image Include="icons\kspade.ico" />
+    <Image Include="icons\logo.png" />
+    <Image Include="icons\nineclub.ico" />
+    <Image Include="icons\ninediamond.ico" />
+    <Image Include="icons\nineheart.ico" />
+    <Image Include="icons\ninespade.ico" />
+    <Image Include="icons\qclub.ico" />
+    <Image Include="icons\qdiamond.ico" />
+    <Image Include="icons\qheart.ico" />
+    <Image Include="icons\qspade.ico" />
+    <Image Include="icons\sevenclub.ico" />
+    <Image Include="icons\sevendiamond.ico" />
+    <Image Include="icons\sevenheart.ico" />
+    <Image Include="icons\sevenspade.ico" />
+    <Image Include="icons\sixclub.ico" />
+    <Image Include="icons\sixdiamond.ico" />
+    <Image Include="icons\sixheart.ico" />
+    <Image Include="icons\sixspade.ico" />
+    <Image Include="icons\tenclub.ico" />
+    <Image Include="icons\tendiamond.ico" />
+    <Image Include="icons\tenheart.ico" />
+    <Image Include="icons\tenspade.ico" />
+    <Image Include="icons\threeclub.ico" />
+    <Image Include="icons\threediamond.ico" />
+    <Image Include="icons\threeheart.ico" />
+    <Image Include="icons\threespade.ico" />
+    <Image Include="icons\twoclub.ico" />
+    <Image Include="icons\twodiamond.ico" />
+    <Image Include="icons\twoheart.ico" />
+    <Image Include="icons\twospade.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

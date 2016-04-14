@@ -29,8 +29,189 @@
     <ClInclude Include="Location.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="Deck.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="PokerTemplate.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="position.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Deck.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="MyForm.resx">
+      <Filter>Resource Files</Filter>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="cardbackside.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icons\aclub.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icons\adiamond.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icons\aheart.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icons\aspade.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icons\background.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icons\cardback.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icons\eightclub.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icons\eightdiamond.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icons\eightheart.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icons\eightspade.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icons\fiveclub.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icons\fivediamond.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icons\fiveheart.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icons\fivespade.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icons\fourclub.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icons\fourdiamond.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icons\fourheart.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icons\fourspade.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icons\jclub.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icons\jdiamond.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icons\jheart.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icons\jspade.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icons\kclub.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icons\kdiamond.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icons\kheart.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icons\kspade.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icons\logo.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icons\nineclub.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icons\ninediamond.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icons\nineheart.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icons\ninespade.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icons\qclub.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icons\qdiamond.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icons\qheart.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icons\qspade.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icons\sevenclub.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icons\sevendiamond.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icons\sevenheart.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icons\sevenspade.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icons\sixclub.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icons\sixdiamond.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icons\sixheart.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icons\sixspade.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icons\tenclub.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icons\tendiamond.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icons\tenheart.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icons\tenspade.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icons\threeclub.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icons\threediamond.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icons\threeheart.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icons\threespade.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icons\twoclub.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icons\twodiamond.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icons\twoheart.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icons\twospade.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>
