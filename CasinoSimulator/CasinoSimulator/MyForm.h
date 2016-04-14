@@ -166,18 +166,43 @@ namespace CasinoSimulator {
 			Rectangle sideCard = Rectangle(x, y, 68, 50);
 			if (side == 0)
 			{
-				g->DrawRectangle(myPen, card);
+				g->DrawIcon(pokerDeck->draw()->getIcon(), card);
 			}
 			else if (side == 1)
 			{
-				g->DrawRectangle(myPen, sideCard);
+				g->DrawIcon(pokerDeck->draw()->getIcon(), sideCard);
+			}
+			
+		}
+		void DrawBigCard(Location2^ loc, int side)
+		{
+
+			myPen = gcnew Pen(Drawing::Color::Black);
+			int x = loc->getX();
+			int y = loc->getY();
+			Rectangle card = Rectangle(x, y, 100, 136);
+			Rectangle sideCard = Rectangle(x, y, 136, 100);
+			if (side == 0)
+			{
+				g->DrawIcon(pokerDeck->draw()->getIcon(), card);
+			}
+			else if (side == 1)
+			{
+				g->DrawIcon(pokerDeck->draw()->getIcon(), sideCard);
 			}
 
 		}
 
 	private: System::Void MyForm_Load(System::Object^  sender, System::EventArgs^  e)
 	{
-		g = this->CreateGraphics();
+		
+		PictureBox^ back = gcnew PictureBox();
+		back->Location = Point(0, 0);
+		back->Parent = this;
+		back->Size::set(Drawing::Size(800, 741));
+		back->Load("background.png");
+		g = back->CreateGraphics();
+		
 	}
 
 	private: System::Void label1_Click(System::Object^  sender, System::EventArgs^  e) {
@@ -189,16 +214,18 @@ namespace CasinoSimulator {
 	}
 	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e)
 	{
-
+		
 		//To enable quitting 
 		button2->Enabled = true;
 		button1->Visible = false;
 		pokerDeck->setLocation(pT->getDeckLocation());
-		DrawCard(pokerDeck->getLocation(), 0);
+		DrawBigCard(pokerDeck->getLocation(), 0);
 
 		for (int i = 0; i < 5; i++)
 		{
-			DrawCard(pT->getRiver(), 0);
+			Location2^ tempLoc = pT->getRiver();
+			DrawCard(tempLoc, 0);
+			
 		}
 		for (int i = 0; i < 4; i++)
 		{
@@ -207,9 +234,18 @@ namespace CasinoSimulator {
 				int temp = 0;
 				if (i == 2 || i == 3)
 				{
-					temp = 1;
+					DrawCard(pT->getPosition(i)->getLocation(), 1);
 				}
-				DrawCard(pT->getPosition(i)->getLocation(), temp);
+				else if (i == 1)
+				{
+					DrawBigCard(pT->getPosition(i)->getLocation(), temp);
+				}
+				else
+				{
+					DrawCard(pT->getPosition(i)->getLocation(), temp);
+				}
+				
+				
 			}
 		}
 	}

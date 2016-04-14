@@ -12,12 +12,12 @@ public:
 		int x, y;
 		if (bottom == true)
 		{
-			x = 199;
-			y = 650;
+			x = 99;
+			y = 550;
 			for (int i = 0; i < 8;i++)
 			{
 				locations[i] = gcnew Location2(x , y);
-				x += 50;
+				x += 75;
 			}
 		}
 		if (top == true)
@@ -32,7 +32,7 @@ public:
 		}
 		if (left == true)
 		{
-			x = 78;
+			x = 28;
 			y = 173+50;
 			for (int i = 0; i < 8; i++)
 			{
@@ -42,7 +42,7 @@ public:
 		}
 		if (right == true)
 		{
-			x = 798-108;
+			x = 798-88;
 			y = 173+50;
 			for (int i = 0; i < 8; i++)
 			{
