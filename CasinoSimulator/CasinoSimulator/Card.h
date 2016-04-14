@@ -22,6 +22,10 @@ public:
 	{
 		return face;
 	}
+	void setIcon(System::Drawing::Icon^ icon)
+	{
+		face = icon;
+	}
 	void setLocation(Location2^ loc)
 	{
 		cardLoc = loc;

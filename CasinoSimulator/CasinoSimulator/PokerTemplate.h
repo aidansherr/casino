@@ -11,13 +11,14 @@ ref class PokerTemplate
 	array< Location2^, 1 > ^river = gcnew array< Location2^, 1 >(6);
 	array< Position^, 1 > ^positions = gcnew array< Position^, 1 >(4);
 	Location2^ deckLoc;
+	
 
 public:
 	PokerTemplate()
 	{
 		deckLoc = gcnew Location2(200, 250);
 		int x = 300;
-		int y = 250;
+		int y = 350;
 		for (int i = 0; i < 5; i++)
 		{
 			river[i] = gcnew Location2(x, y);
@@ -44,6 +45,9 @@ public:
 	}
 	Position^ getPosition(int x)
 	{
+		
+			
+		
 		return positions[x];
 	}
 };
