@@ -3,15 +3,21 @@
 ref class Position
 {
 private:
+	//bool variables that determine what side the position is in
 	bool top, bottom, left, right;
+	//an array of locations for that position
 	array<Location2^, 1> ^locations = gcnew array<Location2^, 1>(8);
 	
+	//the middle of the array of locations
 	int mid = 4;
+	//a variable that will determine where to place the next card in the players hand
 	int evenOdd = 0;
 
 public:
 	Position(bool top, bool bottom, bool left, bool right)
 	{
+		//sets the position based on the bool variable givven in the constructer
+		//The constructer then sets the array of locations with set values for all the cards
 		int x, y;
 		if (bottom == true)
 		{
@@ -54,12 +60,15 @@ public:
 			}
 		}
 	}
+	//returns a location at point mid
 	Location2^ getLocation()
 	{
+		//if even the it will return a location to the middles right
 		if (evenOdd % 2 != 0)
 		{
 			mid += evenOdd;
 		}
+		//else returns a location to the left
 		else
 		{
 			mid -= evenOdd;

@@ -4,6 +4,8 @@
 #include "Card.h"
 #include "Deck.h"
 #include "Location.h"
+#include "Player.h"
+#include "AI.h"
 namespace CasinoSimulator {
 
 	using namespace System;
@@ -46,6 +48,11 @@ namespace CasinoSimulator {
 	private: System::Windows::Forms::Button^  button2;
 	private: System::Windows::Forms::TextBox^  textBox2;
 	private: System::Windows::Forms::Label^  label2;
+	private: System::Windows::Forms::Button^  checkButton;
+	private: System::Windows::Forms::Button^  betButton;
+	private: System::Windows::Forms::Button^  foldButton;
+
+
 	protected:
 
 	private:
@@ -68,6 +75,9 @@ namespace CasinoSimulator {
 			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
 			this->label2 = (gcnew System::Windows::Forms::Label());
+			this->checkButton = (gcnew System::Windows::Forms::Button());
+			this->betButton = (gcnew System::Windows::Forms::Button());
+			this->foldButton = (gcnew System::Windows::Forms::Button());
 			this->SuspendLayout();
 			// 
 			// panel1
@@ -155,12 +165,45 @@ namespace CasinoSimulator {
 			this->label2->Visible = false;
 			this->label2->Click += gcnew System::EventHandler(this, &MyForm::label2_Click);
 			// 
+			// checkButton
+			// 
+			this->checkButton->Location = System::Drawing::Point(62, 496);
+			this->checkButton->Name = L"checkButton";
+			this->checkButton->Size = System::Drawing::Size(75, 23);
+			this->checkButton->TabIndex = 7;
+			this->checkButton->Text = L"Check";
+			this->checkButton->UseVisualStyleBackColor = true;
+			this->checkButton->Click += gcnew System::EventHandler(this, &MyForm::checkButton_Click);
+			// 
+			// betButton
+			// 
+			this->betButton->Location = System::Drawing::Point(62, 542);
+			this->betButton->Name = L"betButton";
+			this->betButton->Size = System::Drawing::Size(75, 23);
+			this->betButton->TabIndex = 7;
+			this->betButton->Text = L"Bet";
+			this->betButton->UseVisualStyleBackColor = true;
+			this->betButton->Click += gcnew System::EventHandler(this, &MyForm::button4_Click);
+			// 
+			// foldButton
+			// 
+			this->foldButton->Location = System::Drawing::Point(62, 591);
+			this->foldButton->Name = L"foldButton";
+			this->foldButton->Size = System::Drawing::Size(75, 23);
+			this->foldButton->TabIndex = 7;
+			this->foldButton->Text = L"Fold";
+			this->foldButton->UseVisualStyleBackColor = true;
+			this->foldButton->Click += gcnew System::EventHandler(this, &MyForm::foldButton_Click);
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
 			this->ClientSize = System::Drawing::Size(800, 741);
+			this->Controls->Add(this->foldButton);
+			this->Controls->Add(this->betButton);
+			this->Controls->Add(this->checkButton);
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->textBox2);
 			this->Controls->Add(this->button2);
@@ -178,12 +221,21 @@ namespace CasinoSimulator {
 #pragma endregion
 		Graphics ^g;
 		Pen^ myPen;
+		//the deck of cards for the game
 		Deck^ pokerDeck = gcnew Deck();
+		//The tmeplate for the game
 		PokerTemplate^ pT = gcnew PokerTemplate();
-
-		//Function to initialize game after start to show cards
-		void DrawCard(Location2^ loc, int side)
-		{
+		//the player
+		Player^ player;
+		//The AI
+		array<AI^, 1> ^computers = gcnew array<AI^, 1>(3);
+		//The turn the game is on
+		int turn = 0;
+		//The amount of cards in the river
+		int riverSize = 0;
+		//Draws a card with the given icon, and location
+		void DrawCard(System::Drawing::Icon^ icon, Location2^ loc, int side)
+		{//side refers if it is vertical(0) or horizantal(1)
 
 			myPen = gcnew Pen(Drawing::Color::Black);
 			int x = loc->getX();
@@ -192,34 +244,35 @@ namespace CasinoSimulator {
 			Rectangle sideCard = Rectangle(x, y, 68, 50);
 			if (side == 0)
 			{
-				g->DrawIcon(pokerDeck->draw()->getIcon(), card);
+				g->DrawIcon(icon, card);
 			}
 			else if (side == 1)
 			{
-				System::Drawing::Icon^ icon = gcnew System::Drawing::Icon("cardbackside.ico");
-
-				g->DrawIcon(icon, sideCard);
+				System::Drawing::Icon^ sideIcon =gcnew System::Drawing::Icon("cardbackside.ico");
+				g->DrawIcon(sideIcon, sideCard);
 			}
 			
 		}
-		void DrawBigCard(Location2^ loc, int side)
+		//same as DrawCard but draws a bigger card for the deck,players hand and river
+		void DrawBigCard(System::Drawing::Icon^ icon, Location2^ loc, int side)
 		{
 
 			myPen = gcnew Pen(Drawing::Color::Black);
 			int x = loc->getX();
 			int y = loc->getY();
-			Rectangle card = Rectangle(x, y, 75, 111);
-			Rectangle sideCard = Rectangle(x, y, 75, 111);
+			Rectangle card = Rectangle(x, y, 100, 136);
+			Rectangle sideCard = Rectangle(x, y, 136, 100);
 			if (side == 0)
 			{
-				g->DrawIcon(pokerDeck->draw()->getIcon(), card);
+				g->DrawIcon(icon, card);
 			}
 			else if (side == 1)
 			{
-				g->DrawIcon(pokerDeck->draw()->getIcon(), sideCard);
+				g->DrawIcon(icon, sideCard);
 			}
 
 		}
+
 
 	private: System::Void MyForm_Load(System::Object^  sender, System::EventArgs^  e)
 	{
@@ -230,7 +283,37 @@ namespace CasinoSimulator {
 		back->Size::set(Drawing::Size(800, 741));
 		back->Load("background.png");
 		g = back->CreateGraphics();
-		
+		//Initilizes the player and draws two cards for the players hand
+		player = gcnew Player();
+		for (int i = 0; i < 2; i++)
+		{
+			Card^ tempCard = pokerDeck->draw();
+			tempCard->setLocation(pT->getPosition(1)->getLocation());
+			player->addCard(tempCard);
+			
+		}
+		//Initilizes the AIs and gives them all two cards
+		for (int i = 0; i < 3; i++)
+		{
+			computers[i] = gcnew AI();
+			Card^ tempCard1 = (pokerDeck->draw());
+			Card^ tempCard2 = (pokerDeck->draw());
+			//skips position 1 as it is reserve for the player
+			if (i == 1)
+			{
+				//corrects the off set of skiping i=1 by picking postion three for the AI
+				tempCard1->setLocation(pT->getPosition(3)->getLocation());
+				tempCard2->setLocation(pT->getPosition(3)->getLocation());
+			}
+			else
+			{
+				tempCard1->setLocation(pT->getPosition(i)->getLocation());
+				tempCard2->setLocation(pT->getPosition(i)->getLocation());
+			}
+
+			computers[i]->addCard(tempCard1);
+			computers[i]->addCard(tempCard2);
+		}
 	}
 
 	private: System::Void label1_Click(System::Object^  sender, System::EventArgs^  e) {
@@ -249,39 +332,168 @@ namespace CasinoSimulator {
 		button1->Visible = false;
 		label2->Visible = true;
 		textBox2->Visible = true;
+		//draws the deck and initilizes its location
 		pokerDeck->setLocation(pT->getDeckLocation());
-		DrawBigCard(pokerDeck->getLocation(), 0);
+		System::Drawing::Icon^ tempIcon = gcnew System::Drawing::Icon("cardback.ico");
+		DrawBigCard(tempIcon,pokerDeck->getLocation(), 0);
 
-		for (int i = 0; i < 5; i++)
+		//Draws the players cards
+		
+		for (int i = 0; i < 2; i++)
 		{
-			Location2^ tempLoc = pT->getRiver();
-			DrawBigCard(tempLoc, 0);
 			
+			Card^ playCard = player->getHand();
+			DrawBigCard(playCard->getIcon(), playCard->getLocation(), 0);
 		}
+		
+		//Draws the AIs cards
+		
 		for (int i = 0; i < 4; i++)
 		{
 			for (int j = 0; j < 2; j++)
 			{
-				int temp = 0;
-				if (i == 2 || i == 3)
+				if (i != 1)
 				{
-					DrawCard(pT->getPosition(i)->getLocation(), 1);
+					int temp = 0;
+					
+					Card^ tempCard;
+					//skips position 1 as it is reserved for the player
+					if (i == 3)
+					{
+						//corrects the off set of skiping i=1 by making i=3 the second position in computers
+						tempCard = computers[1]->getHand();
+					}
+					else
+					{
+						tempCard = computers[i]->getHand();
+					}
+					
+					//draws the cards in the side positions
+					if (i == 2 || i == 3)
+					{
+						DrawCard(tempCard->getIcon(), tempCard->getLocation(), 1);
+					}
+					//draws cards normaly
+					else
+					{
+						DrawCard(tempCard->getIcon(), tempCard->getLocation(), temp);
+					}
+
 				}
-				else if (i == 1)
-				{
-					DrawBigCard(pT->getPosition(i)->getLocation(), temp);
-				}
-				else
-				{
-					DrawCard(pT->getPosition(i)->getLocation(), temp);
-				}
-				
-				
 			}
 		}
+		
 	}
 	private: System::Void label2_Click(System::Object^  sender, System::EventArgs^  e) {
 	}
+private: System::Void button4_Click(System::Object^  sender, System::EventArgs^  e) 
+{
+	Refresh();
+	nextTurn();
+	DrawWorld();
+}
+private: System::Void checkButton_Click(System::Object^  sender, System::EventArgs^  e) 
+{
+	Refresh();
+	nextTurn();
+	DrawWorld();
+}
+private: System::Void foldButton_Click(System::Object^  sender, System::EventArgs^  e) 
+{
+	Refresh();
+	nextTurn();
+	DrawWorld();
+}
+		 void nextTurn()
+		 {
+			 if (turn == 0)
+			 {
+				 //if the first turn hasn't taken place then it draws three cards for the river
+				 for (int i = 0; i < 3; i++)
+				 {
+					 Card^ temp = pokerDeck->draw();
+					 temp->setLocation(pT->getRiver());
+					 pT->addRiverCard(temp);
+					 riverSize++;
+				 }
+				 turn++;
+			 }
+			 else
+			 {
+				 //draws one card afterwards
+				 Card^ temp = pokerDeck->draw();
+				 temp->setLocation(pT->getRiver());
+				 pT->addRiverCard(temp);
+				 riverSize++;
+			 }
+		 }
+		 void DrawWorld()
+		 {
+			 //resets all of the pointers to draw all the cards
+			 resetCounts();
+			 //draws the deck
+			 System::Drawing::Icon^ tempIcon = gcnew System::Drawing::Icon("cardback.ico");
+			 DrawBigCard(tempIcon, pokerDeck->getLocation(), 0);
+			 //Draws the players cards
+			 for (int i = 0; i < 2; i++)
+			 {
+				 Card^ playCard = player->getHand();
+				 DrawBigCard(playCard->getIcon(), playCard->getLocation(), 0);
+			 }
+
+			 //Draws the AIs cards
+
+			 for (int i = 0; i < 4; i++)
+			 {
+				 for (int j = 0; j < 2; j++)
+				 {
+					 //Position 1 is for the player so it skips this position while drawing the AI hands
+					 if (i != 1)
+					 {
+						 int temp = 0;
+
+						 Card^ tempCard;
+						 //corrects the off set of skipping i=0 by setting i=3 to the second position in computers
+						 if (i == 3)
+						 {
+							 tempCard = computers[1]->getHand();
+						 }
+						 else
+						 {
+							 tempCard = computers[i]->getHand();
+						 }
+
+						 //draws the side cards
+						 if (i == 2 || i == 3)
+						 {
+							 DrawCard(tempCard->getIcon(), tempCard->getLocation(), 1);
+						 }
+						 //draws a normal card
+						 else
+						 {
+							 DrawCard(tempCard->getIcon(), tempCard->getLocation(), temp);
+						 }
+
+					 }
+				 }
+		 }
+			 //Draws the river
+			 for (int i = 0; i < riverSize; i++)//only draws the cards in river that have been drawn
+			 {
+				 Card^ temp = pT->getRiverCard();
+				 DrawBigCard(temp->getIcon(), temp->getLocation(), 0);
+			 }
+		 }
+		 void resetCounts()
+		 {
+			 //resets the pointers in player, the PokerTemplate and the computers
+			 pT->reset();
+			 player->reset();
+			 for (int i = 0; i < 3; i++)
+			 {
+				 computers[i]->reset();
+			 }
+		 }
 };
 }
 
