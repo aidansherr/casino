@@ -3,6 +3,7 @@
 #include "Card.h"
 ref class Logic
 {private:
+	//c
 	array <Card^, 1>^hand2 = gcnew array<Card^, 1>(8);
 	array <int, 1>^test = gcnew array<int, 1>(5);
 	Player^ player;
