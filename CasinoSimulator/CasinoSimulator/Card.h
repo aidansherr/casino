@@ -22,6 +22,14 @@ public:
 	{
 		return face;
 	}
+	int getValue()
+	{
+		return value;
+	}
+	int getSuit()
+	{
+		return suit;
+	}
 	void setLocation(Location2^ loc)
 	{
 		cardLoc = loc;
