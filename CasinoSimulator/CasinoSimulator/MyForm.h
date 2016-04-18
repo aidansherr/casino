@@ -53,6 +53,7 @@ namespace CasinoSimulator {
 	private: System::Windows::Forms::Button^  foldButton;
 
 
+
 	protected:
 
 	private:
@@ -167,32 +168,38 @@ namespace CasinoSimulator {
 			// 
 			// checkButton
 			// 
-			this->checkButton->Location = System::Drawing::Point(62, 496);
+			this->checkButton->Enabled = false;
+			this->checkButton->Location = System::Drawing::Point(91, 550);
 			this->checkButton->Name = L"checkButton";
 			this->checkButton->Size = System::Drawing::Size(75, 23);
 			this->checkButton->TabIndex = 7;
 			this->checkButton->Text = L"Check";
 			this->checkButton->UseVisualStyleBackColor = true;
+			this->checkButton->Visible = false;
 			this->checkButton->Click += gcnew System::EventHandler(this, &MyForm::checkButton_Click);
 			// 
 			// betButton
 			// 
-			this->betButton->Location = System::Drawing::Point(62, 542);
+			this->betButton->Enabled = false;
+			this->betButton->Location = System::Drawing::Point(91, 591);
 			this->betButton->Name = L"betButton";
 			this->betButton->Size = System::Drawing::Size(75, 23);
 			this->betButton->TabIndex = 7;
 			this->betButton->Text = L"Bet";
 			this->betButton->UseVisualStyleBackColor = true;
+			this->betButton->Visible = false;
 			this->betButton->Click += gcnew System::EventHandler(this, &MyForm::button4_Click);
 			// 
 			// foldButton
 			// 
-			this->foldButton->Location = System::Drawing::Point(62, 591);
+			this->foldButton->Enabled = false;
+			this->foldButton->Location = System::Drawing::Point(91, 633);
 			this->foldButton->Name = L"foldButton";
 			this->foldButton->Size = System::Drawing::Size(75, 23);
 			this->foldButton->TabIndex = 7;
 			this->foldButton->Text = L"Fold";
 			this->foldButton->UseVisualStyleBackColor = true;
+			this->foldButton->Visible = false;
 			this->foldButton->Click += gcnew System::EventHandler(this, &MyForm::foldButton_Click);
 			// 
 			// MyForm
@@ -203,8 +210,8 @@ namespace CasinoSimulator {
 			this->ClientSize = System::Drawing::Size(800, 741);
 			this->Controls->Add(this->foldButton);
 			this->Controls->Add(this->betButton);
-			this->Controls->Add(this->checkButton);
 			this->Controls->Add(this->label2);
+			this->Controls->Add(this->checkButton);
 			this->Controls->Add(this->textBox2);
 			this->Controls->Add(this->button2);
 			this->Controls->Add(this->label1);
@@ -282,6 +289,7 @@ namespace CasinoSimulator {
 		back->Parent = this;
 		back->Size::set(Drawing::Size(800, 741));
 		back->Load("background.png");
+		
 		g = back->CreateGraphics();
 		//Initilizes the player and draws two cards for the players hand
 		player = gcnew Player();
@@ -332,6 +340,15 @@ namespace CasinoSimulator {
 		button1->Visible = false;
 		label2->Visible = true;
 		textBox2->Visible = true;
+		//to enable the bet, check, fold button
+		betButton->Enabled = true;
+		checkButton->Enabled = true;
+		foldButton->Enabled = true;
+
+		betButton->Visible = true;
+		checkButton->Visible = true;
+		foldButton->Visible = true;
+
 		//draws the deck and initilizes its location
 		pokerDeck->setLocation(pT->getDeckLocation());
 		System::Drawing::Icon^ tempIcon = gcnew System::Drawing::Icon("cardback.ico");
