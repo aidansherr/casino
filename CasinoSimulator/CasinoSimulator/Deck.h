@@ -3,6 +3,17 @@
 #include <cstdlib>
 #include <ctime>
 #include "Location.h"
+#include <string>
+#include <iostream>
+#include <fstream>
+
+using namespace System;
+using namespace System::ComponentModel;
+using namespace System::Collections;
+using namespace System::Windows::Forms;
+using namespace System::Data;
+using namespace System::Drawing;
+
 
 ref class Deck
 {
@@ -19,6 +30,7 @@ ref class Deck
 public:
 	Deck()
 	{
+		getIcons();
 		//initilizes a new deck
 		for (int i = 0; i < 4; i++)
 		{
@@ -29,8 +41,7 @@ public:
 			{
 				//initilizes a new card with a face value and suit value
 				//only one face value for each suit value
-				 System::Drawing::Icon^ back = gcnew System::Drawing::Icon("cardback.ico");
-				cardDeck[point] = gcnew Card(j, i,back);
+				cardDeck[point] = gcnew Card(j, i, icons[facePoint]);
 				facePoint++;
 				point++;
 			}
@@ -69,5 +80,17 @@ public:
 	{
 		return deckLoc;
 	}
-
+	void getIcons()
+	{
+		std::fstream infile;
+		infile.open("Cards.txt");
+		for (int i = 0; i < 52; i++)
+		{
+			std::string temp;
+			infile >> temp;
+			String^ name = gcnew String(temp.c_str());
+			System::Drawing::Icon^tempicon = gcnew System::Drawing::Icon(name);
+			icons[i] = tempicon;
+		}
+	}
 };
