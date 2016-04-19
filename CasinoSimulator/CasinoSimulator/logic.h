@@ -10,8 +10,9 @@ ref class Logic
 	Player^ player;
 public:
 	// creates the players hand to check for posiibilities
-	Logic()
+	Logic(Player^ newPlayer)
 	{
+		player = newPlayer;
 		for (int i = 0; i < 7; i++)
 		{
 			hand2[i] = player->getHand();
