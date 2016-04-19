@@ -51,7 +51,11 @@ public:
 		positions[1] = gcnew Position(false, true, false, false);
 		positions[2] = gcnew Position(false, false, true, false);
 		positions[3] = gcnew Position(false, false, false, true);
-
+		player = gcnew Player();
+		for (int i = 0; i < 3; i++)
+		{
+			computers[i] = gcnew AI();
+		}
 	};
 	//returns the location of the deck
 	Location2^ getDeckLocation()
