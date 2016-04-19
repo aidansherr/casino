@@ -22,6 +22,8 @@ ref class PokerTemplate
 	array<Card^, 1> ^riverCards = gcnew array<Card^, 1>(6);
 	//the location for the deck
 	Location2^ deckLoc;
+	//the current betting pool
+	int betPool=0;
 	
 
 public:
@@ -86,6 +88,15 @@ public:
 	{
 		cardPoint2 = 0;
 	}
+	int getBetPool()
+	{
+		return betPool;
+	}
+	void addToPool(int newVal)
+	{
+		betPool += newVal;
+	}
+	
 };
 
 
