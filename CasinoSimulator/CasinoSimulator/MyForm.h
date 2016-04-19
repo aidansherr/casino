@@ -259,11 +259,6 @@ namespace CasinoSimulator {
 		Deck^ pokerDeck = gcnew Deck();
 		//The tmeplate for the game
 		PokerTemplate^ pT = gcnew PokerTemplate();
-		//the player
-		Player^ player;
-		//The AI
-		array<AI^, 1> ^computers = gcnew array<AI^, 1>(3);
-		//The turn the game is on
 		int turn = 0;
 		//The amount of cards in the river
 		int riverSize = 0;
@@ -319,18 +314,18 @@ namespace CasinoSimulator {
 		
 		g = back->CreateGraphics();
 		//Initilizes the player and draws two cards for the players hand
-		player = gcnew Player();
+		
 		for (int i = 0; i < 2; i++)
 		{
 			Card^ tempCard = pokerDeck->draw();
 			tempCard->setLocation(pT->getPosition(1)->getLocation());
-			player->addCard(tempCard);
+			pT->getPlayer()->addCard(tempCard);
 			
 		}
 		//Initilizes the AIs and gives them all two cards
 		for (int i = 0; i < 3; i++)
 		{
-			computers[i] = gcnew AI();
+			
 			Card^ tempCard1 = (pokerDeck->draw());
 			Card^ tempCard2 = (pokerDeck->draw());
 			//skips position 1 as it is reserve for the player
@@ -346,8 +341,8 @@ namespace CasinoSimulator {
 				tempCard2->setLocation(pT->getPosition(i)->getLocation());
 			}
 
-			computers[i]->addCard(tempCard1);
-			computers[i]->addCard(tempCard2);
+			pT->getAI(i)->addCard(tempCard1);
+			pT->getAI(i)->addCard(tempCard2);
 		}
 	}
 
@@ -391,7 +386,7 @@ namespace CasinoSimulator {
 		for (int i = 0; i < 2; i++)
 		{
 			
-			Card^ playCard = player->getHand();
+			Card^ playCard = pT->getPlayer()->getHand();
 			DrawBigCard(playCard->getIcon(), playCard->getLocation(), 0);
 		}
 		
@@ -410,11 +405,11 @@ namespace CasinoSimulator {
 					if (i == 3)
 					{
 						//corrects the off set of skiping i=1 by making i=3 the second position in computers
-						tempCard = computers[1]->getHand();
+						tempCard = pT->getAI(1)->getHand();
 					}
 					else
 					{
-						tempCard = computers[i]->getHand();
+						tempCard = pT->getAI(i)->getHand();
 					}
 					
 					//draws the cards in the side positions
@@ -439,9 +434,9 @@ private: System::Void button4_Click(System::Object^  sender, System::EventArgs^ 
 {
 	int value;
 	Int32::TryParse(textBox3->Text, value);
-	player->changeTotal((value*-1));
+	pT->getPlayer()->changeTotal((value*-1));
 	
-	std::string sValue= std::to_string(player->getTotal());
+	std::string sValue= std::to_string(pT->getPlayer()->getTotal());
 	String^ totalValue = gcnew String(sValue.c_str());
 	textBox1->Text = totalValue;
 
@@ -499,7 +494,7 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 			 //Draws the players cards
 			 for (int i = 0; i < 2; i++)
 			 {
-				 Card^ playCard = player->getHand();
+				 Card^ playCard = pT->getPlayer()->getHand();
 				 DrawBigCard(playCard->getIcon(), playCard->getLocation(), 0);
 			 }
 
@@ -518,11 +513,11 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 						 //corrects the off set of skipping i=0 by setting i=3 to the second position in computers
 						 if (i == 3)
 						 {
-							 tempCard = computers[1]->getHand();
+							 tempCard = pT->getAI(1)->getHand();
 						 }
 						 else
 						 {
-							 tempCard = computers[i]->getHand();
+							 tempCard = pT->getAI(i)->getHand();
 						 }
 
 						 //draws the side cards
@@ -550,10 +545,10 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 		 {
 			 //resets the pointers in player, the PokerTemplate and the computers
 			 pT->reset();
-			 player->reset();
+			 pT->getPlayer()->reset();
 			 for (int i = 0; i < 3; i++)
 			 {
-				 computers[i]->reset();
+				 pT->getAI(i)->reset();
 			 }
 		 }
 };
