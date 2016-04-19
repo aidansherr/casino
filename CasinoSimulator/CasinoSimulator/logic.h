@@ -10,8 +10,9 @@ ref class Logic
 	Player^ player;
 public:
 	// creates the players hand to check for posiibilities
-	Logic()
+	Logic(Player^ newPlayer)
 	{
+		player = newPlayer;
 		for (int i = 0; i < 7; i++)
 		{
 			hand2[i] = player->getHand();
@@ -32,7 +33,7 @@ public:
 			{
 				for (int j = 0; j < 8; j++)
 				{
-					if (hand2[j]->getValue() == test[n] && hand2[j]->getSuit == i)
+					if (hand2[j]->getValue() == test[n] && hand2[j]->getSuit() == i)
 					{
 						CardCount++;
 					}
@@ -60,7 +61,7 @@ public:
 				{
 					for (int j = 0; j < 8; j++)
 					{
-						if (hand2[j]->getValue() == test[n] && hand2[j]->getSuit == i)
+						if (hand2[j]->getValue() == test[n] && hand2[j]->getSuit() == i)
 						{
 							CardCount++;
 						}
@@ -132,7 +133,7 @@ public:
 			{
 				if (j != i)
 				{
-					if (hand2[i]->getSuit == hand2[j]->getSuit)
+					if (hand2[i]->getSuit() == hand2[j]->getSuit())
 					{
 						CardCount++;
 					}
