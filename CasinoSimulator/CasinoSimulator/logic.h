@@ -33,7 +33,7 @@ public:
 			{
 				for (int j = 0; j < 8; j++)
 				{
-					if (hand2[j]->getValue() == test[n] && hand2[j]->getSuit == i)
+					if (hand2[j]->getValue() == test[n] && hand2[j]->getSuit() == i)
 					{
 						CardCount++;
 					}
@@ -61,7 +61,7 @@ public:
 				{
 					for (int j = 0; j < 8; j++)
 					{
-						if (hand2[j]->getValue() == test[n] && hand2[j]->getSuit == i)
+						if (hand2[j]->getValue() == test[n] && hand2[j]->getSuit() == i)
 						{
 							CardCount++;
 						}
@@ -133,7 +133,7 @@ public:
 			{
 				if (j != i)
 				{
-					if (hand2[i]->getSuit == hand2[j]->getSuit)
+					if (hand2[i]->getSuit() == hand2[j]->getSuit())
 					{
 						CardCount++;
 					}
