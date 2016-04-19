@@ -3,6 +3,8 @@
 #include "Deck.h"
 #include "Location.h"
 #include "position.h"
+#include "Player.h"
+#include "AI.h"
 
 ref class PokerTemplate
 {
@@ -24,6 +26,11 @@ ref class PokerTemplate
 	Location2^ deckLoc;
 	//the current betting pool
 	int betPool=0;
+	//The player
+	Player^ player;
+	//The AI
+	array<AI^, 1> ^computers = gcnew array<AI^, 1>(3);
+
 	
 
 public:
@@ -96,7 +103,14 @@ public:
 	{
 		betPool += newVal;
 	}
-	
+	Player^ getPlayer()
+	{
+		return player;
+	}
+	Player^ getAI(int x)
+	{
+		return computers[x];
+	}
 };
 
 

@@ -10,6 +10,7 @@ ref class Card
 	static System::Drawing::Icon^ face;
 	//The icon for the card
 	Location2^ cardLoc;
+	
 public:
 	Card(int value, int suit, System::Drawing::Icon^ icon)
 	{

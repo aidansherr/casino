@@ -9,7 +9,7 @@ ref class Player
 	//pointer for returning a card in the players hand
 	int pos2 = 0;
 	//the total cash the player has
-	int total = 0;
+	int total =2000;
 	array <Card^, 1>^hand = gcnew array<Card^, 1>(8);
 
 public:

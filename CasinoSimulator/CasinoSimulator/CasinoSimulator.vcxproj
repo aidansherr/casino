@@ -142,9 +142,11 @@
     <ClInclude Include="Card.h" />
     <ClInclude Include="Deck.h" />
     <ClInclude Include="Location.h" />
+    <ClInclude Include="logic.h" />
     <ClInclude Include="MyForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="Player.h" />
     <ClInclude Include="PokerTemplate.h" />
     <ClInclude Include="position.h" />
   </ItemGroup>
