@@ -448,18 +448,36 @@ private: System::Void button4_Click(System::Object^  sender, System::EventArgs^ 
 	Refresh();
 	nextTurn();
 	DrawWorld();
+	if (riverSize == 5)
+	{
+		betButton->Enabled=false;
+		checkButton->Enabled = false;
+		foldButton->Enabled = false;
+	}
 }
 private: System::Void checkButton_Click(System::Object^  sender, System::EventArgs^  e) 
 {
 	Refresh();
 	nextTurn();
 	DrawWorld();
+	if (riverSize == 5)
+	{
+		betButton->Enabled = false;
+		checkButton->Enabled = false;
+		foldButton->Enabled = false;
+	}
 }
 private: System::Void foldButton_Click(System::Object^  sender, System::EventArgs^  e) 
 {
 	Refresh();
 	nextTurn();
 	DrawWorld();
+	if (riverSize == 5)
+	{
+		betButton->Enabled = false;
+		checkButton->Enabled = false;
+		foldButton->Enabled = false;
+	}
 }
 		 void nextTurn()
 		 {
