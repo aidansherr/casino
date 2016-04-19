@@ -6,6 +6,7 @@
 #include "Location.h"
 #include "Player.h"
 #include "AI.h"
+#include <string>
 namespace CasinoSimulator {
 
 	using namespace System;
@@ -51,6 +52,8 @@ namespace CasinoSimulator {
 	private: System::Windows::Forms::Button^  checkButton;
 	private: System::Windows::Forms::Button^  betButton;
 	private: System::Windows::Forms::Button^  foldButton;
+	private: System::Windows::Forms::TextBox^  textBox3;
+	private: System::Windows::Forms::Label^  label3;
 
 
 
@@ -79,6 +82,8 @@ namespace CasinoSimulator {
 			this->checkButton = (gcnew System::Windows::Forms::Button());
 			this->betButton = (gcnew System::Windows::Forms::Button());
 			this->foldButton = (gcnew System::Windows::Forms::Button());
+			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
+			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->SuspendLayout();
 			// 
 			// panel1
@@ -202,12 +207,34 @@ namespace CasinoSimulator {
 			this->foldButton->Visible = false;
 			this->foldButton->Click += gcnew System::EventHandler(this, &MyForm::foldButton_Click);
 			// 
+			// textBox3
+			// 
+			this->textBox3->Enabled = false;
+			this->textBox3->Location = System::Drawing::Point(196, 593);
+			this->textBox3->Name = L"textBox3";
+			this->textBox3->Size = System::Drawing::Size(100, 20);
+			this->textBox3->TabIndex = 8;
+			this->textBox3->Visible = false;
+			// 
+			// label3
+			// 
+			this->label3->AutoSize = true;
+			this->label3->Enabled = false;
+			this->label3->Location = System::Drawing::Point(193, 577);
+			this->label3->Name = L"label3";
+			this->label3->Size = System::Drawing::Size(61, 13);
+			this->label3->TabIndex = 9;
+			this->label3->Text = L"Bet amount";
+			this->label3->Visible = false;
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
 			this->ClientSize = System::Drawing::Size(800, 741);
+			this->Controls->Add(this->label3);
+			this->Controls->Add(this->textBox3);
 			this->Controls->Add(this->foldButton);
 			this->Controls->Add(this->betButton);
 			this->Controls->Add(this->label2);
@@ -349,6 +376,11 @@ namespace CasinoSimulator {
 		checkButton->Visible = true;
 		foldButton->Visible = true;
 
+		label3->Visible = true;
+		label3->Enabled = true;
+		textBox3->Visible = true;
+		textBox3->Enabled = true;
+
 		//draws the deck and initilizes its location
 		pokerDeck->setLocation(pT->getDeckLocation());
 		System::Drawing::Icon^ tempIcon = gcnew System::Drawing::Icon("cardback.ico");
@@ -405,6 +437,19 @@ namespace CasinoSimulator {
 	}
 private: System::Void button4_Click(System::Object^  sender, System::EventArgs^  e) 
 {
+	int value;
+	Int32::TryParse(textBox3->Text, value);
+	player->changeTotal((value*-1));
+	
+	std::string sValue= std::to_string(player->getTotal());
+	String^ totalValue = gcnew String(sValue.c_str());
+	textBox1->Text = totalValue;
+
+	pT->addToPool(value);
+	std::string sValue2 = std::to_string(pT->getBetPool());
+	String^ totalValue2 = gcnew String(sValue2.c_str());
+	textBox2->Text = totalValue2;
+	 
 	Refresh();
 	nextTurn();
 	DrawWorld();
