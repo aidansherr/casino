@@ -273,13 +273,16 @@ namespace CasinoSimulator {
 			Rectangle sideCard = Rectangle(x, y, 68, 50);
 			if (side == 0)
 			{
-				g->DrawIcon(icon, card);
+				System::Drawing::Icon^ icon = gcnew System::Drawing::Icon("cardback.ico");
+				g->DrawIcon(icon, sideCard);
 			}
 			else if (side == 1)
 			{
 				System::Drawing::Icon^ sideIcon =gcnew System::Drawing::Icon("cardbackside.ico");
 				g->DrawIcon(sideIcon, sideCard);
 			}
+			
+
 			
 		}
 		//same as DrawCard but draws a bigger card for the deck,players hand and river
@@ -315,35 +318,7 @@ namespace CasinoSimulator {
 		g = back->CreateGraphics();
 		//Initilizes the player and draws two cards for the players hand
 		
-		for (int i = 0; i < 2; i++)
-		{
-			Card^ tempCard = pokerDeck->draw();
-			tempCard->setLocation(pT->getPosition(1)->getLocation());
-			pT->getPlayer()->addCard(tempCard);
-			
-		}
-		//Initilizes the AIs and gives them all two cards
-		for (int i = 0; i < 3; i++)
-		{
-			
-			Card^ tempCard1 = (pokerDeck->draw());
-			Card^ tempCard2 = (pokerDeck->draw());
-			//skips position 1 as it is reserve for the player
-			if (i == 1)
-			{
-				//corrects the off set of skiping i=1 by picking postion three for the AI
-				tempCard1->setLocation(pT->getPosition(3)->getLocation());
-				tempCard2->setLocation(pT->getPosition(3)->getLocation());
-			}
-			else
-			{
-				tempCard1->setLocation(pT->getPosition(i)->getLocation());
-				tempCard2->setLocation(pT->getPosition(i)->getLocation());
-			}
-
-			pT->getAI(i)->addCard(tempCard1);
-			pT->getAI(i)->addCard(tempCard2);
-		}
+		
 	}
 
 	private: System::Void label1_Click(System::Object^  sender, System::EventArgs^  e) {
@@ -356,6 +331,9 @@ namespace CasinoSimulator {
 	}
 	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e)
 	{
+		pokerDeck->makeCards();
+		pokerDeck->setIcons();
+		startAction();
 		
 		//To enable quitting 
 		button2->Enabled = true;
@@ -568,6 +546,42 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 			 {
 				 pT->getAI(i)->reset();
 			 }
+		 }
+		 void startAction()
+		 {
+			 //Initilizes the player and draws two cards for the players hand
+			 
+			 for (int i = 0; i < 2; i++)
+			 {
+				
+				 Card^ tempCard = pokerDeck->draw();
+				 tempCard->setLocation(pT->getPosition(1)->getLocation());
+				 pT->getPlayer()->addCard(tempCard);
+
+			 }
+			 //Initilizes the AIs and gives them all two cards
+			 for (int i = 0; i < 3; i++)
+			 {
+
+				 Card^ tempCard1 = (pokerDeck->draw());
+				 Card^ tempCard2 = (pokerDeck->draw());
+				 //skips position 1 as it is reserve for the player
+				 if (i == 1)
+				 {
+					 //corrects the off set of skiping i=1 by picking postion three for the AI
+					 tempCard1->setLocation(pT->getPosition(3)->getLocation());
+					 tempCard2->setLocation(pT->getPosition(3)->getLocation());
+				 }
+				 else
+				 {
+					 tempCard1->setLocation(pT->getPosition(i)->getLocation());
+					 tempCard2->setLocation(pT->getPosition(i)->getLocation());
+				 }
+
+				 pT->getAI(i)->addCard(tempCard1);
+				 pT->getAI(i)->addCard(tempCard2);
+			 }
+		 
 		 }
 };
 }
