@@ -633,19 +633,21 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 			Player^ winner = pT->getPlayer();
 			Logic^ winLogic = pT->getPlayerLogic();
 			std::string sValue= std::to_string(pT->getPlayerLogic()->HandValue());
+			String^ totalValue;
 			 for (int i = 0; i < 3; i++)
 			 {
 				 sValue += " ";
 				  sValue += std::to_string(pT->getComputerLogic(i)->HandValue());
 				 
-				 String^ totalValue = gcnew String(sValue.c_str());
-				 textBox1->Text = totalValue;
+				 totalValue = gcnew String(sValue.c_str());
+				
 				 if (pT->getComputerLogic(i)->HandValue()>winLogic->HandValue())
 				 {
 					 winner = pT->getAI(i);
 					 winLogic = pT->getComputerLogic(i);
 				 }
 			 }
+			 MessageBox::Show(totalValue);
 			 return winner;
 		 }
 		 void fillHands()
