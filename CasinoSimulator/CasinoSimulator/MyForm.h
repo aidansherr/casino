@@ -263,6 +263,8 @@ namespace CasinoSimulator {
 		int turn = 0;
 		//The amount of cards in the river
 		int riverSize = 0;
+		//fold value for player to make sure player loses
+		bool fold = false;
 		//Draws a card with the given icon, and location
 		Logic^ playerLogic;
 		array<Logic^, 1> ^compLogics = gcnew array<Logic^, 1>(3);
@@ -415,40 +417,49 @@ namespace CasinoSimulator {
 	}
 private: System::Void button4_Click(System::Object^  sender, System::EventArgs^  e) 
 {
+	//changes bet amount to int and subtracts amount from balance
 	int value;
-	Int32::TryParse(textBox3->Text, value);
-	pT->getPlayer()->changeTotal((value*-1));
-	
-	std::string sValue= std::to_string(pT->getPlayer()->getTotal());
-	String^ totalValue = gcnew String(sValue.c_str());
-	textBox1->Text = totalValue;
-
-	pT->addToPool(value);
-	std::string sValue2 = std::to_string(pT->getBetPool());
-	String^ totalValue2 = gcnew String(sValue2.c_str());
-	textBox2->Text = totalValue2;
-	 
-	Refresh();
-	nextTurn();
-	DrawWorld();
-	if (riverSize == 5)
+	if ((Int32::TryParse(textBox3->Text, value)) && (value >= 1))
 	{
-		fillHands();
-		if (getWinner() == pT->getPlayer())
-		{
-			MessageBox::Show("Player Wins");
-		}
-		else
-		{
-			MessageBox::Show("Computer Wins");
-		}
-		getWinner()->changeTotal(pT->getBetPool());
+		pT->getPlayer()->changeTotal((value*-1));
+
+		//changes balance amount back to string and changes balance display
 		std::string sValue = std::to_string(pT->getPlayer()->getTotal());
 		String^ totalValue = gcnew String(sValue.c_str());
 		textBox1->Text = totalValue;
-		betButton->Enabled=false;
-		checkButton->Enabled = false;
-		foldButton->Enabled = false;
+
+		//changes pot total to previous pot+bet amount
+		pT->addToPool(value);
+		std::string sValue2 = std::to_string(pT->getBetPool());
+		String^ totalValue2 = gcnew String(sValue2.c_str());
+		textBox2->Text = totalValue2;
+
+		Refresh();
+		nextTurn();
+		DrawWorld();
+		if (riverSize == 5)
+		{
+			fillHands();
+			if (getWinner() == pT->getPlayer())
+			{
+				MessageBox::Show("Player Wins");
+			}
+			else
+			{
+				MessageBox::Show("Computer Wins");
+			}
+			getWinner()->changeTotal(pT->getBetPool());
+			std::string sValue = std::to_string(pT->getPlayer()->getTotal());
+			String^ totalValue = gcnew String(sValue.c_str());
+			textBox1->Text = totalValue;
+			betButton->Enabled = false;
+			checkButton->Enabled = false;
+			foldButton->Enabled = false;
+		}
+	}
+	else
+	{
+		MessageBox::Show("That bet amount is invalid. Must enter an integer bet amount greater than 0.");
 	}
 	
 }
@@ -476,9 +487,12 @@ private: System::Void checkButton_Click(System::Object^  sender, System::EventAr
 }
 private: System::Void foldButton_Click(System::Object^  sender, System::EventArgs^  e) 
 {
-	Refresh();
-	nextTurn();
-	DrawWorld();
+	while (riverSize != 5)
+	{
+		Refresh();
+		nextTurn();
+		DrawWorld();
+	}
 	if (riverSize == 5)
 	{
 		fillHands();
@@ -490,11 +504,13 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 		{
 			MessageBox::Show("Computer Wins");
 		}
+		fold = true;
 		getWinner()->changeTotal(pT->getBetPool());
 		betButton->Enabled = false;
 		checkButton->Enabled = false;
 		foldButton->Enabled = false;
 	}
+
 }
 		 void nextTurn()
 		 {
@@ -632,12 +648,20 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 		 {
 			Player^ winner = pT->getPlayer();
 			Logic^ winLogic = pT->getPlayerLogic();
-			std::string sValue= std::to_string(pT->getPlayerLogic()->HandValue());
+			std::string sValue;
+			if (fold == false)
+			{
+				sValue = std::to_string(pT->getPlayerLogic()->HandValue());
+			}
+			else
+			{
+				sValue = "0";
+			}
 			String^ totalValue;
 			 for (int i = 0; i < 3; i++)
 			 {
 				 sValue += " ";
-				  sValue += std::to_string(pT->getComputerLogic(i)->HandValue());
+				 sValue += std::to_string(pT->getComputerLogic(i)->HandValue());
 				 
 				 totalValue = gcnew String(sValue.c_str());
 				
