@@ -14,10 +14,10 @@ public:
 	{
 		test[0] = 0;
 		player = newPlayer;
-		for (int i = 0; i < 7; i++)
+		for (int i = 0; i <player->getHandCount(); i++)
 		{
 			hand2[i] = player->getHand();
-		}
+				}
 		player->reset();
 	}
 	//checks for a royal flush
@@ -108,7 +108,7 @@ public:
 		int CardCount = 0;
 		for (int i = 0; i < player->getHandCount(); i++)
 		{
-			
+			CardCount = 0;
 			for (int j = 0; j < player->getHandCount(); j++)
 			{
 				if (i != j)
@@ -119,8 +119,7 @@ public:
 					}
 					if (CardCount == 1 || CardCount == 2)
 					{
-						CardCount2 = CardCount;
-						CardCount = 0;
+						CardCount2 = CardCount;						
 					}
 					if ((CardCount == 1 && CardCount2 == 2) || (CardCount == 2 && CardCount2 == 1))
 					{
@@ -219,10 +218,10 @@ public:
 	// checks to see if there are three of a kind
 	bool ThreeOfAKind()
 	{
-		
+		int CardCount = 0;
 		for (int i = 0; i < player->getHandCount(); i++)
 		{
-			int CardCount = 0;
+			CardCount = 0;
 			for (int j = 0; j < player->getHandCount(); j++)
 			{
 				if (i != j)
@@ -248,7 +247,7 @@ public:
 		int CardCount2 = 0;
 		for (int i = 0; i < player->getHandCount(); i++)
 		{
-			
+			CardCount = 0;
 			for (int j = 0; j < player->getHandCount(); j++)
 			{
 				if (i != j)
@@ -257,7 +256,7 @@ public:
 					{
 						CardCount++;
 					}
-					if (CardCount == 1)
+					if (CardCount == 1 && CardCount2==0)
 					{
 						CardCount2 = CardCount;
 						CardCount = 0;
