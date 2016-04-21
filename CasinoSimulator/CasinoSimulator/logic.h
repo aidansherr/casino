@@ -25,7 +25,7 @@ public:
 	{
 		for (int i = 0; i <4 ; i++)
 		{
-			test[i] = 10 + i;
+			test[i] = 9 + i;
 		}
 		test[4] = 0;
 		for (int i = 0; i < 4; i++)
@@ -53,7 +53,7 @@ public:
 	{
 		for (int x = 0; x < player->getHandCount(); x++)
 		{
-			for (int i = 0; i < 4; i++)
+			for (int i = 0; i < 5; i++)
 			{
 				test[i] = hand2[x]->getValue() + i;
 			}
@@ -92,7 +92,7 @@ public:
 					{
 						CardCount++;
 					}
-					if (CardCount == 4)
+					if (CardCount == 3)
 					{
 						return true;
 					}
@@ -105,9 +105,10 @@ public:
 	bool FullHouse()
 	{
 		int CardCount2 = 0;
+		int CardCount = 0;
 		for (int i = 0; i < player->getHandCount(); i++)
 		{
-			int CardCount = 0;
+			
 			for (int j = 0; j < player->getHandCount(); j++)
 			{
 				if (i != j)
@@ -116,11 +117,12 @@ public:
 					{
 						CardCount++;
 					}
-					if (CardCount == 3 || CardCount == 2)
+					if (CardCount == 1 || CardCount == 2)
 					{
 						CardCount2 = CardCount;
+						CardCount = 0;
 					}
-					if ((CardCount == 3 && CardCount2 == 2) || (CardCount == 2 && CardCount2 == 3))
+					if ((CardCount == 1 && CardCount2 == 2) || (CardCount == 2 && CardCount2 == 1))
 					{
 						return true;
 					}
@@ -157,7 +159,7 @@ public:
 	{
 		for (int i = 0; i < 4; i++)
 		{
-			test[i] = 10 + i;
+			test[i] = 9 + i;
 		}
 		test[4] = 0;
 					int CardCount = 0;
@@ -182,21 +184,30 @@ public:
 	{
 		for (int x = 0; x < player->getHandCount(); x++)
 		{
-			for (int i = 0; i < 4; i++)
+			int n = 0;
+			for (int i = 0; i < 5; i++)
 			{
 				test[i] = hand2[x]->getValue() + i;
 			}
 			
 				int CardCount = 0;
-				for (int n = 0; n < 5; n++)
+				for (int i = 0; i < 5;i++)
 				{
 					for (int j = 0; j < player->getHandCount(); j++)
 					{
-						if (hand2[j]->getValue() == test[n])
+						if (n > 5)
+						{
+							
+						}
+						else if (hand2[j]->getValue() == test[n])
 						{
 							CardCount++;
+							n++;
 						}
+						
 					}
+					
+					
 				}
 				if (CardCount == 5)
 				{
@@ -220,7 +231,7 @@ public:
 					{
 						CardCount++;
 					}
-					if (CardCount == 3)
+					if (CardCount == 2)
 					{
 						return true;
 					}
@@ -233,10 +244,11 @@ public:
 	// checks to see if there are 2 pairs
 	bool TwoPairs()
 	{
+		int CardCount = 0;
 		int CardCount2 = 0;
 		for (int i = 0; i < player->getHandCount(); i++)
 		{
-			int CardCount = 0;
+			
 			for (int j = 0; j < player->getHandCount(); j++)
 			{
 				if (i != j)
@@ -245,11 +257,12 @@ public:
 					{
 						CardCount++;
 					}
-					if (CardCount == 2)
+					if (CardCount == 1)
 					{
 						CardCount2 = CardCount;
+						CardCount = 0;
 					}
-					if (CardCount == 2 && CardCount2 == 2)
+					if (CardCount == 1 && CardCount2 == 1)
 					{
 						return true;
 					}
@@ -273,7 +286,7 @@ public:
 					{
 						CardCount++;
 					}
-					if (CardCount == 2)
+					if (CardCount == 1)
 					{
 						return true;
 					}

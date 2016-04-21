@@ -646,6 +646,11 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 					 winner = pT->getAI(i);
 					 winLogic = pT->getComputerLogic(i);
 				 }
+				 Panel^ winPanel = gcnew Panel();
+				 winPanel->Location = Point(0, 0);
+				 winPanel->Parent = this;
+				 winPanel->Size::set(Drawing::Size(800, 741));
+				 g = winPanel->CreateGraphics();
 			 }
 			 MessageBox::Show(totalValue);
 			 return winner;
