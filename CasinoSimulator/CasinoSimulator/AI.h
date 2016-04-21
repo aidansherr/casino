@@ -23,6 +23,10 @@ public:
 		total -= x;
 		return x;
 	}
+	int AIbet(int x)
+	{
+		return x;
+	}
 	void intelligance(int x)
 	{
 		int count = 0;

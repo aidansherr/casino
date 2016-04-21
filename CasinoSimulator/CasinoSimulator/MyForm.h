@@ -418,18 +418,22 @@ namespace CasinoSimulator {
 private: System::Void button4_Click(System::Object^  sender, System::EventArgs^  e) 
 {
 	//changes bet amount to int and subtracts amount from balance
-	int value;
+	int value, currentBets;
 	if ((Int32::TryParse(textBox3->Text, value)) && (value >= 1))
 	{
 		pT->getPlayer()->changeTotal((value*-1));
-
+		currentBets = value;
 		//changes balance amount back to string and changes balance display
 		std::string sValue = std::to_string(pT->getPlayer()->getTotal());
 		String^ totalValue = gcnew String(sValue.c_str());
 		textBox1->Text = totalValue;
-
+		for (int i = 0; i < 3; i++)
+		{
+			pT->getAI(i)->AIbet(value);
+			currentBets += value;
+		}
 		//changes pot total to previous pot+bet amount
-		pT->addToPool(value);
+		pT->addToPool(currentBets);
 		std::string sValue2 = std::to_string(pT->getBetPool());
 		String^ totalValue2 = gcnew String(sValue2.c_str());
 		textBox2->Text = totalValue2;
@@ -637,13 +641,13 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 					 pT->addRiverCard(temp);
 					 riverSize++;
 				 }
-				int x = 0;
+				/*int x = 0;
 			for (int i = 0; i < 3; i++)
 			{
 				
 				x = pT->getComputerLogic(i)->HandValue();
 				pT->getAI(i)->intelligance(x);
-			}
+			}*/
 				 turn++;
 			 }
 			 else
