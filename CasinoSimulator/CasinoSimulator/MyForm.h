@@ -468,6 +468,7 @@ private: System::Void button4_Click(System::Object^  sender, System::EventArgs^ 
 			betButton->Enabled = false;
 			checkButton->Enabled = false;
 			foldButton->Enabled = false;
+			//restart();
 		}
 	}
 	else
@@ -510,6 +511,7 @@ private: System::Void checkButton_Click(System::Object^  sender, System::EventAr
 		betButton->Enabled = false;
 		checkButton->Enabled = false;
 		foldButton->Enabled = false;
+		//restart();
 	}
 }
 private: System::Void foldButton_Click(System::Object^  sender, System::EventArgs^  e) 
@@ -542,53 +544,58 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 		betButton->Enabled = false;
 		checkButton->Enabled = false;
 		foldButton->Enabled = false;
+		//restart();
 	}
 
 }
-		 void restart()
+	 void restart()
+	 {
+		 //the deck of cards for the game
+		 Deck^ pokerDeck = gcnew Deck();
+		 //The tmeplate for the game
+		 PokerTemplate^ pT = gcnew PokerTemplate();
+	     pokerDeck->makeCards();
+		 pokerDeck->setIcons();
+		 startAction();
+		
+		
+		 //To enable quitting 
+		 button2->Enabled = true;
+		 button1->Visible = false;
+		 label2->Visible = true;
+		 textBox2->Visible = true;
+		 //to enable the bet, check, fold button
+		 betButton->Enabled = true;
+		 checkButton->Enabled = true;
+		 foldButton->Enabled = true;
+
+		 betButton->Visible = true;
+		 checkButton->Visible = true;
+		 foldButton->Visible = true;
+
+		 label3->Visible = true;
+		 label3->Enabled = true;
+		 textBox3->Visible = true;
+		 textBox3->Enabled = true;
+
+		 //draws the deck and initilizes its location
+		 pokerDeck->setLocation(pT->getDeckLocation());
+		 System::Drawing::Icon^ tempIcon = gcnew System::Drawing::Icon("cardback.ico");
+		 DrawBigCard(tempIcon,pokerDeck->getLocation(), 0);
+
+		 //Draws the players cards
+		
+		 for (int i = 0; i < 2; i++)
 		 {
-			 pokerDeck->makeCards();
-		pokerDeck->setIcons();
-		startAction();
-		
-		
-		//To enable quitting 
-		button2->Enabled = true;
-		button1->Visible = false;
-		label2->Visible = true;
-		textBox2->Visible = true;
-		//to enable the bet, check, fold button
-		betButton->Enabled = true;
-		checkButton->Enabled = true;
-		foldButton->Enabled = true;
-
-		betButton->Visible = true;
-		checkButton->Visible = true;
-		foldButton->Visible = true;
-
-		label3->Visible = true;
-		label3->Enabled = true;
-		textBox3->Visible = true;
-		textBox3->Enabled = true;
-
-		//draws the deck and initilizes its location
-		pokerDeck->setLocation(pT->getDeckLocation());
-		System::Drawing::Icon^ tempIcon = gcnew System::Drawing::Icon("cardback.ico");
-		DrawBigCard(tempIcon,pokerDeck->getLocation(), 0);
-
-		//Draws the players cards
-		
-		for (int i = 0; i < 2; i++)
-		{
 			
-			Card^ playCard = pT->getPlayer()->getHand();
+	 		Card^ playCard = pT->getPlayer()->getHand();
 			DrawBigCard(playCard->getIcon(), playCard->getLocation(), 0);
-		}
+	     }
 		
-		//Draws the AIs cards
+		 //Draws the AIs cards
 		
-		for (int i = 0; i < 4; i++)
-		{
+		 for (int i = 0; i < 4; i++)
+		 {
 			for (int j = 0; j < 2; j++)
 			{
 				if (i != 1)
@@ -618,10 +625,10 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 						DrawCard(tempCard->getIcon(), tempCard->getLocation(), temp);
 					}
 
-				}
+			    }
 			}
-		}
-		 }
+			}
+	}
 		 void nextTurn()
 		 {
 			 
@@ -637,13 +644,13 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 					 pT->addRiverCard(temp);
 					 riverSize++;
 				 }
-				int x = 0;
+				/*int x = 0;
 			for (int i = 0; i < 3; i++)
 			{
 				
 				x = pT->getComputerLogic(i)->HandValue();
 				pT->getAI(i)->intelligance(x);
-			}
+			}*/
 				 turn++;
 			 }
 			 else
