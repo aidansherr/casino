@@ -124,7 +124,7 @@ public:
 	{
 		return player;
 	}
-	Player^ getAI(int x)
+	AI^ getAI(int x)
 	{
 		return computers[x];
 	}

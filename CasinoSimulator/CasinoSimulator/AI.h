@@ -23,12 +23,7 @@ public:
 	}
 	void intelligance()
 	{
-		if (easy)
-		{
-
-		}
-		if (medium)
-		{
+		
 			if (handValue <=16 )
 			{
 				fold();
@@ -48,6 +43,6 @@ public:
 			{
 				bet(anti);
 			}
-		}
+		
 	}
 };

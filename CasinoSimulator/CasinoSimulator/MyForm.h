@@ -503,7 +503,13 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 				 //if the first turn hasn't taken place then it draws three cards for the river
 				 for (int i = 0; i < 3; i++)
 				 {
+					 
 					 Card^ temp = pokerDeck->draw();
+					/* for (int i = 0; i < 3; i++)
+					 {
+						 pT->getComputerLogic(i)->HandValue();
+						 pT->getAI(i)->intelligance();
+					 }*/
 					 temp->setLocation(pT->getRiver());
 					 pT->addRiverCard(temp);
 					 riverSize++;

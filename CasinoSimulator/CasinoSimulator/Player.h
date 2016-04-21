@@ -12,9 +12,9 @@ ref class Player
 protected:
 	//the total cash the player has
 	int total =2000;
-	int handValue;
+	int handValue=0;
 	array <Card^, 1>^hand = gcnew array<Card^, 1>(8);
-	
+	int handCount;
 
 public:
 	//adds a card at pos1 in the players hand
@@ -22,7 +22,7 @@ public:
 	{
 		pos1++;
 		hand[pos1-1] = card;
-		
+		handCount++;
 	}
 	//returns the card at positon pos2 in the players hand
 	Card^ getHand()
@@ -51,6 +51,11 @@ public:
 	int getTotal()
 	{
 		return total;
+	}
+	//returns hand size
+	int getHandCount()
+	{
+		return handCount;
 	}
 	//increments the players total
 	void changeTotal(int change)

@@ -33,7 +33,7 @@ public:
 			int CardCount = 0;
 			for (int n = 0; n < 5; n++)
 			{
-				for (int j = 0; j < 7; j++)
+				for (int j = 0; j < player->getHandCount(); j++)
 				{
 					if (hand2[j]->getValue() == test[n] && hand2[j]->getSuit() == i)
 					{
@@ -51,7 +51,7 @@ public:
 	// checks for a straight flush
 	bool StraightFlush()
 	{
-		for (int x = 0; x < 7; x++)
+		for (int x = 0; x < player->getHandCount(); x++)
 		{
 			for (int i = 0; i < 4; i++)
 			{
@@ -62,7 +62,7 @@ public:
 				int CardCount = 0;
 				for (int n = 0; n < 5; n++)
 				{
-					for (int j = 0; j < 7; j++)
+					for (int j = 0; j < player->getHandCount(); j++)
 					{
 						if (hand2[j]->getValue() == test[n] && hand2[j]->getSuit() == i)
 						{
@@ -81,10 +81,10 @@ public:
 	// checks for four of a kind
 	bool FourOfAKind()
 	{
-		for (int i = 0; i < 7; i++)
+		for (int i = 0; i < player->getHandCount(); i++)
 		{
 			int CardCount = 0;
-			for (int j = 0; j < 7; j++)
+			for (int j = 0; j < player->getHandCount(); j++)
 			{
 				if (j != i) 
 				{
@@ -105,10 +105,10 @@ public:
 	bool FullHouse()
 	{
 		int CardCount2 = 0;
-		for (int i = 0; i < 7; i++)
+		for (int i = 0; i < player->getHandCount(); i++)
 		{
 			int CardCount = 0;
-			for (int j = 0; j < 7; j++)
+			for (int j = 0; j < player->getHandCount(); j++)
 			{
 				if (i != j)
 				{
@@ -132,10 +132,10 @@ public:
 	// checks to see if there is a flush
 	bool Flush()
 	{
-		for (int i = 0; i < 7; i++)
+		for (int i = 0; i < player->getHandCount(); i++)
 		{
 			int CardCount=0;
-			for (int j = 0; j < 7;j++)
+			for (int j = 0; j < player->getHandCount();j++)
 			{
 				if (j != i)
 				{
@@ -163,7 +163,7 @@ public:
 					int CardCount = 0;
 			for (int n = 0; n < 5; n++)
 			{
-				for (int j = 0; j < 7; j++)
+				for (int j = 0; j < player->getHandCount(); j++)
 				{
 					if (hand2[j]->getValue() == test[n])
 					{
@@ -180,7 +180,7 @@ public:
 	//checks to see if there is a straigh
 	bool Straight()
 	{
-		for (int x = 0; x < 7; x++)
+		for (int x = 0; x < player->getHandCount(); x++)
 		{
 			for (int i = 0; i < 4; i++)
 			{
@@ -190,7 +190,7 @@ public:
 				int CardCount = 0;
 				for (int n = 0; n < 5; n++)
 				{
-					for (int j = 0; j < 7; j++)
+					for (int j = 0; j < player->getHandCount(); j++)
 					{
 						if (hand2[j]->getValue() == test[n])
 						{
@@ -209,10 +209,10 @@ public:
 	bool ThreeOfAKind()
 	{
 		
-		for (int i = 0; i < 7; i++)
+		for (int i = 0; i < player->getHandCount(); i++)
 		{
 			int CardCount = 0;
-			for (int j = 0; j < 7; j++)
+			for (int j = 0; j < player->getHandCount(); j++)
 			{
 				if (i != j)
 				{
@@ -234,10 +234,10 @@ public:
 	bool TwoPairs()
 	{
 		int CardCount2 = 0;
-		for (int i = 0; i < 7; i++)
+		for (int i = 0; i < player->getHandCount(); i++)
 		{
 			int CardCount = 0;
-			for (int j = 0; j < 7; j++)
+			for (int j = 0; j < player->getHandCount(); j++)
 			{
 				if (i != j)
 				{
@@ -262,10 +262,10 @@ public:
 	bool Pairs()
 	{
 
-		for (int i = 0; i < 7; i++)
+		for (int i = 0; i < player->getHandCount(); i++)
 		{
 			int CardCount = 0;
-			for (int j = 0; j < 7; j++)
+			for (int j = 0; j < player->getHandCount(); j++)
 			{
 				if (i != j)
 				{
@@ -287,7 +287,7 @@ public:
 	int HighCard()
 	{
 		int x = 0;
-		for (int i = 0; i < 7; i++)
+		for (int i = 0; i < 2; i++)
 		{
 			if (hand2[i]->getValue()==0)
 			{
@@ -349,4 +349,5 @@ public:
 			return HighCard();
 		}
 	}
+	
 };

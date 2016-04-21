@@ -36,7 +36,7 @@ public:
 		int randPos2;
 		Card^ temp;
 		srand(time(0));
-		for (int i = 0; i < 100; i++)
+		for (int i = 0; i < 1000; i++)
 		{
 			//grabs two positions in the deck
 			randPos1 = (rand() % 52);
