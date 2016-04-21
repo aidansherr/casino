@@ -481,6 +481,7 @@ private: System::Void checkButton_Click(System::Object^  sender, System::EventAr
 	Refresh();
 	nextTurn();
 	DrawWorld();
+	
 	if (riverSize == 5)
 	{
 		fillHands();
@@ -623,6 +624,7 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 		 }
 		 void nextTurn()
 		 {
+			 
 			 if (turn == 0)
 			 {
 				 //if the first turn hasn't taken place then it draws three cards for the river
@@ -630,15 +632,18 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 				 {
 					 
 					 Card^ temp = pokerDeck->draw();
-					/* for (int i = 0; i < 3; i++)
-					 {
-						 pT->getComputerLogic(i)->HandValue();
-						 pT->getAI(i)->intelligance();
-					 }*/
+					 
 					 temp->setLocation(pT->getRiver());
 					 pT->addRiverCard(temp);
 					 riverSize++;
 				 }
+				int x = 0;
+			for (int i = 0; i < 3; i++)
+			{
+				
+				x = pT->getComputerLogic(i)->HandValue();
+				pT->getAI(i)->intelligance(x);
+			}
 				 turn++;
 			 }
 			 else
