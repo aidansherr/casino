@@ -23,29 +23,12 @@ ref class Deck
 	array<Card^, 1> ^cardDeck = gcnew array<Card^, 1>(52);
 	//an array of the cards Icons
 	array<System::Drawing::Icon^, 1> ^icons = gcnew array<System::Drawing::Icon^, 1>(52);
-	//a pointer for the next imcon to be given to a card
-	int facePoint = 0;
 	Location2^ deckLoc;
 
 public:
 	Deck()
 	{
-		getIcons();
-		//initilizes a new deck
-		//points to the position in the deck
-		int point = 0;
-		for (int i = 0; i < 4; i++)
-		{
-			for (int j = 0; j < 13; j++)
-			{
-				//initilizes a new card with a face value and suit value
-				//only one face value for each suit value
-				cardDeck[point] = gcnew Card(j, i, icons[facePoint]);
-				facePoint++;
-				point++;
-			}
-		}
-		shuffle();
+		
 	}
 	void shuffle()
 	{
@@ -53,7 +36,7 @@ public:
 		int randPos2;
 		Card^ temp;
 		srand(time(0));
-		for (int i = 0; i < 100; i++)
+		for (int i = 0; i < 1000; i++)
 		{
 			//grabs two positions in the deck
 			randPos1 = (rand() % 52);
@@ -66,10 +49,11 @@ public:
 	}
 	Card^ draw()
 	{//draws the top card in the deck
-		Card^ drawn = cardDeck[topCard];
-		//incriments topCard so that the next draw() will return the next item in the array
+		
 		topCard++;
 		//returns the drawn card
+		Card^ drawn = cardDeck[topCard-1];
+		//incriments topCard so that the next draw() will return the next item in the array
 		return drawn;
 	}
 	void setLocation(Location2^ loc)
@@ -92,5 +76,39 @@ public:
 			System::Drawing::Icon^tempicon = gcnew System::Drawing::Icon(name);
 			icons[i] = tempicon;
 		}
+	}
+	void makeCards()
+	{
+		int point = 0;
+		
+		getIcons();
+		//initilizes a new deck
+		//points to the position in the deck
+		for (int i = 0; i < 4; i++)
+		{
+			for (int j = 0; j < 13; j++)
+			{
+				//initilizes a new card with a face value and suit value
+				//only one face value for each suit value
+				cardDeck[point] = gcnew Card(j, i);
+				point++;
+			}
+		}
+
+		
+	}
+	void setIcons()
+	{
+		int point = 0;
+		int p = 1;
+		int t = 0;
+		for (int i = 0; i < 52; i++)
+		{
+			
+				cardDeck[point]->setIcon(icons[point]);
+			
+			point++;
+		}
+		shuffle();
 	}
 };

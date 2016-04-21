@@ -3,9 +3,9 @@
 ref class Card
 {
 	//the face vale of a card (Ace, 8, king ect). Ace is 1, jack is 11, queen is 12 and king is 13
-	int value;
+	int value=0;
 	//the suit of the card, club, ace, heeart diamond. 0 is spade, 1 is club, 2 is heart, three is diamond
-	int suit;
+	int suit=0;
 	//The location of the card on the board
 	 System::Drawing::Icon^ face;
 	//The icon for the card

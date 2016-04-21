@@ -6,6 +6,7 @@
 #include "Location.h"
 #include "Player.h"
 #include "AI.h"
+#include "logic.h"
 #include <string>
 namespace CasinoSimulator {
 
@@ -263,6 +264,8 @@ namespace CasinoSimulator {
 		//The amount of cards in the river
 		int riverSize = 0;
 		//Draws a card with the given icon, and location
+		Logic^ playerLogic;
+		array<Logic^, 1> ^compLogics = gcnew array<Logic^, 1>(3);
 		void DrawCard(System::Drawing::Icon^ icon, Location2^ loc, int side)
 		{//side refers if it is vertical(0) or horizantal(1)
 
@@ -315,6 +318,7 @@ namespace CasinoSimulator {
 		back->Size::set(Drawing::Size(800, 741));
 		back->Load("background.png");
 		
+		
 		g = back->CreateGraphics();
 		//Initilizes the player and draws two cards for the players hand
 		
@@ -334,6 +338,7 @@ namespace CasinoSimulator {
 		pokerDeck->makeCards();
 		pokerDeck->setIcons();
 		startAction();
+		
 		
 		//To enable quitting 
 		button2->Enabled = true;
@@ -428,10 +433,24 @@ private: System::Void button4_Click(System::Object^  sender, System::EventArgs^ 
 	DrawWorld();
 	if (riverSize == 5)
 	{
+		fillHands();
+		if (getWinner() == pT->getPlayer())
+		{
+			MessageBox::Show("Player Wins");
+		}
+		else
+		{
+			MessageBox::Show("Computer Wins");
+		}
+		getWinner()->changeTotal(pT->getBetPool());
+		std::string sValue = std::to_string(pT->getPlayer()->getTotal());
+		String^ totalValue = gcnew String(sValue.c_str());
+		textBox1->Text = totalValue;
 		betButton->Enabled=false;
 		checkButton->Enabled = false;
 		foldButton->Enabled = false;
 	}
+	
 }
 private: System::Void checkButton_Click(System::Object^  sender, System::EventArgs^  e) 
 {
@@ -440,6 +459,16 @@ private: System::Void checkButton_Click(System::Object^  sender, System::EventAr
 	DrawWorld();
 	if (riverSize == 5)
 	{
+		fillHands();
+		if (getWinner() == pT->getPlayer())
+		{
+			MessageBox::Show("Player Wins");
+		}
+		else
+		{
+			MessageBox::Show("Computer Wins");
+		}
+		getWinner()->changeTotal(pT->getBetPool());
 		betButton->Enabled = false;
 		checkButton->Enabled = false;
 		foldButton->Enabled = false;
@@ -452,6 +481,16 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 	DrawWorld();
 	if (riverSize == 5)
 	{
+		fillHands();
+		if (getWinner() == pT->getPlayer())
+		{
+			MessageBox::Show("Player Wins");
+		}
+		else
+		{
+			MessageBox::Show("Computer Wins");
+		}
+		getWinner()->changeTotal(pT->getBetPool());
 		betButton->Enabled = false;
 		checkButton->Enabled = false;
 		foldButton->Enabled = false;
@@ -464,7 +503,13 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 				 //if the first turn hasn't taken place then it draws three cards for the river
 				 for (int i = 0; i < 3; i++)
 				 {
+					 
 					 Card^ temp = pokerDeck->draw();
+					/* for (int i = 0; i < 3; i++)
+					 {
+						 pT->getComputerLogic(i)->HandValue();
+						 pT->getAI(i)->intelligance();
+					 }*/
 					 temp->setLocation(pT->getRiver());
 					 pT->addRiverCard(temp);
 					 riverSize++;
@@ -582,6 +627,55 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 				 pT->getAI(i)->addCard(tempCard2);
 			 }
 		 
+		 }
+		 Player^ getWinner()
+		 {
+			Player^ winner = pT->getPlayer();
+			Logic^ winLogic = pT->getPlayerLogic();
+			std::string sValue= std::to_string(pT->getPlayerLogic()->HandValue());
+			String^ totalValue;
+			 for (int i = 0; i < 3; i++)
+			 {
+				 sValue += " ";
+				  sValue += std::to_string(pT->getComputerLogic(i)->HandValue());
+				 
+				 totalValue = gcnew String(sValue.c_str());
+				
+				 if (pT->getComputerLogic(i)->HandValue()>winLogic->HandValue())
+				 {
+					 winner = pT->getAI(i);
+					 winLogic = pT->getComputerLogic(i);
+				 }
+				 Panel^ winPanel = gcnew Panel();
+				 winPanel->Location = Point(0, 0);
+				 winPanel->Parent = this;
+				 winPanel->Size::set(Drawing::Size(800, 741));
+				 g = winPanel->CreateGraphics();
+			 }
+			 MessageBox::Show(totalValue);
+			 return winner;
+		 }
+		 void fillHands()
+		 {
+			 resetCounts();
+			  
+			 for (int i = 0; i < 5; i++)
+			 {
+				
+				 pT->getPlayer()->addCard(pT->getRiverCard());
+			 }
+			 resetCounts();
+			
+			 for (int j = 0; j < 3; j++)
+			 {
+				
+				 for (int i = 0; i < 5; i++)
+				 {
+					 pT->getAI(j)->addCard(pT->getRiverCard());
+				 }
+				 resetCounts();
+			 }
+			 pT->updateLogic();
 		 }
 };
 }
