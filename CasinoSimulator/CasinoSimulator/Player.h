@@ -20,9 +20,17 @@ public:
 	//adds a card at pos1 in the players hand
 	void addCard(Card^ card)
 	{
-		pos1++;
-		hand[pos1-1] = card;
-		handCount++;
+		if (pos1 > 7)
+		{
+			pos1 = 0;
+			handCount = 0;
+		}
+		else
+		{
+			pos1++;
+			hand[pos1 - 1] = card;
+			handCount++;
+		}
 	}
 	//returns the card at positon pos2 in the players hand
 	Card^ getHand()
