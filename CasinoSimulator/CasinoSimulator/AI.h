@@ -29,7 +29,7 @@ public:
 		}
 		if (medium)
 		{
-			if (handValue <= 3)
+			if (handValue <=16 )
 			{
 				fold();
 			}

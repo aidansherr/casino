@@ -23,10 +23,11 @@ public:
 	//checks for a royal flush
 	bool RoyalFlush()
 	{
-		for (int i = 0; i < 5; i++)
+		for (int i = 0; i <4 ; i++)
 		{
 			test[i] = 10 + i;
 		}
+		test[4] = 0;
 		for (int i = 0; i < 4; i++)
 		{
 			int CardCount = 0;
@@ -133,7 +134,7 @@ public:
 	{
 		for (int i = 0; i < 7; i++)
 		{
-			int CardCount;
+			int CardCount=0;
 			for (int j = 0; j < 7;j++)
 			{
 				if (j != i)
@@ -158,6 +159,7 @@ public:
 		{
 			test[i] = 10 + i;
 		}
+		test[4] = 0;
 					int CardCount = 0;
 			for (int n = 0; n < 5; n++)
 			{
@@ -287,12 +289,16 @@ public:
 		int x = 0;
 		for (int i = 0; i < 7; i++)
 		{
-			if (x < hand2[i]->getValue())
+			if (hand2[i]->getValue()==0)
+			{
+				return 14;
+			}
+			else if (x < hand2[i]->getValue())
 			{
 				x = hand2[i]->getValue();
 			}
 		}
-		return x;
+		return x+1;
 	}
 	// assigns values to each hand
 	int HandValue()

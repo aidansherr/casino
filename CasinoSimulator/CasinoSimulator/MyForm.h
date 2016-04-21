@@ -442,14 +442,15 @@ private: System::Void button4_Click(System::Object^  sender, System::EventArgs^ 
 		{
 			MessageBox::Show("Computer Wins");
 		}
+		getWinner()->changeTotal(pT->getBetPool());
+		std::string sValue = std::to_string(pT->getPlayer()->getTotal());
+		String^ totalValue = gcnew String(sValue.c_str());
+		textBox1->Text = totalValue;
 		betButton->Enabled=false;
 		checkButton->Enabled = false;
 		foldButton->Enabled = false;
 	}
-	for (int i = 0; i < 3; i++)
-	{
-		
-	}
+	
 }
 private: System::Void checkButton_Click(System::Object^  sender, System::EventArgs^  e) 
 {
@@ -467,6 +468,7 @@ private: System::Void checkButton_Click(System::Object^  sender, System::EventAr
 		{
 			MessageBox::Show("Computer Wins");
 		}
+		getWinner()->changeTotal(pT->getBetPool());
 		betButton->Enabled = false;
 		checkButton->Enabled = false;
 		foldButton->Enabled = false;
@@ -488,6 +490,7 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 		{
 			MessageBox::Show("Computer Wins");
 		}
+		getWinner()->changeTotal(pT->getBetPool());
 		betButton->Enabled = false;
 		checkButton->Enabled = false;
 		foldButton->Enabled = false;
@@ -623,8 +626,14 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 		 {
 			Player^ winner = pT->getPlayer();
 			Logic^ winLogic = pT->getPlayerLogic();
+			std::string sValue= std::to_string(pT->getPlayerLogic()->HandValue());
 			 for (int i = 0; i < 3; i++)
 			 {
+				 sValue += " ";
+				  sValue += std::to_string(pT->getComputerLogic(i)->HandValue());
+				 
+				 String^ totalValue = gcnew String(sValue.c_str());
+				 textBox1->Text = totalValue;
 				 if (pT->getComputerLogic(i)->HandValue()>winLogic->HandValue())
 				 {
 					 winner = pT->getAI(i);
