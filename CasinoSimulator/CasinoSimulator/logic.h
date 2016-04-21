@@ -12,17 +12,18 @@ public:
 	// creates the players hand to check for posiibilities
 	Logic(Player^ newPlayer)
 	{
+		test[0] = 0;
 		player = newPlayer;
 		for (int i = 0; i < 7; i++)
 		{
 			hand2[i] = player->getHand();
 		}
-		
+		player->reset();
 	}
 	//checks for a royal flush
 	bool RoyalFlush()
 	{
-		for (int i = 0; i < 4; i++)
+		for (int i = 0; i < 5; i++)
 		{
 			test[i] = 10 + i;
 		}
@@ -31,7 +32,7 @@ public:
 			int CardCount = 0;
 			for (int n = 0; n < 5; n++)
 			{
-				for (int j = 0; j < 8; j++)
+				for (int j = 0; j < 7; j++)
 				{
 					if (hand2[j]->getValue() == test[n] && hand2[j]->getSuit() == i)
 					{
@@ -44,11 +45,12 @@ public:
 				return true;
 			}
 		}
+		return false;
 	}
 	// checks for a straight flush
 	bool StraightFlush()
 	{
-		for (int x = 0; x < 8; x++)
+		for (int x = 0; x < 7; x++)
 		{
 			for (int i = 0; i < 4; i++)
 			{
@@ -59,7 +61,7 @@ public:
 				int CardCount = 0;
 				for (int n = 0; n < 5; n++)
 				{
-					for (int j = 0; j < 8; j++)
+					for (int j = 0; j < 7; j++)
 					{
 						if (hand2[j]->getValue() == test[n] && hand2[j]->getSuit() == i)
 						{
@@ -73,14 +75,15 @@ public:
 				}
 			}
 		}
+		return false;
 	}
 	// checks for four of a kind
 	bool FourOfAKind()
 	{
-		for (int i = 0; i < 8; i++)
+		for (int i = 0; i < 7; i++)
 		{
 			int CardCount = 0;
-			for (int j = 0; j < 8; j++)
+			for (int j = 0; j < 7; j++)
 			{
 				if (j != i) 
 				{
@@ -95,15 +98,16 @@ public:
 				}
 			}
 		}
+		return false;
 	}
 	// checks to see if there is a fullhouse
 	bool FullHouse()
 	{
 		int CardCount2 = 0;
-		for (int i = 0; i < 8; i++)
+		for (int i = 0; i < 7; i++)
 		{
 			int CardCount = 0;
-			for (int j = 0; j < 8; j++)
+			for (int j = 0; j < 7; j++)
 			{
 				if (i != j)
 				{
@@ -122,14 +126,15 @@ public:
 				}
 			}
 		}
+		return false;
 	}
 	// checks to see if there is a flush
 	bool Flush()
 	{
-		for (int i = 0; i < 8; i++)
+		for (int i = 0; i < 7; i++)
 		{
 			int CardCount;
-			for (int j = 0; j < 8;j++)
+			for (int j = 0; j < 7;j++)
 			{
 				if (j != i)
 				{
@@ -144,6 +149,7 @@ public:
 				}
 			}
 		}
+		return false;
 	}
 	// checks to see if their is a straight with ace high
 	bool RoyalStraight()
@@ -155,7 +161,7 @@ public:
 					int CardCount = 0;
 			for (int n = 0; n < 5; n++)
 			{
-				for (int j = 0; j < 8; j++)
+				for (int j = 0; j < 7; j++)
 				{
 					if (hand2[j]->getValue() == test[n])
 					{
@@ -167,11 +173,12 @@ public:
 			{
 				return true;
 			}
+			return false;
 	}
 	//checks to see if there is a straigh
 	bool Straight()
 	{
-		for (int x = 0; x < 8; x++)
+		for (int x = 0; x < 7; x++)
 		{
 			for (int i = 0; i < 4; i++)
 			{
@@ -181,7 +188,7 @@ public:
 				int CardCount = 0;
 				for (int n = 0; n < 5; n++)
 				{
-					for (int j = 0; j < 8; j++)
+					for (int j = 0; j < 7; j++)
 					{
 						if (hand2[j]->getValue() == test[n])
 						{
@@ -194,15 +201,16 @@ public:
 					return true;
 				}
 			}
+		return false;
 	}
 	// checks to see if there are three of a kind
 	bool ThreeOfAKind()
 	{
 		
-		for (int i = 0; i < 8; i++)
+		for (int i = 0; i < 7; i++)
 		{
 			int CardCount = 0;
-			for (int j = 0; j < 8; j++)
+			for (int j = 0; j < 7; j++)
 			{
 				if (i != j)
 				{
@@ -218,15 +226,16 @@ public:
 				}
 			}
 		}
+		return false;
 	}
 	// checks to see if there are 2 pairs
 	bool TwoPairs()
 	{
 		int CardCount2 = 0;
-		for (int i = 0; i < 8; i++)
+		for (int i = 0; i < 7; i++)
 		{
 			int CardCount = 0;
-			for (int j = 0; j < 8; j++)
+			for (int j = 0; j < 7; j++)
 			{
 				if (i != j)
 				{
@@ -245,15 +254,16 @@ public:
 				}
 			}
 		}
+		return false;
 	}
 	// checks to see if there are any pairs
 	bool Pairs()
 	{
 
-		for (int i = 0; i < 8; i++)
+		for (int i = 0; i < 7; i++)
 		{
 			int CardCount = 0;
-			for (int j = 0; j < 8; j++)
+			for (int j = 0; j < 7; j++)
 			{
 				if (i != j)
 				{
@@ -269,12 +279,13 @@ public:
 				}
 			}
 		}
+		return false;
 	}
 	// checks to see what the highest card is
 	int HighCard()
 	{
 		int x = 0;
-		for (int i = 0; i < 8; i++)
+		for (int i = 0; i < 7; i++)
 		{
 			if (x < hand2[i]->getValue())
 			{

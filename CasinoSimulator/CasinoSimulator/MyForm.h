@@ -6,6 +6,7 @@
 #include "Location.h"
 #include "Player.h"
 #include "AI.h"
+#include "logic.h"
 #include <string>
 namespace CasinoSimulator {
 
@@ -263,6 +264,8 @@ namespace CasinoSimulator {
 		//The amount of cards in the river
 		int riverSize = 0;
 		//Draws a card with the given icon, and location
+		Logic^ playerLogic;
+		array<Logic^, 1> ^compLogics = gcnew array<Logic^, 1>(3);
 		void DrawCard(System::Drawing::Icon^ icon, Location2^ loc, int side)
 		{//side refers if it is vertical(0) or horizantal(1)
 
@@ -315,6 +318,7 @@ namespace CasinoSimulator {
 		back->Size::set(Drawing::Size(800, 741));
 		back->Load("background.png");
 		
+		
 		g = back->CreateGraphics();
 		//Initilizes the player and draws two cards for the players hand
 		
@@ -334,6 +338,7 @@ namespace CasinoSimulator {
 		pokerDeck->makeCards();
 		pokerDeck->setIcons();
 		startAction();
+		
 		
 		//To enable quitting 
 		button2->Enabled = true;
@@ -428,9 +433,22 @@ private: System::Void button4_Click(System::Object^  sender, System::EventArgs^ 
 	DrawWorld();
 	if (riverSize == 5)
 	{
+		fillHands();
+		if (getWinner() == pT->getPlayer())
+		{
+			MessageBox::Show("Player Wins");
+		}
+		else
+		{
+			MessageBox::Show("Computer Wins");
+		}
 		betButton->Enabled=false;
 		checkButton->Enabled = false;
 		foldButton->Enabled = false;
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		
 	}
 }
 private: System::Void checkButton_Click(System::Object^  sender, System::EventArgs^  e) 
@@ -440,6 +458,15 @@ private: System::Void checkButton_Click(System::Object^  sender, System::EventAr
 	DrawWorld();
 	if (riverSize == 5)
 	{
+		fillHands();
+		if (getWinner() == pT->getPlayer())
+		{
+			MessageBox::Show("Player Wins");
+		}
+		else
+		{
+			MessageBox::Show("Computer Wins");
+		}
 		betButton->Enabled = false;
 		checkButton->Enabled = false;
 		foldButton->Enabled = false;
@@ -452,6 +479,15 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 	DrawWorld();
 	if (riverSize == 5)
 	{
+		fillHands();
+		if (getWinner() == pT->getPlayer())
+		{
+			MessageBox::Show("Player Wins");
+		}
+		else
+		{
+			MessageBox::Show("Computer Wins");
+		}
 		betButton->Enabled = false;
 		checkButton->Enabled = false;
 		foldButton->Enabled = false;
@@ -582,6 +618,42 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 				 pT->getAI(i)->addCard(tempCard2);
 			 }
 		 
+		 }
+		 Player^ getWinner()
+		 {
+			Player^ winner = pT->getPlayer();
+			Logic^ winLogic = pT->getPlayerLogic();
+			 for (int i = 0; i < 3; i++)
+			 {
+				 if (pT->getComputerLogic(i)->HandValue()>winLogic->HandValue())
+				 {
+					 winner = pT->getAI(i);
+					 winLogic = pT->getComputerLogic(i);
+				 }
+			 }
+			 return winner;
+		 }
+		 void fillHands()
+		 {
+			 resetCounts();
+			  
+			 for (int i = 0; i < 5; i++)
+			 {
+				
+				 pT->getPlayer()->addCard(pT->getRiverCard());
+			 }
+			 resetCounts();
+			
+			 for (int j = 0; j < 3; j++)
+			 {
+				
+				 for (int i = 0; i < 5; i++)
+				 {
+					 pT->getAI(j)->addCard(pT->getRiverCard());
+				 }
+				 resetCounts();
+			 }
+			 pT->updateLogic();
 		 }
 };
 }

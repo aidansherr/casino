@@ -5,6 +5,7 @@
 #include "position.h"
 #include "Player.h"
 #include "AI.h"
+#include "logic.h"
 
 ref class PokerTemplate
 {
@@ -21,7 +22,7 @@ ref class PokerTemplate
 	//an array of the four different positions in the game
 	array< Position^, 1 > ^positions = gcnew array< Position^, 1 >(4);
 	//an array of cards that will be in the river
-	array<Card^, 1> ^riverCards = gcnew array<Card^, 1>(6);
+	array<Card^, 1> ^riverCards = gcnew array<Card^, 1>(5);
 	//the location for the deck
 	Location2^ deckLoc;
 	//the current betting pool
@@ -30,8 +31,8 @@ ref class PokerTemplate
 	Player^ player;
 	//The AI
 	array<AI^, 1> ^computers = gcnew array<AI^, 1>(3);
-
-	
+	Logic^ playerLogic;
+	array<Logic^, 1> ^compLogics = gcnew array<Logic^, 1>(3);
 
 public:
 	PokerTemplate()
@@ -52,9 +53,12 @@ public:
 		positions[2] = gcnew Position(false, false, true, false);
 		positions[3] = gcnew Position(false, false, false, true);
 		player = gcnew Player();
+		playerLogic = gcnew Logic(player);
 		for (int i = 0; i < 3; i++)
 		{
 			computers[i] = gcnew AI();
+			compLogics[i] = gcnew Logic(computers[i]);
+			player->reset();
 		}
 	};
 	//returns the location of the deck
@@ -65,6 +69,14 @@ public:
 	void checkForWinner()
 	{
 
+	}
+	Logic^ getPlayerLogic()
+	{
+		return playerLogic;
+	}
+	Logic^ getComputerLogic(int x)
+	{
+		return compLogics[x];
 	}
 	//returns the location in river at riverPoint
 	Location2^ getRiver()
@@ -98,6 +110,7 @@ public:
 	void reset()
 	{
 		cardPoint2 = 0;
+		
 	}
 	int getBetPool()
 	{
@@ -114,6 +127,15 @@ public:
 	Player^ getAI(int x)
 	{
 		return computers[x];
+	}
+	void updateLogic()
+	{
+		playerLogic = gcnew Logic(player);
+		for (int i = 0; i < 3; i++)
+		{
+			compLogics[i] = gcnew Logic(computers[i]);
+		}
+		player->reset();
 	}
 };
 
