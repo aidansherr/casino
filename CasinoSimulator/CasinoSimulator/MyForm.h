@@ -55,6 +55,8 @@ namespace CasinoSimulator {
 	private: System::Windows::Forms::Button^  foldButton;
 	private: System::Windows::Forms::TextBox^  textBox3;
 	private: System::Windows::Forms::Label^  label3;
+	private: System::Windows::Forms::Button^  button3;
+	private: System::Windows::Forms::Button^  button4;
 
 
 
@@ -85,6 +87,8 @@ namespace CasinoSimulator {
 			this->foldButton = (gcnew System::Windows::Forms::Button());
 			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
 			this->label3 = (gcnew System::Windows::Forms::Label());
+			this->button3 = (gcnew System::Windows::Forms::Button());
+			this->button4 = (gcnew System::Windows::Forms::Button());
 			this->SuspendLayout();
 			// 
 			// panel1
@@ -228,12 +232,33 @@ namespace CasinoSimulator {
 			this->label3->Text = L"Bet amount";
 			this->label3->Visible = false;
 			// 
+			// button3
+			// 
+			this->button3->Location = System::Drawing::Point(0, 0);
+			this->button3->Name = L"button3";
+			this->button3->Size = System::Drawing::Size(75, 23);
+			this->button3->TabIndex = 10;
+			this->button3->Text = L"button3";
+			this->button3->UseVisualStyleBackColor = true;
+			// 
+			// button4
+			// 
+			this->button4->Location = System::Drawing::Point(653, 617);
+			this->button4->Name = L"button4";
+			this->button4->Size = System::Drawing::Size(100, 50);
+			this->button4->TabIndex = 11;
+			this->button4->Text = L"display rules";
+			this->button4->UseVisualStyleBackColor = true;
+			this->button4->Click += gcnew System::EventHandler(this, &MyForm::button4_Click_1);
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
 			this->ClientSize = System::Drawing::Size(800, 741);
+			this->Controls->Add(this->button4);
+			this->Controls->Add(this->button3);
 			this->Controls->Add(this->label3);
 			this->Controls->Add(this->textBox3);
 			this->Controls->Add(this->foldButton);
@@ -834,6 +859,25 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 			 }
 			 pT->updateLogic();
 		 }
+		 std::string displayRules()
+		 {
+			 std::fstream infile;
+			 infile.open("poker rules.txt");
+			 std::string temp;
+			 std::string total = "";
+			 while (!infile.eof())
+			 {
+				 getline(infile, temp);
+
+				 total += temp;
+				 total += "\n";
+			 }
+			 return total;
+		 }
+private: System::Void button4_Click_1(System::Object^  sender, System::EventArgs^  e) {
+	String^ temp = gcnew String(displayRules().c_str());
+	MessageBox::Show(temp);
+}
 };
 }
 
