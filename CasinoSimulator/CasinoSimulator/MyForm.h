@@ -55,6 +55,10 @@ namespace CasinoSimulator {
 	private: System::Windows::Forms::Button^  foldButton;
 	private: System::Windows::Forms::TextBox^  textBox3;
 	private: System::Windows::Forms::Label^  label3;
+	private: System::Windows::Forms::Label^  label4;
+	private: System::Windows::Forms::Label^  label5;
+	private: System::Windows::Forms::Label^  label6;
+	private: System::Windows::Forms::Label^  label7;
 
 
 
@@ -85,6 +89,10 @@ namespace CasinoSimulator {
 			this->foldButton = (gcnew System::Windows::Forms::Button());
 			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
 			this->label3 = (gcnew System::Windows::Forms::Label());
+			this->label4 = (gcnew System::Windows::Forms::Label());
+			this->label5 = (gcnew System::Windows::Forms::Label());
+			this->label6 = (gcnew System::Windows::Forms::Label());
+			this->label7 = (gcnew System::Windows::Forms::Label());
 			this->SuspendLayout();
 			// 
 			// panel1
@@ -228,12 +236,59 @@ namespace CasinoSimulator {
 			this->label3->Text = L"Bet amount";
 			this->label3->Visible = false;
 			// 
+			// label4
+			// 
+			this->label4->AutoSize = true;
+			this->label4->Location = System::Drawing::Point(645, 408);
+			this->label4->Name = L"label4";
+			this->label4->Size = System::Drawing::Size(58, 13);
+			this->label4->TabIndex = 10;
+			this->label4->Text = L"Computer2";
+			this->label4->Visible = false;
+			this->label4->Click += gcnew System::EventHandler(this, &MyForm::label4_Click);
+			// 
+			// label5
+			// 
+			this->label5->AutoSize = true;
+			this->label5->Location = System::Drawing::Point(439, 189);
+			this->label5->Name = L"label5";
+			this->label5->Size = System::Drawing::Size(58, 13);
+			this->label5->TabIndex = 11;
+			this->label5->Text = L"Computer1";
+			this->label5->Visible = false;
+			this->label5->Click += gcnew System::EventHandler(this, &MyForm::label5_Click);
+			// 
+			// label6
+			// 
+			this->label6->AutoSize = true;
+			this->label6->Location = System::Drawing::Point(108, 408);
+			this->label6->Name = L"label6";
+			this->label6->Size = System::Drawing::Size(58, 13);
+			this->label6->TabIndex = 12;
+			this->label6->Text = L"Computer0";
+			this->label6->Visible = false;
+			this->label6->Click += gcnew System::EventHandler(this, &MyForm::label6_Click);
+			// 
+			// label7
+			// 
+			this->label7->AutoSize = true;
+			this->label7->Location = System::Drawing::Point(439, 526);
+			this->label7->Name = L"label7";
+			this->label7->Size = System::Drawing::Size(58, 13);
+			this->label7->TabIndex = 13;
+			this->label7->Text = L"Your Hand";
+			this->label7->Visible = false;
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
 			this->ClientSize = System::Drawing::Size(800, 741);
+			this->Controls->Add(this->label7);
+			this->Controls->Add(this->label6);
+			this->Controls->Add(this->label5);
+			this->Controls->Add(this->label4);
 			this->Controls->Add(this->label3);
 			this->Controls->Add(this->textBox3);
 			this->Controls->Add(this->foldButton);
@@ -341,7 +396,11 @@ namespace CasinoSimulator {
 		pokerDeck->setIcons();
 		startAction();
 		
-		
+		//To enable the labels of the hands
+		label4->Visible = true;
+		label5->Visible = true;
+		label6->Visible = true;
+		label7->Visible = true;
 		//To enable quitting 
 		button2->Enabled = true;
 		button1->Visible = false;
@@ -834,6 +893,12 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 			 }
 			 pT->updateLogic();
 		 }
+private: System::Void label4_Click(System::Object^  sender, System::EventArgs^  e) {
+}
+private: System::Void label6_Click(System::Object^  sender, System::EventArgs^  e) {
+}
+private: System::Void label5_Click(System::Object^  sender, System::EventArgs^  e) {
+}
 };
 }
 
