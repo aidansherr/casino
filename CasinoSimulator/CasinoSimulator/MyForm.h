@@ -495,6 +495,7 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 	}
 	if (riverSize == 5)
 	{
+		fold = true;
 		fillHands();
 		if (getWinner() == pT->getPlayer())
 		{
@@ -504,7 +505,6 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 		{
 			MessageBox::Show("Computer Wins");
 		}
-		fold = true;
 		getWinner()->changeTotal(pT->getBetPool());
 		betButton->Enabled = false;
 		checkButton->Enabled = false;
