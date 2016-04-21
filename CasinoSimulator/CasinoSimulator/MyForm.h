@@ -440,14 +440,27 @@ private: System::Void button4_Click(System::Object^  sender, System::EventArgs^ 
 		if (riverSize == 5)
 		{
 			fillHands();
+			Player^ winner = getWinner();
 			if (getWinner() == pT->getPlayer())
 			{
 				MessageBox::Show("Player Wins");
 			}
 			else
 			{
-				MessageBox::Show("Computer Wins");
+				if (winner == pT->getAI(0))
+				{
+					MessageBox::Show("Computer0 Wins");
+				}
+				else if (winner == pT->getAI(1))
+				{
+					MessageBox::Show("Computer1 Wins");
+				}
+				else
+				{
+					MessageBox::Show("Computer2 Wins");
+				}
 			}
+			
 			getWinner()->changeTotal(pT->getBetPool());
 			std::string sValue = std::to_string(pT->getPlayer()->getTotal());
 			String^ totalValue = gcnew String(sValue.c_str());
@@ -471,14 +484,27 @@ private: System::Void checkButton_Click(System::Object^  sender, System::EventAr
 	if (riverSize == 5)
 	{
 		fillHands();
+		Player^ winner = getWinner(); 
 		if (getWinner() == pT->getPlayer())
 		{
 			MessageBox::Show("Player Wins");
 		}
 		else
 		{
-			MessageBox::Show("Computer Wins");
+			if (winner == pT->getAI(0))
+			{
+				MessageBox::Show("Computer0 Wins");
+			}
+			else if (winner == pT->getAI(1))
+			{
+				MessageBox::Show("Computer1 Wins");
+			}
+			else
+			{
+				MessageBox::Show("Computer2 Wins");
+			}
 		}
+
 		getWinner()->changeTotal(pT->getBetPool());
 		betButton->Enabled = false;
 		checkButton->Enabled = false;
@@ -497,14 +523,20 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 	{
 		fold = true;
 		fillHands();
-		if (getWinner() == pT->getPlayer())
+		Player^ winner = getWinner();
+		if (winner == pT->getAI(0))
 		{
-			MessageBox::Show("Player Wins");
+			MessageBox::Show("Computer0 Wins");
+		}
+		else if (winner == pT->getAI(1))
+		{
+			MessageBox::Show("Computer1 Wins");
 		}
 		else
 		{
-			MessageBox::Show("Computer Wins");
+			MessageBox::Show("Computer2 Wins");
 		}
+
 		getWinner()->changeTotal(pT->getBetPool());
 		betButton->Enabled = false;
 		checkButton->Enabled = false;
@@ -512,6 +544,83 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 	}
 
 }
+		 void restart()
+		 {
+			 pokerDeck->makeCards();
+		pokerDeck->setIcons();
+		startAction();
+		
+		
+		//To enable quitting 
+		button2->Enabled = true;
+		button1->Visible = false;
+		label2->Visible = true;
+		textBox2->Visible = true;
+		//to enable the bet, check, fold button
+		betButton->Enabled = true;
+		checkButton->Enabled = true;
+		foldButton->Enabled = true;
+
+		betButton->Visible = true;
+		checkButton->Visible = true;
+		foldButton->Visible = true;
+
+		label3->Visible = true;
+		label3->Enabled = true;
+		textBox3->Visible = true;
+		textBox3->Enabled = true;
+
+		//draws the deck and initilizes its location
+		pokerDeck->setLocation(pT->getDeckLocation());
+		System::Drawing::Icon^ tempIcon = gcnew System::Drawing::Icon("cardback.ico");
+		DrawBigCard(tempIcon,pokerDeck->getLocation(), 0);
+
+		//Draws the players cards
+		
+		for (int i = 0; i < 2; i++)
+		{
+			
+			Card^ playCard = pT->getPlayer()->getHand();
+			DrawBigCard(playCard->getIcon(), playCard->getLocation(), 0);
+		}
+		
+		//Draws the AIs cards
+		
+		for (int i = 0; i < 4; i++)
+		{
+			for (int j = 0; j < 2; j++)
+			{
+				if (i != 1)
+				{
+					int temp = 0;
+					
+					Card^ tempCard;
+					//skips position 1 as it is reserved for the player
+					if (i == 3)
+					{
+						//corrects the off set of skiping i=1 by making i=3 the second position in computers
+						tempCard = pT->getAI(1)->getHand();
+					}
+					else
+					{
+						tempCard = pT->getAI(i)->getHand();
+					}
+					
+					//draws the cards in the side positions
+					if (i == 2 || i == 3)
+					{
+						DrawCard(tempCard->getIcon(), tempCard->getLocation(), 1);
+					}
+					//draws cards normaly
+					else
+					{
+						DrawCard(tempCard->getIcon(), tempCard->getLocation(), temp);
+					}
+
+				}
+			}
+		}
+		 }
 		 void nextTurn()
 		 {
 			 if (turn == 0)
@@ -665,10 +774,18 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 				 
 				 totalValue = gcnew String(sValue.c_str());
 				
-				 if (pT->getComputerLogic(i)->HandValue()>winLogic->HandValue())
+				 if (pT->getComputerLogic(i)->HandValue() > winLogic->HandValue())
 				 {
 					 winner = pT->getAI(i);
 					 winLogic = pT->getComputerLogic(i);
+				 }
+				 else if (pT->getComputerLogic(i)->HandValue() == winLogic->HandValue())
+				 {
+					 if (pT->getComputerLogic(i)->HighCard() > winLogic->HighCard())
+					 {
+						 winner = pT->getAI(i);
+						 winLogic = pT->getComputerLogic(i);
+					 }
 				 }
 				 Panel^ winPanel = gcnew Panel();
 				 winPanel->Location = Point(0, 0);
