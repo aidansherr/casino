@@ -357,17 +357,17 @@ namespace CasinoSimulator {
 			Rectangle sideCard = Rectangle(x, y, 68, 50);
 			if (side == 0)
 			{
-				System::Drawing::Icon^ icon = gcnew System::Drawing::Icon("cardback.ico");
+
 				g->DrawIcon(icon, sideCard);
 			}
 			else if (side == 1)
 			{
-				System::Drawing::Icon^ sideIcon =gcnew System::Drawing::Icon("cardbackside.ico");
-				g->DrawIcon(sideIcon, sideCard);
+				//
+				g->DrawIcon(icon, sideCard);
 			}
-			
 
-			
+
+
 		}
 		//same as DrawCard but draws a bigger card for the deck,players hand and river
 		void DrawBigCard(System::Drawing::Icon^ icon, Location2^ loc, int side)
@@ -449,51 +449,9 @@ namespace CasinoSimulator {
 		System::Drawing::Icon^ tempIcon = gcnew System::Drawing::Icon("cardback.ico");
 		DrawBigCard(tempIcon,pokerDeck->getLocation(), 0);
 
-		//Draws the players cards
+		DrawWorld();
 		
-		for (int i = 0; i < 2; i++)
-		{
-			
-			Card^ playCard = pT->getPlayer()->getHand();
-			DrawBigCard(playCard->getIcon(), playCard->getLocation(), 0);
-		}
 		
-		//Draws the AIs cards
-		
-		for (int i = 0; i < 4; i++)
-		{
-			for (int j = 0; j < 2; j++)
-			{
-				if (i != 1)
-				{
-					int temp = 0;
-					
-					Card^ tempCard;
-					//skips position 1 as it is reserved for the player
-					if (i == 3)
-					{
-						//corrects the off set of skiping i=1 by making i=3 the second position in computers
-						tempCard = pT->getAI(1)->getHand();
-					}
-					else
-					{
-						tempCard = pT->getAI(i)->getHand();
-					}
-					
-					//draws the cards in the side positions
-					if (i == 2 || i == 3)
-					{
-						DrawCard(tempCard->getIcon(), tempCard->getLocation(), 1);
-					}
-					//draws cards normaly
-					else
-					{
-						DrawCard(tempCard->getIcon(), tempCard->getLocation(), temp);
-					}
-
-				}
-			}
-		}
 		
 	}
 	private: System::Void label2_Click(System::Object^  sender, System::EventArgs^  e) {
@@ -526,6 +484,8 @@ private: System::Void button4_Click(System::Object^  sender, System::EventArgs^ 
 		DrawWorld();
 		if (riverSize == 5)
 		{
+			
+			DrawWinScreen();
 			fillHands();
 			Player^ winner = getWinner();
 			if (getWinner() == pT->getPlayer())
@@ -546,12 +506,15 @@ private: System::Void button4_Click(System::Object^  sender, System::EventArgs^ 
 				{
 					MessageBox::Show("Computer2 Wins");
 				}
+				
+				
 			}
 			
 			getWinner()->changeTotal(pT->getBetPool());
 			std::string sValue = std::to_string(pT->getPlayer()->getTotal());
 			String^ totalValue = gcnew String(sValue.c_str());
 			textBox1->Text = totalValue;
+			
 			betButton->Enabled = false;
 			checkButton->Enabled = false;
 			foldButton->Enabled = false;
@@ -572,8 +535,10 @@ private: System::Void checkButton_Click(System::Object^  sender, System::EventAr
 	
 	if (riverSize == 5)
 	{
+		DrawWinScreen();
 		fillHands();
 		Player^ winner = getWinner(); 
+		
 		if (getWinner() == pT->getPlayer())
 		{
 			MessageBox::Show("Player Wins");
@@ -595,6 +560,7 @@ private: System::Void checkButton_Click(System::Object^  sender, System::EventAr
 		}
 
 		getWinner()->changeTotal(pT->getBetPool());
+		
 		betButton->Enabled = false;
 		checkButton->Enabled = false;
 		foldButton->Enabled = false;
@@ -611,6 +577,7 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 	}
 	if (riverSize == 5)
 	{
+		DrawWinScreen();
 		fold = true;
 		fillHands();
 		Player^ winner = getWinner();
@@ -628,12 +595,13 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 		}
 
 		getWinner()->changeTotal(pT->getBetPool());
+		
 		betButton->Enabled = false;
 		checkButton->Enabled = false;
 		foldButton->Enabled = false;
 		//restart();
 	}
-
+	
 }
 	 void restart()
 	 {
@@ -754,7 +722,7 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 			 //resets all of the pointers to draw all the cards
 			 resetCounts();
 			 //draws the deck
-			 System::Drawing::Icon^ tempIcon = gcnew System::Drawing::Icon("cardback.ico");
+			System::Drawing::Icon^ tempIcon = gcnew System::Drawing::Icon("cardback.ico");
 			 DrawBigCard(tempIcon, pokerDeck->getLocation(), 0);
 			 //Draws the players cards
 			 for (int i = 0; i < 2; i++)
@@ -784,21 +752,22 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 						 {
 							 tempCard = pT->getAI(i)->getHand();
 						 }
-
+						 System::Drawing::Icon^ icon = gcnew System::Drawing::Icon("cardback.ico");
+						 System::Drawing::Icon^ sideIcon = gcnew System::Drawing::Icon("cardbackside.ico");
 						 //draws the side cards
 						 if (i == 2 || i == 3)
 						 {
-							 DrawCard(tempCard->getIcon(), tempCard->getLocation(), 1);
+							 DrawCard(sideIcon, tempCard->getLocation(), 1);
 						 }
 						 //draws a normal card
 						 else
 						 {
-							 DrawCard(tempCard->getIcon(), tempCard->getLocation(), temp);
+							 DrawCard(icon, tempCard->getLocation(), temp);
 						 }
 
 					 }
 				 }
-		 }
+			 }
 			 //Draws the river
 			 for (int i = 0; i < riverSize; i++)//only draws the cards in river that have been drawn
 			 {
@@ -893,6 +862,7 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 				 g = winPanel->CreateGraphics();
 			 }
 			 MessageBox::Show(totalValue);
+			 
 			 return winner;
 		 }
 		 void fillHands()
@@ -942,6 +912,104 @@ private: System::Void label6_Click(System::Object^  sender, System::EventArgs^  
 }
 private: System::Void label5_Click(System::Object^  sender, System::EventArgs^  e) {
 }
+		 void DrawWinScreen()
+		 {
+			 Refresh();
+			 {
+				 //resets all of the pointers to draw all the cards
+				 resetCounts();
+				 //draws the deck
+				 System::Drawing::Icon^ tempIcon = gcnew System::Drawing::Icon("cardback.ico");
+				 DrawBigCard(tempIcon, pokerDeck->getLocation(), 0);
+				 //Draws the players cards
+				 for (int i = 0; i < 2; i++)
+				 {
+					 Card^ playCard = pT->getPlayer()->getHand();
+					 DrawBigCard(playCard->getIcon(), playCard->getLocation(), 0);
+				 }
+
+				 //Draws the AIs cards
+
+				 for (int i = 0; i < 4; i++)
+				 {
+					 for (int j = 0; j < 2; j++)
+					 {
+						 //Position 1 is for the player so it skips this position while drawing the AI hands
+						 if (i != 1)
+						 {
+							 int temp = 0;
+
+							 Card^ tempCard;
+							 //corrects the off set of skipping i=0 by setting i=3 to the second position in computers
+							 if (i == 3)
+							 {
+								 tempCard = pT->getAI(1)->getHand();
+							 }
+							 else
+							 {
+								 tempCard = pT->getAI(i)->getHand();
+							 }
+							 
+							 //draws the side cards
+							 if (i == 2 || i == 3)
+							 {
+								 DrawCard(tempCard->getIcon(), tempCard->getLocation(), 1);
+							 }
+							 //draws a normal card
+							 else
+							 {
+								 DrawCard(tempCard->getIcon(), tempCard->getLocation(), temp);
+							 }
+
+						 }
+					 }
+				 }
+				 //Draws the river
+				 for (int i = 0; i < riverSize; i++)//only draws the cards in river that have been drawn
+				 {
+					 Card^ temp = pT->getRiverCard();
+					 DrawBigCard(temp->getIcon(), temp->getLocation(), 0);
+				 }
+			 }
+		 }
+		 void PlayerButton()
+		 {
+			 Refresh();
+			 nextTurn();
+			 DrawWorld();
+
+			 if (riverSize == 5)
+			 {
+				 fillHands();
+				 Player^ winner = getWinner();
+				 if (getWinner() == pT->getPlayer())
+				 {
+					 MessageBox::Show("Player Wins");
+				 }
+				 else
+				 {
+					 if (winner == pT->getAI(0))
+					 {
+						 MessageBox::Show("Computer0 Wins");
+					 }
+					 else if (winner == pT->getAI(1))
+					 {
+						 MessageBox::Show("Computer1 Wins");
+					 }
+					 else
+					 {
+						 MessageBox::Show("Computer2 Wins");
+					 }
+				 }
+
+				 getWinner()->changeTotal(pT->getBetPool());
+
+				 betButton->Enabled = false;
+				 checkButton->Enabled = false;
+				 foldButton->Enabled = false;
+				 //restart();
+			 }
+		 }
 };
 }
 
