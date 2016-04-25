@@ -502,15 +502,15 @@ private: System::Void button4_Click(System::Object^  sender, System::EventArgs^ 
 			}
 			else
 			{
-				if (winner == pT->getAI(0))
+				if (winner == pT->getAI(1))
 				{
 					MessageBox::Show("Computer0 Wins");
 				}
-				else if (winner == pT->getAI(1))
+				else if (winner == pT->getAI(0))
 				{
 					MessageBox::Show("Computer1 Wins");
 				}
-				else
+				else if (winner == pT->getAI(2))
 				{
 					MessageBox::Show("Computer2 Wins");
 				}
@@ -551,20 +551,17 @@ private: System::Void checkButton_Click(System::Object^  sender, System::EventAr
 		{
 			MessageBox::Show("Player Wins");
 		}
-		else
+		else if (winner == pT->getAI(1))
 		{
-			if (winner == pT->getAI(0))
-			{
-				MessageBox::Show("Computer0 Wins");
-			}
-			else if (winner == pT->getAI(1))
-			{
-				MessageBox::Show("Computer1 Wins");
-			}
-			else
-			{
-				MessageBox::Show("Computer2 Wins");
-			}
+			MessageBox::Show("Computer0 Wins");
+		}
+		else if (winner == pT->getAI(0))
+		{
+			MessageBox::Show("Computer1 Wins");
+		}
+		else if (winner == pT->getAI(2))
+		{
+			MessageBox::Show("Computer2 Wins");
 		}
 
 		getWinner()->changeTotal(pT->getBetPool());
@@ -591,15 +588,15 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 		
 		Player^ winner = getWinner();
 		
-		if (winner == pT->getAI(0))
+		if (winner == pT->getAI(1))
 		{
 			MessageBox::Show("Computer0 Wins");
 		}
-		else if (winner == pT->getAI(1))
+		else if (winner == pT->getAI(0))
 		{
 			MessageBox::Show("Computer1 Wins");
 		}
-		else
+		else if( winner==pT->getAI(2))
 		{
 			MessageBox::Show("Computer2 Wins");
 		}
@@ -759,7 +756,7 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 			 {
 				
 				 Card^ tempCard = pokerDeck->draw();
-				 tempCard->setLocation(pT->getPosition(1)->getLocation());
+				 tempCard->setLocation(pT->getPosition(2)->getLocation());
 				 pT->getPlayer()->addCard(tempCard);
 
 			 }
@@ -770,7 +767,7 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 				 Card^ tempCard1 = (pokerDeck->draw());
 				 Card^ tempCard2 = (pokerDeck->draw());
 				 //skips position 1 as it is reserve for the player
-				 if (i == 1)
+				 if (i == 2)
 				 {
 					 //corrects the off set of skiping i=1 by picking postion three for the AI
 					 tempCard1->setLocation(pT->getPosition(3)->getLocation());
@@ -789,12 +786,13 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 		 }
 		 Player^ getWinner()
 		 {
-			Player^ winner = pT->getPlayer();
+			Player^ winner ;
 			Logic^ winLogic = pT->getPlayerLogic();
 			std::string sValue;
 			if (fold == false)
 			{
 				sValue = std::to_string(pT->getPlayerLogic()->HandValue());
+				winner = pT->getPlayer();
 			}
 			else
 			{
