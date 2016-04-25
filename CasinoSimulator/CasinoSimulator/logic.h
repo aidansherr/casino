@@ -4,7 +4,7 @@
 ref class Logic
 {private:
 	//creates the hand array
-	array <Card^, 1>^hand2 = gcnew array<Card^, 1>(8);
+	array <Card^, 1>^hand2 = gcnew array<Card^, 1>(7);
 	// creates an array to check for certain hands
 	array <int, 1>^test = gcnew array<int, 1>(5);
 	Player^ player;
@@ -114,32 +114,36 @@ public:
 	// checks to see if there is a fullhouse
 	bool FullHouse()
 	{
+		Card^ pair1;
 		int CardCount2 = 0;
 		int CardCount = 0;
+		int matchValue=-1;
 		for (int i = 0; i < player->getHandCount(); i++)
 		{
 			CardCount = 0;
 			for (int j = 0; j < player->getHandCount(); j++)
 			{
-				if (i != j)
+				if (i != j && hand2[i]->getValue()!=matchValue && pair1 != hand2[j])
 				{
 					if (hand2[i]->getValue() == hand2[j]->getValue())
 					{
 						CardCount++;
-					}
-					if (CardCount == 1 && CardCount2==0)
-					{
-						CardCount2 = CardCount;						
-					}
-					else if(CardCount == 2 && CardCount2 == 0)
-					{
-						CardCount2 = CardCount;
-					}
+					}			
 					if ((CardCount == 2 && CardCount2 == 1) || (CardCount == 1 && CardCount2 == 2))
 					{
 						return true;
 					}
 				}
+			}
+			if (CardCount == 2 && CardCount2 == 0)
+			{
+				CardCount2 = CardCount;
+				matchValue = hand2[i]->getValue();
+			}
+			else if (CardCount == 1 && CardCount2 == 0)
+			{
+				CardCount2 = CardCount;
+				pair1 = hand2[i];
 			}
 		}
 		return false;
