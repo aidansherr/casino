@@ -111,4 +111,9 @@ public:
 		}
 		shuffle();
 	}
+	void resetDeck()
+	{
+		topCard = 0;
+		shuffle();
+	}
 };

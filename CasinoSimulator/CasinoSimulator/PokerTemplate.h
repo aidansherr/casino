@@ -33,14 +33,15 @@ ref class PokerTemplate
 	array<AI^, 1> ^computers = gcnew array<AI^, 1>(3);
 	Logic^ playerLogic;
 	array<Logic^, 1> ^compLogics = gcnew array<Logic^, 1>(3);
+	int x = 300;
+	int y = 350;
 
 public:
 	PokerTemplate()
 	{
 		//Initilizes the deck location at a set point
 		deckLoc = gcnew Location2(200, 250);
-		int x = 300;
-		int y = 350;
+		
 		//initilizes the river locations at set points
 		for (int i = 0; i < 5; i++)
 		{
@@ -81,6 +82,10 @@ public:
 	//returns the location in river at riverPoint
 	Location2^ getRiver()
 	{
+		if (riverPoint > 5)
+		{
+			riverPoint = 0;
+		}
 		riverPoint++;
 		return river[riverPoint - 1];
 	}
@@ -136,6 +141,19 @@ public:
 			compLogics[i] = gcnew Logic(computers[i]);
 		}
 		player->reset();
+	}
+	void resetAddRiver()
+	{
+		cardPoint1 = 0;
+	}
+	void resetTemplate()
+	{
+		riverPoint = 0;
+		cardPoint1 = 0;
+		cardPoint2 = 0;
+		betPool = 0;
+		x = 300;
+		y = 350;
 	}
 };
 
