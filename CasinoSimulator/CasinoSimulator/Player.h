@@ -5,11 +5,12 @@
 
 ref class Player
 {
+	
+protected:
 	//pointer for adding a card in the players hand
 	int pos1 = 0;
 	//pointer for returning a card in the players hand
 	int pos2 = 0;
-protected:
 	//the total cash the player has
 	int total =2000;
 	int handValue=0;
@@ -69,5 +70,19 @@ public:
 	void changeTotal(int change)
 	{
 		total += change;
+	}
+	void resetPlayer()
+	{
+		pos1 = 0;
+		pos2 = 0;
+		handValue = 0;
+		handCount = 0;
+	}
+	void emptyHand()
+	{
+		for (int i = 0; i < 7; i++)
+		{
+			
+		}
 	}
 };
