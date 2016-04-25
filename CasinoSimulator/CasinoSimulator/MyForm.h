@@ -282,14 +282,21 @@ namespace CasinoSimulator {
 			this->label7->TabIndex = 13;
 			this->label7->Text = L"Your Hand";
 			this->label7->Visible = false;
+			// 
 			// button3
 			// 
-			this->button3->Location = System::Drawing::Point(0, 0);
+			this->button3->BackColor = System::Drawing::Color::Red;
+			this->button3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->button3->ForeColor = System::Drawing::Color::White;
+			this->button3->Location = System::Drawing::Point(32, 79);
 			this->button3->Name = L"button3";
-			this->button3->Size = System::Drawing::Size(75, 23);
+			this->button3->Size = System::Drawing::Size(222, 148);
 			this->button3->TabIndex = 10;
-			this->button3->Text = L"button3";
-			this->button3->UseVisualStyleBackColor = true;
+			this->button3->Text = L"Play Again\?";
+			this->button3->UseVisualStyleBackColor = false;
+			this->button3->Visible = false;
+			this->button3->Click += gcnew System::EventHandler(this, &MyForm::button3_Click);
 			// 
 			// button4
 			// 
@@ -306,7 +313,7 @@ namespace CasinoSimulator {
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
-			this->ClientSize = System::Drawing::Size(800, 741);
+			this->ClientSize = System::Drawing::Size(800, 740);
 			this->Controls->Add(this->label7);
 			this->Controls->Add(this->label6);
 			this->Controls->Add(this->label5);
@@ -336,9 +343,9 @@ namespace CasinoSimulator {
 		Graphics ^g;
 		Pen^ myPen;
 		//the deck of cards for the game
-		Deck^ pokerDeck = gcnew Deck();
+		Deck^ pokerDeck;
 		//The tmeplate for the game
-		PokerTemplate^ pT = gcnew PokerTemplate();
+		PokerTemplate^ pT;
 		int turn = 0;
 		//The amount of cards in the river
 		int riverSize = 0;
@@ -392,7 +399,8 @@ namespace CasinoSimulator {
 
 	private: System::Void MyForm_Load(System::Object^  sender, System::EventArgs^  e)
 	{
-		
+		pokerDeck = gcnew Deck();
+		pT = gcnew PokerTemplate();
 		PictureBox^ back = gcnew PictureBox();
 		back->Location = Point(0, 0);
 		back->Parent = this;
@@ -580,7 +588,9 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 		DrawWinScreen();
 		fold = true;
 		fillHands();
+		
 		Player^ winner = getWinner();
+		
 		if (winner == pT->getAI(0))
 		{
 			MessageBox::Show("Computer0 Wins");
@@ -605,84 +615,39 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 }
 	 void restart()
 	 {
-		 //the deck of cards for the game
-		 Deck^ pokerDeck = gcnew Deck();
-		 //The tmeplate for the game
-		 PokerTemplate^ pT = gcnew PokerTemplate();
-	     pokerDeck->makeCards();
-		 pokerDeck->setIcons();
-		 startAction();
-		
-		
-		 //To enable quitting 
-		 button2->Enabled = true;
-		 button1->Visible = false;
-		 label2->Visible = true;
-		 textBox2->Visible = true;
-		 //to enable the bet, check, fold button
+		 
+
+		 Refresh();
+		 textBox2->Text = "";
+		 
 		 betButton->Enabled = true;
 		 checkButton->Enabled = true;
 		 foldButton->Enabled = true;
-
-		 betButton->Visible = true;
-		 checkButton->Visible = true;
-		 foldButton->Visible = true;
-
-		 label3->Visible = true;
-		 label3->Enabled = true;
-		 textBox3->Visible = true;
-		 textBox3->Enabled = true;
-
-		 //draws the deck and initilizes its location
-		 pokerDeck->setLocation(pT->getDeckLocation());
-		 System::Drawing::Icon^ tempIcon = gcnew System::Drawing::Icon("cardback.ico");
-		 DrawBigCard(tempIcon,pokerDeck->getLocation(), 0);
-
-		 //Draws the players cards
-		
-		 for (int i = 0; i < 2; i++)
+		 //the deck of cards for the game
+		  pokerDeck->resetDeck();
+		 //The template for the game
+		 pT->resetTemplate();
+		 pT->getPlayer()->resetPlayer();
+		 for (int i = 0; i < 3; i++)
 		 {
 			
-	 		Card^ playCard = pT->getPlayer()->getHand();
-			DrawBigCard(playCard->getIcon(), playCard->getLocation(), 0);
-	     }
-		
-		 //Draws the AIs cards
-		
+			 pT->getAI(i)->resetPlayer();
+		 }
 		 for (int i = 0; i < 4; i++)
 		 {
-			for (int j = 0; j < 2; j++)
-			{
-				if (i != 1)
-				{
-					int temp = 0;
-					
-					Card^ tempCard;
-					//skips position 1 as it is reserved for the player
-					if (i == 3)
-					{
-						//corrects the off set of skiping i=1 by making i=3 the second position in computers
-						tempCard = pT->getAI(1)->getHand();
-					}
-					else
-					{
-						tempCard = pT->getAI(i)->getHand();
-					}
-					
-					//draws the cards in the side positions
-					if (i == 2 || i == 3)
-					{
-						DrawCard(tempCard->getIcon(), tempCard->getLocation(), 1);
-					}
-					//draws cards normaly
-					else
-					{
-						DrawCard(tempCard->getIcon(), tempCard->getLocation(), temp);
-					}
 
-			    }
-			}
-			}
+			 pT->getPosition(i)->resetPos();
+		 }
+		 fold = false;
+		 startAction();
+		 riverSize = 0;
+		 turn = 0;
+		 resetCounts();
+		 button3->Visible = false;
+		DrawWorld();
+		 
+		 
+		
 	}
 		 void nextTurn()
 		 {
@@ -787,6 +752,7 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 		 }
 		 void startAction()
 		 {
+			 
 			 //Initilizes the player and draws two cards for the players hand
 			 
 			 for (int i = 0; i < 2; i++)
@@ -855,13 +821,9 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 						 winLogic = pT->getComputerLogic(i);
 					 }
 				 }
-				 Panel^ winPanel = gcnew Panel();
-				 winPanel->Location = Point(0, 0);
-				 winPanel->Parent = this;
-				 winPanel->Size::set(Drawing::Size(800, 741));
-				 g = winPanel->CreateGraphics();
+				 button3->Visible = true;
 			 }
-			 MessageBox::Show(totalValue);
+			// MessageBox::Show(totalValue);
 			 
 			 return winner;
 		 }
@@ -869,7 +831,7 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 		 {
 			 resetCounts();
 			  
-			 for (int i = 0; i < 5; i++)
+			 for (int i = 0; i < riverSize; i++)
 			 {
 				
 				 pT->getPlayer()->addCard(pT->getRiverCard());
@@ -1010,6 +972,10 @@ private: System::Void label5_Click(System::Object^  sender, System::EventArgs^  
 				 //restart();
 			 }
 		 }
+private: System::Void button3_Click(System::Object^  sender, System::EventArgs^  e) 
+{
+	restart();
+}
 };
 }
 

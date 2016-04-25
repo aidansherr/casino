@@ -77,5 +77,9 @@ public:
 		evenOdd++;
 		return locations[mid];
 	}
-	
+	void resetPos()
+	{
+		mid = 4;
+		evenOdd = 0;
+	}
 };

@@ -8,7 +8,10 @@ ref class AI : public Player//inherits player
 	int anti = 0;
 	
 public:
-	
+	void setHandValue(int x)
+	{
+		handValue = x;
+	}
 	void getAnti(int x)
 	{
 		anti = x;
