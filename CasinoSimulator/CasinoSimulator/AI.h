@@ -16,9 +16,9 @@ public:
 	{
 		anti = x;
 	}
-	void fold()
+	int fold()
 	{
-		
+		return 0;
 	}
 	int bet(int x)
 	{
@@ -30,31 +30,31 @@ public:
 	{
 		return x;
 	}
-	void intelligance(int x)
+	int intelligance(int x)
 	{
 		int count = 0;
 			if (x <=16 )
 			{
-				fold();
+				return fold();
 			}
 			else if (x >= 20 && count==0)
 			{
 				if (total >= 500)
 				{
-					bet(500);
+					return bet(500);
 					total += 500;
 				}
 				count++;
 			}
 			else if (x >= 10 && count == 0)
 			{
-				bet(100);
+				return bet(100);
 				total += 100;
 				count++;
 			}
 			else
 			{
-				bet(anti);
+				return bet(anti);
 				total += anti;
 			}
 		

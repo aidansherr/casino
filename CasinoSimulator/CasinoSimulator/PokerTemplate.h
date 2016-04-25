@@ -50,8 +50,8 @@ public:
 		}
 		//creates Positions for all four positions of the game
 		positions[0] = gcnew Position(true, false, false, false);
-		positions[1] = gcnew Position(false, true, false, false);
-		positions[2] = gcnew Position(false, false, true, false);
+		positions[1] = gcnew Position(false,false, true, false);
+		positions[2] = gcnew Position(false, true, false, false);
 		positions[3] = gcnew Position(false, false, false, true);
 		player = gcnew Player();
 		playerLogic = gcnew Logic(player);
