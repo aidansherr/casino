@@ -1,0 +1,21 @@
+ante of $100to start game.
+2 cards per player.
+after every player antes. Three cards are drawn and placed in the river.
+the players may now choose to check, bet or fold based on their hand and the cards in the river.
+after every player has either bet, checked or folded another card is drawn and placed in the river.
+the players may now choose to check, bet or fold again based on their hand and the new cardadded to the river.
+after every player has either bet, checked or folded the last card is drawn and placed in the river.
+after the final bet is placed or the player has folded the players hands are revealed and the player with the best hand wins.
+
+Possible Hands & Ranking:
+Royal Flush=24
+striaght Flush=23
+four of a Kind=22
+Full House=21
+Flush=20
+Royal Straight=19
+straight=18
+Three of a Kind=17
+Two Pairs=16
+Pair=15
+High Card= card values in order 2-14 (ace high)
