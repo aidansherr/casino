@@ -666,7 +666,7 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 			{
 				
 				x = pT->getComputerLogic(i)->HandValue();
-				pT->getAI(i)->intelligance(x);
+				pT->addToPool(pT->getAI(i)->intelligance(x));
 			}*/
 				 turn++;
 			 }
@@ -828,18 +828,18 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 		 void fillHands()
 		 {
 			 resetCounts();
-			  
+
 			 for (int i = 0; i < riverSize; i++)
 			 {
-				
+
 				 pT->getPlayer()->addCard(pT->getRiverCard());
 			 }
 			 resetCounts();
-			
+
 			 for (int j = 0; j < 3; j++)
 			 {
-				
-				 for (int i = 0; i < 5; i++)
+
+				 for (int i = 0; i < riverSize; i++)
 				 {
 					 pT->getAI(j)->addCard(pT->getRiverCard());
 				 }
