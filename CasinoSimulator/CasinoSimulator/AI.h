@@ -6,6 +6,7 @@ ref class AI : public Player//inherits player
 	bool easy, medium, hard;
 	
 	int anti = 0;
+	
 public:
 	
 	void getAnti(int x)
@@ -18,36 +19,41 @@ public:
 	}
 	int bet(int x)
 	{
+		
 		total -= x;
 		return x;
 	}
-	void intelligance()
+	int AIbet(int x)
 	{
-		if (easy)
-		{
-
-		}
-		if (medium)
-		{
-			if (handValue <= 3)
+		return x;
+	}
+	void intelligance(int x)
+	{
+		int count = 0;
+			if (x <=16 )
 			{
 				fold();
 			}
-			else if (handValue >= 20)
+			else if (x >= 20 && count==0)
 			{
 				if (total >= 500)
 				{
 					bet(500);
+					total += 500;
 				}
+				count++;
 			}
-			else if (handValue >= 10)
+			else if (x >= 10 && count == 0)
 			{
 				bet(100);
+				total += 100;
+				count++;
 			}
 			else
 			{
 				bet(anti);
+				total += anti;
 			}
-		}
+		
 	}
 };

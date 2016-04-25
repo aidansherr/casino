@@ -55,6 +55,12 @@ namespace CasinoSimulator {
 	private: System::Windows::Forms::Button^  foldButton;
 	private: System::Windows::Forms::TextBox^  textBox3;
 	private: System::Windows::Forms::Label^  label3;
+	private: System::Windows::Forms::Label^  label4;
+	private: System::Windows::Forms::Label^  label5;
+	private: System::Windows::Forms::Label^  label6;
+	private: System::Windows::Forms::Label^  label7;
+	private: System::Windows::Forms::Button^  button3;
+	private: System::Windows::Forms::Button^  button4;
 
 
 
@@ -85,6 +91,12 @@ namespace CasinoSimulator {
 			this->foldButton = (gcnew System::Windows::Forms::Button());
 			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
 			this->label3 = (gcnew System::Windows::Forms::Label());
+			this->label4 = (gcnew System::Windows::Forms::Label());
+			this->label5 = (gcnew System::Windows::Forms::Label());
+			this->label6 = (gcnew System::Windows::Forms::Label());
+			this->label7 = (gcnew System::Windows::Forms::Label());
+			this->button3 = (gcnew System::Windows::Forms::Button());
+			this->button4 = (gcnew System::Windows::Forms::Button());
 			this->SuspendLayout();
 			// 
 			// panel1
@@ -228,12 +240,79 @@ namespace CasinoSimulator {
 			this->label3->Text = L"Bet amount";
 			this->label3->Visible = false;
 			// 
+			// label4
+			// 
+			this->label4->AutoSize = true;
+			this->label4->Location = System::Drawing::Point(645, 408);
+			this->label4->Name = L"label4";
+			this->label4->Size = System::Drawing::Size(58, 13);
+			this->label4->TabIndex = 10;
+			this->label4->Text = L"Computer2";
+			this->label4->Visible = false;
+			this->label4->Click += gcnew System::EventHandler(this, &MyForm::label4_Click);
+			// 
+			// label5
+			// 
+			this->label5->AutoSize = true;
+			this->label5->Location = System::Drawing::Point(439, 189);
+			this->label5->Name = L"label5";
+			this->label5->Size = System::Drawing::Size(58, 13);
+			this->label5->TabIndex = 11;
+			this->label5->Text = L"Computer1";
+			this->label5->Visible = false;
+			this->label5->Click += gcnew System::EventHandler(this, &MyForm::label5_Click);
+			// 
+			// label6
+			// 
+			this->label6->AutoSize = true;
+			this->label6->Location = System::Drawing::Point(108, 408);
+			this->label6->Name = L"label6";
+			this->label6->Size = System::Drawing::Size(58, 13);
+			this->label6->TabIndex = 12;
+			this->label6->Text = L"Computer0";
+			this->label6->Visible = false;
+			this->label6->Click += gcnew System::EventHandler(this, &MyForm::label6_Click);
+			// 
+			// label7
+			// 
+			this->label7->AutoSize = true;
+			this->label7->Location = System::Drawing::Point(439, 526);
+			this->label7->Name = L"label7";
+			this->label7->Size = System::Drawing::Size(58, 13);
+			this->label7->TabIndex = 13;
+			this->label7->Text = L"Your Hand";
+			this->label7->Visible = false;
+			// button3
+			// 
+			this->button3->Location = System::Drawing::Point(0, 0);
+			this->button3->Name = L"button3";
+			this->button3->Size = System::Drawing::Size(75, 23);
+			this->button3->TabIndex = 10;
+			this->button3->Text = L"button3";
+			this->button3->UseVisualStyleBackColor = true;
+			// 
+			// button4
+			// 
+			this->button4->Location = System::Drawing::Point(653, 617);
+			this->button4->Name = L"button4";
+			this->button4->Size = System::Drawing::Size(100, 50);
+			this->button4->TabIndex = 11;
+			this->button4->Text = L"display rules";
+			this->button4->UseVisualStyleBackColor = true;
+			this->button4->Click += gcnew System::EventHandler(this, &MyForm::button4_Click_1);
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
 			this->ClientSize = System::Drawing::Size(800, 741);
+			this->Controls->Add(this->label7);
+			this->Controls->Add(this->label6);
+			this->Controls->Add(this->label5);
+			this->Controls->Add(this->label4);
+			this->Controls->Add(this->button4);
+			this->Controls->Add(this->button3);
 			this->Controls->Add(this->label3);
 			this->Controls->Add(this->textBox3);
 			this->Controls->Add(this->foldButton);
@@ -263,6 +342,8 @@ namespace CasinoSimulator {
 		int turn = 0;
 		//The amount of cards in the river
 		int riverSize = 0;
+		//fold value for player to make sure player loses
+		bool fold = false;
 		//Draws a card with the given icon, and location
 		Logic^ playerLogic;
 		array<Logic^, 1> ^compLogics = gcnew array<Logic^, 1>(3);
@@ -276,17 +357,17 @@ namespace CasinoSimulator {
 			Rectangle sideCard = Rectangle(x, y, 68, 50);
 			if (side == 0)
 			{
-				System::Drawing::Icon^ icon = gcnew System::Drawing::Icon("cardback.ico");
+
 				g->DrawIcon(icon, sideCard);
 			}
 			else if (side == 1)
 			{
-				System::Drawing::Icon^ sideIcon =gcnew System::Drawing::Icon("cardbackside.ico");
-				g->DrawIcon(sideIcon, sideCard);
+				//
+				g->DrawIcon(icon, sideCard);
 			}
-			
 
-			
+
+
 		}
 		//same as DrawCard but draws a bigger card for the deck,players hand and river
 		void DrawBigCard(System::Drawing::Icon^ icon, Location2^ loc, int side)
@@ -339,7 +420,11 @@ namespace CasinoSimulator {
 		pokerDeck->setIcons();
 		startAction();
 		
-		
+		//To enable the labels of the hands
+		label4->Visible = true;
+		label5->Visible = true;
+		label6->Visible = true;
+		label7->Visible = true;
 		//To enable quitting 
 		button2->Enabled = true;
 		button1->Visible = false;
@@ -364,19 +449,208 @@ namespace CasinoSimulator {
 		System::Drawing::Icon^ tempIcon = gcnew System::Drawing::Icon("cardback.ico");
 		DrawBigCard(tempIcon,pokerDeck->getLocation(), 0);
 
-		//Draws the players cards
+		DrawWorld();
 		
-		for (int i = 0; i < 2; i++)
+		
+		
+	}
+	private: System::Void label2_Click(System::Object^  sender, System::EventArgs^  e) {
+	}
+private: System::Void button4_Click(System::Object^  sender, System::EventArgs^  e) 
+{
+	//changes bet amount to int and subtracts amount from balance
+	int value, currentBets;
+	if ((Int32::TryParse(textBox3->Text, value)) && (value >= 1))
+	{
+		pT->getPlayer()->changeTotal((value*-1));
+		currentBets = value;
+		//changes balance amount back to string and changes balance display
+		std::string sValue = std::to_string(pT->getPlayer()->getTotal());
+		String^ totalValue = gcnew String(sValue.c_str());
+		textBox1->Text = totalValue;
+		for (int i = 0; i < 3; i++)
+		{
+			pT->getAI(i)->AIbet(value);
+			currentBets += value;
+		}
+		//changes pot total to previous pot+bet amount
+		pT->addToPool(currentBets);
+		std::string sValue2 = std::to_string(pT->getBetPool());
+		String^ totalValue2 = gcnew String(sValue2.c_str());
+		textBox2->Text = totalValue2;
+
+		Refresh();
+		nextTurn();
+		DrawWorld();
+		if (riverSize == 5)
 		{
 			
-			Card^ playCard = pT->getPlayer()->getHand();
-			DrawBigCard(playCard->getIcon(), playCard->getLocation(), 0);
+			DrawWinScreen();
+			fillHands();
+			Player^ winner = getWinner();
+			if (getWinner() == pT->getPlayer())
+			{
+				MessageBox::Show("Player Wins");
+			}
+			else
+			{
+				if (winner == pT->getAI(0))
+				{
+					MessageBox::Show("Computer0 Wins");
+				}
+				else if (winner == pT->getAI(1))
+				{
+					MessageBox::Show("Computer1 Wins");
+				}
+				else
+				{
+					MessageBox::Show("Computer2 Wins");
+				}
+				
+				
+			}
+			
+			getWinner()->changeTotal(pT->getBetPool());
+			std::string sValue = std::to_string(pT->getPlayer()->getTotal());
+			String^ totalValue = gcnew String(sValue.c_str());
+			textBox1->Text = totalValue;
+			
+			betButton->Enabled = false;
+			checkButton->Enabled = false;
+			foldButton->Enabled = false;
+			//restart();
 		}
+	}
+	else
+	{
+		MessageBox::Show("That bet amount is invalid. Must enter an integer bet amount greater than 0.");
+	}
+	
+}
+private: System::Void checkButton_Click(System::Object^  sender, System::EventArgs^  e) 
+{
+	Refresh();
+	nextTurn();
+	DrawWorld();
+	
+	if (riverSize == 5)
+	{
+		DrawWinScreen();
+		fillHands();
+		Player^ winner = getWinner(); 
 		
-		//Draws the AIs cards
-		
-		for (int i = 0; i < 4; i++)
+		if (getWinner() == pT->getPlayer())
 		{
+			MessageBox::Show("Player Wins");
+		}
+		else
+		{
+			if (winner == pT->getAI(0))
+			{
+				MessageBox::Show("Computer0 Wins");
+			}
+			else if (winner == pT->getAI(1))
+			{
+				MessageBox::Show("Computer1 Wins");
+			}
+			else
+			{
+				MessageBox::Show("Computer2 Wins");
+			}
+		}
+
+		getWinner()->changeTotal(pT->getBetPool());
+		
+		betButton->Enabled = false;
+		checkButton->Enabled = false;
+		foldButton->Enabled = false;
+		//restart();
+	}
+}
+private: System::Void foldButton_Click(System::Object^  sender, System::EventArgs^  e) 
+{
+	while (riverSize != 5)
+	{
+		Refresh();
+		nextTurn();
+		DrawWorld();
+	}
+	if (riverSize == 5)
+	{
+		DrawWinScreen();
+		fold = true;
+		fillHands();
+		Player^ winner = getWinner();
+		if (winner == pT->getAI(0))
+		{
+			MessageBox::Show("Computer0 Wins");
+		}
+		else if (winner == pT->getAI(1))
+		{
+			MessageBox::Show("Computer1 Wins");
+		}
+		else
+		{
+			MessageBox::Show("Computer2 Wins");
+		}
+
+		getWinner()->changeTotal(pT->getBetPool());
+		
+		betButton->Enabled = false;
+		checkButton->Enabled = false;
+		foldButton->Enabled = false;
+		//restart();
+	}
+	
+}
+	 void restart()
+	 {
+		 //the deck of cards for the game
+		 Deck^ pokerDeck = gcnew Deck();
+		 //The tmeplate for the game
+		 PokerTemplate^ pT = gcnew PokerTemplate();
+	     pokerDeck->makeCards();
+		 pokerDeck->setIcons();
+		 startAction();
+		
+		
+		 //To enable quitting 
+		 button2->Enabled = true;
+		 button1->Visible = false;
+		 label2->Visible = true;
+		 textBox2->Visible = true;
+		 //to enable the bet, check, fold button
+		 betButton->Enabled = true;
+		 checkButton->Enabled = true;
+		 foldButton->Enabled = true;
+
+		 betButton->Visible = true;
+		 checkButton->Visible = true;
+		 foldButton->Visible = true;
+
+		 label3->Visible = true;
+		 label3->Enabled = true;
+		 textBox3->Visible = true;
+		 textBox3->Enabled = true;
+
+		 //draws the deck and initilizes its location
+		 pokerDeck->setLocation(pT->getDeckLocation());
+		 System::Drawing::Icon^ tempIcon = gcnew System::Drawing::Icon("cardback.ico");
+		 DrawBigCard(tempIcon,pokerDeck->getLocation(), 0);
+
+		 //Draws the players cards
+		
+		 for (int i = 0; i < 2; i++)
+		 {
+			
+	 		Card^ playCard = pT->getPlayer()->getHand();
+			DrawBigCard(playCard->getIcon(), playCard->getLocation(), 0);
+	     }
+		
+		 //Draws the AIs cards
+		
+		 for (int i = 0; i < 4; i++)
+		 {
 			for (int j = 0; j < 2; j++)
 			{
 				if (i != 1)
@@ -406,105 +680,32 @@ namespace CasinoSimulator {
 						DrawCard(tempCard->getIcon(), tempCard->getLocation(), temp);
 					}
 
-				}
+			    }
 			}
-		}
-		
+			}
 	}
-	private: System::Void label2_Click(System::Object^  sender, System::EventArgs^  e) {
-	}
-private: System::Void button4_Click(System::Object^  sender, System::EventArgs^  e) 
-{
-	int value;
-	Int32::TryParse(textBox3->Text, value);
-	pT->getPlayer()->changeTotal((value*-1));
-	
-	std::string sValue= std::to_string(pT->getPlayer()->getTotal());
-	String^ totalValue = gcnew String(sValue.c_str());
-	textBox1->Text = totalValue;
-
-	pT->addToPool(value);
-	std::string sValue2 = std::to_string(pT->getBetPool());
-	String^ totalValue2 = gcnew String(sValue2.c_str());
-	textBox2->Text = totalValue2;
-	 
-	Refresh();
-	nextTurn();
-	DrawWorld();
-	if (riverSize == 5)
-	{
-		fillHands();
-		if (getWinner() == pT->getPlayer())
-		{
-			MessageBox::Show("Player Wins");
-		}
-		else
-		{
-			MessageBox::Show("Computer Wins");
-		}
-		betButton->Enabled=false;
-		checkButton->Enabled = false;
-		foldButton->Enabled = false;
-	}
-	for (int i = 0; i < 3; i++)
-	{
-		
-	}
-}
-private: System::Void checkButton_Click(System::Object^  sender, System::EventArgs^  e) 
-{
-	Refresh();
-	nextTurn();
-	DrawWorld();
-	if (riverSize == 5)
-	{
-		fillHands();
-		if (getWinner() == pT->getPlayer())
-		{
-			MessageBox::Show("Player Wins");
-		}
-		else
-		{
-			MessageBox::Show("Computer Wins");
-		}
-		betButton->Enabled = false;
-		checkButton->Enabled = false;
-		foldButton->Enabled = false;
-	}
-}
-private: System::Void foldButton_Click(System::Object^  sender, System::EventArgs^  e) 
-{
-	Refresh();
-	nextTurn();
-	DrawWorld();
-	if (riverSize == 5)
-	{
-		fillHands();
-		if (getWinner() == pT->getPlayer())
-		{
-			MessageBox::Show("Player Wins");
-		}
-		else
-		{
-			MessageBox::Show("Computer Wins");
-		}
-		betButton->Enabled = false;
-		checkButton->Enabled = false;
-		foldButton->Enabled = false;
-	}
-}
 		 void nextTurn()
 		 {
+			 
 			 if (turn == 0)
 			 {
 				 //if the first turn hasn't taken place then it draws three cards for the river
 				 for (int i = 0; i < 3; i++)
 				 {
+					 
 					 Card^ temp = pokerDeck->draw();
+					 
 					 temp->setLocation(pT->getRiver());
 					 pT->addRiverCard(temp);
 					 riverSize++;
 				 }
+				/*int x = 0;
+			for (int i = 0; i < 3; i++)
+			{
+				
+				x = pT->getComputerLogic(i)->HandValue();
+				pT->getAI(i)->intelligance(x);
+			}*/
 				 turn++;
 			 }
 			 else
@@ -521,7 +722,7 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 			 //resets all of the pointers to draw all the cards
 			 resetCounts();
 			 //draws the deck
-			 System::Drawing::Icon^ tempIcon = gcnew System::Drawing::Icon("cardback.ico");
+			System::Drawing::Icon^ tempIcon = gcnew System::Drawing::Icon("cardback.ico");
 			 DrawBigCard(tempIcon, pokerDeck->getLocation(), 0);
 			 //Draws the players cards
 			 for (int i = 0; i < 2; i++)
@@ -551,21 +752,22 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 						 {
 							 tempCard = pT->getAI(i)->getHand();
 						 }
-
+						 System::Drawing::Icon^ icon = gcnew System::Drawing::Icon("cardback.ico");
+						 System::Drawing::Icon^ sideIcon = gcnew System::Drawing::Icon("cardbackside.ico");
 						 //draws the side cards
 						 if (i == 2 || i == 3)
 						 {
-							 DrawCard(tempCard->getIcon(), tempCard->getLocation(), 1);
+							 DrawCard(sideIcon, tempCard->getLocation(), 1);
 						 }
 						 //draws a normal card
 						 else
 						 {
-							 DrawCard(tempCard->getIcon(), tempCard->getLocation(), temp);
+							 DrawCard(icon, tempCard->getLocation(), temp);
 						 }
 
 					 }
 				 }
-		 }
+			 }
 			 //Draws the river
 			 for (int i = 0; i < riverSize; i++)//only draws the cards in river that have been drawn
 			 {
@@ -623,14 +825,44 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 		 {
 			Player^ winner = pT->getPlayer();
 			Logic^ winLogic = pT->getPlayerLogic();
+			std::string sValue;
+			if (fold == false)
+			{
+				sValue = std::to_string(pT->getPlayerLogic()->HandValue());
+			}
+			else
+			{
+				sValue = "0";
+			}
+			String^ totalValue;
 			 for (int i = 0; i < 3; i++)
 			 {
-				 if (pT->getComputerLogic(i)->HandValue()>winLogic->HandValue())
+				 sValue += " ";
+				 sValue += std::to_string(pT->getComputerLogic(i)->HandValue());
+				 
+				 totalValue = gcnew String(sValue.c_str());
+				
+				 if (pT->getComputerLogic(i)->HandValue() > winLogic->HandValue())
 				 {
 					 winner = pT->getAI(i);
 					 winLogic = pT->getComputerLogic(i);
 				 }
+				 else if (pT->getComputerLogic(i)->HandValue() == winLogic->HandValue())
+				 {
+					 if (pT->getComputerLogic(i)->HighCard() > winLogic->HighCard())
+					 {
+						 winner = pT->getAI(i);
+						 winLogic = pT->getComputerLogic(i);
+					 }
+				 }
+				 Panel^ winPanel = gcnew Panel();
+				 winPanel->Location = Point(0, 0);
+				 winPanel->Parent = this;
+				 winPanel->Size::set(Drawing::Size(800, 741));
+				 g = winPanel->CreateGraphics();
 			 }
+			 MessageBox::Show(totalValue);
+			 
 			 return winner;
 		 }
 		 void fillHands()
@@ -654,6 +886,129 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 				 resetCounts();
 			 }
 			 pT->updateLogic();
+		 }
+		 std::string displayRules()
+		 {
+			 std::fstream infile;
+			 infile.open("poker rules.txt");
+			 std::string temp;
+			 std::string total = "";
+			 while (!infile.eof())
+			 {
+				 getline(infile, temp);
+
+				 total += temp;
+				 total += "\n";
+			 }
+			 return total;
+		 }
+private: System::Void button4_Click_1(System::Object^  sender, System::EventArgs^  e) {
+	String^ temp = gcnew String(displayRules().c_str());
+	MessageBox::Show(temp);
+}
+private: System::Void label4_Click(System::Object^  sender, System::EventArgs^  e) {
+}
+private: System::Void label6_Click(System::Object^  sender, System::EventArgs^  e) {
+}
+private: System::Void label5_Click(System::Object^  sender, System::EventArgs^  e) {
+}
+		 void DrawWinScreen()
+		 {
+			 Refresh();
+			 {
+				 //resets all of the pointers to draw all the cards
+				 resetCounts();
+				 //draws the deck
+				 System::Drawing::Icon^ tempIcon = gcnew System::Drawing::Icon("cardback.ico");
+				 DrawBigCard(tempIcon, pokerDeck->getLocation(), 0);
+				 //Draws the players cards
+				 for (int i = 0; i < 2; i++)
+				 {
+					 Card^ playCard = pT->getPlayer()->getHand();
+					 DrawBigCard(playCard->getIcon(), playCard->getLocation(), 0);
+				 }
+
+				 //Draws the AIs cards
+
+				 for (int i = 0; i < 4; i++)
+				 {
+					 for (int j = 0; j < 2; j++)
+					 {
+						 //Position 1 is for the player so it skips this position while drawing the AI hands
+						 if (i != 1)
+						 {
+							 int temp = 0;
+
+							 Card^ tempCard;
+							 //corrects the off set of skipping i=0 by setting i=3 to the second position in computers
+							 if (i == 3)
+							 {
+								 tempCard = pT->getAI(1)->getHand();
+							 }
+							 else
+							 {
+								 tempCard = pT->getAI(i)->getHand();
+							 }
+							 
+							 //draws the side cards
+							 if (i == 2 || i == 3)
+							 {
+								 DrawCard(tempCard->getIcon(), tempCard->getLocation(), 1);
+							 }
+							 //draws a normal card
+							 else
+							 {
+								 DrawCard(tempCard->getIcon(), tempCard->getLocation(), temp);
+							 }
+
+						 }
+					 }
+				 }
+				 //Draws the river
+				 for (int i = 0; i < riverSize; i++)//only draws the cards in river that have been drawn
+				 {
+					 Card^ temp = pT->getRiverCard();
+					 DrawBigCard(temp->getIcon(), temp->getLocation(), 0);
+				 }
+			 }
+		 }
+		 void PlayerButton()
+		 {
+			 Refresh();
+			 nextTurn();
+			 DrawWorld();
+
+			 if (riverSize == 5)
+			 {
+				 fillHands();
+				 Player^ winner = getWinner();
+				 if (getWinner() == pT->getPlayer())
+				 {
+					 MessageBox::Show("Player Wins");
+				 }
+				 else
+				 {
+					 if (winner == pT->getAI(0))
+					 {
+						 MessageBox::Show("Computer0 Wins");
+					 }
+					 else if (winner == pT->getAI(1))
+					 {
+						 MessageBox::Show("Computer1 Wins");
+					 }
+					 else
+					 {
+						 MessageBox::Show("Computer2 Wins");
+					 }
+				 }
+
+				 getWinner()->changeTotal(pT->getBetPool());
+
+				 betButton->Enabled = false;
+				 checkButton->Enabled = false;
+				 foldButton->Enabled = false;
+				 //restart();
+			 }
 		 }
 };
 }
