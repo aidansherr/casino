@@ -36,7 +36,7 @@ public:
 	//returns the card at positon pos2 in the players hand
 	Card^ getHand()
 	{
-		if (pos2 >5 )
+		if (pos2 >7 )
 		{
 			pos2 = 0;
 		}

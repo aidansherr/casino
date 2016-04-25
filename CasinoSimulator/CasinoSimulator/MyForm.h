@@ -823,7 +823,7 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 				 }
 				 button3->Visible = true;
 			 }
-			// MessageBox::Show(totalValue);
+			 MessageBox::Show(totalValue);
 			 
 			 return winner;
 		 }
