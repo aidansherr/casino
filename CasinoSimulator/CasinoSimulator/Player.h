@@ -16,7 +16,7 @@ protected:
 	int handValue=0;
 	array <Card^, 1>^hand = gcnew array<Card^, 1>(8);
 	int handCount;
-
+	bool hasFold = false();
 public:
 	//adds a card at pos1 in the players hand
 	void addCard(Card^ card)
@@ -84,5 +84,13 @@ public:
 		{
 			
 		}
+	}
+	void setHandValue(int x)
+	{
+		handValue = x;
+	}
+	bool getHasFold()
+	{
+		return hasFold;
 	}
 };

@@ -3,8 +3,8 @@
 
 ref class AI : public Player//inherits player
 {
-	bool easy, medium, hard;
 	
+	bool canBet=false;
 	int anti = 0;
 	
 public:
@@ -18,6 +18,7 @@ public:
 	}
 	int fold()
 	{
+		hasFold = true;
 		return 0;
 	}
 	int bet(int x)
@@ -30,33 +31,32 @@ public:
 	{
 		return x;
 	}
-	int intelligance(int x)
+	int intelligance()
 	{
-		int count = 0;
-			if (x <=16 )
+		if (canBet)
+		{
+			return bet(100);
+		}
+		else
+		{
+			int x = handValue;
+			if (x <= 7)
 			{
 				return fold();
 			}
-			else if (x >= 20 && count==0)
+
+			else if (x >= 10)
 			{
-				if (total >= 500)
-				{
-					return bet(500);
-					total += 500;
-				}
-				count++;
-			}
-			else if (x >= 10 && count == 0)
-			{
+
 				return bet(100);
-				total += 100;
-				count++;
+				canBet = true;
+
 			}
 			else
 			{
-				return bet(anti);
-				total += anti;
+				return 0;
 			}
+		}
 		
 	}
 };

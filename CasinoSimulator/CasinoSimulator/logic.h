@@ -14,10 +14,15 @@ public:
 	{
 		test[0] = 0;
 		player = newPlayer;
+		setHand();
+		
+	}
+	void setHand()
+	{
 		for (int i = 0; i <player->getHandCount(); i++)
 		{
 			hand2[i] = player->getHand();
-				}
+		}
 		player->reset();
 	}
 	//checks for a royal flush
@@ -342,7 +347,11 @@ public:
 	// assigns values to each hand
 	int HandValue()
 	{
-		if(RoyalFlush()==true)
+		if (player->getHasFold())
+		{
+			return 0;
+		}
+		else if(RoyalFlush()==true)
 		{
 			return 24;
 		}
@@ -388,5 +397,9 @@ public:
 			return HighCard();
 		}
 	}
-	
+	void setPlayerValue()
+	{
+		setHand();
+		player->setHandValue(HandValue());
+	}
 };

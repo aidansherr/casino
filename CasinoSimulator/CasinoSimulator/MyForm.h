@@ -495,6 +495,7 @@ private: System::Void button4_Click(System::Object^  sender, System::EventArgs^ 
 			
 			DrawWinScreen();
 			fillHands();
+			
 			Player^ winner = getWinner();
 			if (getWinner() == pT->getPlayer())
 			{
@@ -503,17 +504,17 @@ private: System::Void button4_Click(System::Object^  sender, System::EventArgs^ 
 			else
 			{
 				if (winner == pT->getAI(1))
-				{
-					MessageBox::Show("Computer0 Wins");
-				}
-				else if (winner == pT->getAI(0))
-				{
-					MessageBox::Show("Computer1 Wins");
-				}
-				else if (winner == pT->getAI(2))
-				{
-					MessageBox::Show("Computer2 Wins");
-				}
+		{
+			MessageBox::Show("Computer0 Wins");
+		}
+		else if (winner == pT->getAI(0))
+		{
+			MessageBox::Show("Computer1 Wins");
+		}
+		else if( winner==pT->getAI(2))
+		{
+			MessageBox::Show("Computer2 Wins");
+		}
 				
 				
 			}
@@ -661,17 +662,33 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 					 pT->addRiverCard(temp);
 					 riverSize++;
 				 }
-				/*int x = 0;
+				
 			for (int i = 0; i < 3; i++)
 			{
 				
-				x = pT->getComputerLogic(i)->HandValue();
-				pT->addToPool(pT->getAI(i)->intelligance(x));
-			}*/
+				
+				pT->addToPool(pT->getAI(i)->intelligance());
+				if (pT->getAI(i)->intelligance()>0)
+				{
+					checkButton->Enabled = false;
+				}
+				displayBetPool();
+			}
 				 turn++;
 			 }
 			 else
 			 {
+				 for (int i = 0; i < 3; i++)
+				 {
+
+
+					 pT->addToPool(pT->getAI(i)->intelligance());
+					 if (pT->getAI(i)->intelligance()>0)
+					 {
+						 checkButton->Enabled = false;
+					 }
+					 displayBetPool();
+				 }
 				 //draws one card afterwards
 				 Card^ temp = pokerDeck->draw();
 				 temp->setLocation(pT->getRiver());
@@ -781,6 +798,7 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 
 				 pT->getAI(i)->addCard(tempCard1);
 				 pT->getAI(i)->addCard(tempCard2);
+				 pT->getComputerLogic(i)->setPlayerValue();
 			 }
 		 
 		 }
@@ -828,17 +846,17 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 		 void fillHands()
 		 {
 			 resetCounts();
-
+			  
 			 for (int i = 0; i < riverSize; i++)
 			 {
-
+				
 				 pT->getPlayer()->addCard(pT->getRiverCard());
 			 }
 			 resetCounts();
-
+			
 			 for (int j = 0; j < 3; j++)
 			 {
-
+				
 				 for (int i = 0; i < riverSize; i++)
 				 {
 					 pT->getAI(j)->addCard(pT->getRiverCard());
@@ -974,6 +992,12 @@ private: System::Void button3_Click(System::Object^  sender, System::EventArgs^ 
 {
 	restart();
 }
+		 void displayBetPool()
+		 {
+			 std::string sValue2 = std::to_string(pT->getBetPool());
+			 String^ totalValue2 = gcnew String(sValue2.c_str());
+			 textBox2->Text = totalValue2;
+		 }
 };
 }
 
