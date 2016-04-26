@@ -116,7 +116,7 @@ namespace CasinoSimulator {
 			this->button1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 18, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->button1->ForeColor = System::Drawing::SystemColors::ControlLight;
-			this->button1->Location = System::Drawing::Point(341, 176);
+			this->button1->Location = System::Drawing::Point(378, 252);
 			this->button1->Name = L"button1";
 			this->button1->Size = System::Drawing::Size(119, 51);
 			this->button1->TabIndex = 4;
@@ -292,7 +292,7 @@ namespace CasinoSimulator {
 			this->button3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->button3->ForeColor = System::Drawing::Color::White;
-			this->button3->Location = System::Drawing::Point(32, 79);
+			this->button3->Location = System::Drawing::Point(531, 64);
 			this->button3->Name = L"button3";
 			this->button3->Size = System::Drawing::Size(222, 148);
 			this->button3->TabIndex = 10;
@@ -313,7 +313,7 @@ namespace CasinoSimulator {
 			// 
 			// pictureBox1
 			// 
-			this->pictureBox1->Location = System::Drawing::Point(537, 69);
+			this->pictureBox1->Location = System::Drawing::Point(21, 37);
 			this->pictureBox1->Name = L"pictureBox1";
 			this->pictureBox1->Size = System::Drawing::Size(233, 165);
 			this->pictureBox1->TabIndex = 14;
