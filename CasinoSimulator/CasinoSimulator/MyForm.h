@@ -61,6 +61,7 @@ namespace CasinoSimulator {
 	private: System::Windows::Forms::Label^  label7;
 	private: System::Windows::Forms::Button^  button3;
 	private: System::Windows::Forms::Button^  button4;
+	private: System::Windows::Forms::PictureBox^  pictureBox1;
 
 
 
@@ -97,6 +98,8 @@ namespace CasinoSimulator {
 			this->label7 = (gcnew System::Windows::Forms::Label());
 			this->button3 = (gcnew System::Windows::Forms::Button());
 			this->button4 = (gcnew System::Windows::Forms::Button());
+			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// panel1
@@ -308,12 +311,21 @@ namespace CasinoSimulator {
 			this->button4->UseVisualStyleBackColor = true;
 			this->button4->Click += gcnew System::EventHandler(this, &MyForm::button4_Click_1);
 			// 
+			// pictureBox1
+			// 
+			this->pictureBox1->Location = System::Drawing::Point(537, 69);
+			this->pictureBox1->Name = L"pictureBox1";
+			this->pictureBox1->Size = System::Drawing::Size(233, 165);
+			this->pictureBox1->TabIndex = 14;
+			this->pictureBox1->TabStop = false;
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
 			this->ClientSize = System::Drawing::Size(800, 740);
+			this->Controls->Add(this->pictureBox1);
 			this->Controls->Add(this->label7);
 			this->Controls->Add(this->label6);
 			this->Controls->Add(this->label5);
@@ -335,6 +347,7 @@ namespace CasinoSimulator {
 			this->Name = L"MyForm";
 			this->Text = L"MyForm";
 			this->Load += gcnew System::EventHandler(this, &MyForm::MyForm_Load);
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -399,6 +412,7 @@ namespace CasinoSimulator {
 
 	private: System::Void MyForm_Load(System::Object^  sender, System::EventArgs^  e)
 	{
+		pictureBox1->Load("logo.png");
 		pokerDeck = gcnew Deck();
 		pT = gcnew PokerTemplate();
 		PictureBox^ back = gcnew PictureBox();
@@ -839,7 +853,7 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 				 }
 				 button3->Visible = true;
 			 }
-			 MessageBox::Show(totalValue);
+			// MessageBox::Show(totalValue);
 			 
 			 return winner;
 		 }
