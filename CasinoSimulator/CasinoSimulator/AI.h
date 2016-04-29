@@ -7,6 +7,8 @@ ref class AI : public Player//inherits player
 	bool canBet=false;
 	int anti = 0;
 	String^ move;
+	int minSize;
+	int maxSize;
 public:
 	void setHandValue(int x)
 	{
@@ -40,18 +42,22 @@ public:
 		else
 		{
 			int x = handValue;
-			if (x <= 7)
+			if (x <= minSize)
 			{
 				return fold();
 			}
-
-			else if (x >= 10)
+			else if (x >= maxSize)
+			{
+				bet(200);
+			}
+			else if (x >=minSize)
 			{
 				canBet = true;
 				return bet(100);
 				
 
 			}
+			
 			else if (anti==0)
 			{
 				move = "Check";
@@ -64,5 +70,15 @@ public:
 	String^ getMove()
 	{
 		return move;
+	}
+	void easyMode()
+	{
+		minSize = 7;
+		maxSize = 10;
+	}
+	void hardMode()
+	{
+		minSize = 10;
+		maxSize = 12;
 	}
 };

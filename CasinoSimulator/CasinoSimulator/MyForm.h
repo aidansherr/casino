@@ -70,6 +70,9 @@ namespace CasinoSimulator {
 	private: System::Windows::Forms::TextBox^  compMove2;
 
 	private: System::Windows::Forms::Timer^  timer1;
+	private: System::Windows::Forms::RadioButton^  easyButton;
+	private: System::Windows::Forms::RadioButton^  hardButton;
+	private: System::Windows::Forms::Label^  label8;
 	private: System::ComponentModel::IContainer^  components;
 
 
@@ -113,6 +116,9 @@ namespace CasinoSimulator {
 			this->compMove1 = (gcnew System::Windows::Forms::TextBox());
 			this->compMove2 = (gcnew System::Windows::Forms::TextBox());
 			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
+			this->easyButton = (gcnew System::Windows::Forms::RadioButton());
+			this->hardButton = (gcnew System::Windows::Forms::RadioButton());
+			this->label8 = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -127,6 +133,7 @@ namespace CasinoSimulator {
 			// 
 			this->button1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(0)),
 				static_cast<System::Int32>(static_cast<System::Byte>(0)));
+			this->button1->Enabled = false;
 			this->button1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 18, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->button1->ForeColor = System::Drawing::SystemColors::ControlLight;
@@ -366,12 +373,48 @@ namespace CasinoSimulator {
 			this->timer1->Interval = 1000;
 			this->timer1->Tick += gcnew System::EventHandler(this, &MyForm::timer1_Tick);
 			// 
+			// easyButton
+			// 
+			this->easyButton->AutoSize = true;
+			this->easyButton->Location = System::Drawing::Point(294, 252);
+			this->easyButton->Name = L"easyButton";
+			this->easyButton->Size = System::Drawing::Size(48, 17);
+			this->easyButton->TabIndex = 16;
+			this->easyButton->TabStop = true;
+			this->easyButton->Text = L"Easy";
+			this->easyButton->UseVisualStyleBackColor = true;
+			this->easyButton->CheckedChanged += gcnew System::EventHandler(this, &MyForm::easyButton_CheckedChanged);
+			// 
+			// hardButton
+			// 
+			this->hardButton->AutoSize = true;
+			this->hardButton->Location = System::Drawing::Point(294, 273);
+			this->hardButton->Name = L"hardButton";
+			this->hardButton->Size = System::Drawing::Size(48, 17);
+			this->hardButton->TabIndex = 17;
+			this->hardButton->TabStop = true;
+			this->hardButton->Text = L"Hard";
+			this->hardButton->UseVisualStyleBackColor = true;
+			this->hardButton->CheckedChanged += gcnew System::EventHandler(this, &MyForm::hardButton_CheckedChanged);
+			// 
+			// label8
+			// 
+			this->label8->AutoSize = true;
+			this->label8->Location = System::Drawing::Point(291, 236);
+			this->label8->Name = L"label8";
+			this->label8->Size = System::Drawing::Size(87, 13);
+			this->label8->TabIndex = 18;
+			this->label8->Text = L"Select a difficulty";
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
 			this->ClientSize = System::Drawing::Size(800, 740);
+			this->Controls->Add(this->label8);
+			this->Controls->Add(this->hardButton);
+			this->Controls->Add(this->easyButton);
 			this->Controls->Add(this->compMove2);
 			this->Controls->Add(this->compMove1);
 			this->Controls->Add(this->compMove0);
@@ -419,6 +462,7 @@ namespace CasinoSimulator {
 		array<Logic^, 1> ^compLogics = gcnew array<Logic^, 1>(3);
 		int intervel = 0;
 		int anti = 100;
+		bool easy;
 		void DrawCard(System::Drawing::Icon^ icon, Location2^ loc, int side)
 		{//side refers if it is vertical(0) or horizantal(1)
 
@@ -846,6 +890,9 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 			compMove0->Visible = true;
 			compMove1->Visible = true;
 			compMove2->Visible = true;
+			easyButton->Visible = false;
+			hardButton->Visible = false;
+			label8->Visible = false;
 			 
 			 //Initilizes the player and draws two cards for the players hand
 			 
@@ -879,6 +926,14 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 				 pT->getAI(i)->addCard(tempCard1);
 				 pT->getAI(i)->addCard(tempCard2);
 				 pT->getComputerLogic(i)->setPlayerValue();
+				 if (easy)
+				 {
+					 pT->getAI(i)->easyMode();
+				 }
+				 else
+				 {
+					 pT->getAI(i)->hardMode();
+				 }
 			 }
 		 
 		 }
@@ -1032,6 +1087,10 @@ private: System::Void label5_Click(System::Object^  sender, System::EventArgs^  
 					 DrawBigCard(temp->getIcon(), temp->getLocation(), 0);
 				 }
 			 }
+			 easyButton->Visible = true;
+			 hardButton->Visible = true;
+			 label8->Visible = true;
+			 button3->Enabled = false;
 		 }
 		 void PlayerButton()
 		 {
@@ -1125,6 +1184,18 @@ private: System::Void timer1_Tick(System::Object^  sender, System::EventArgs^  e
 				 Application::Exit();
 			 }
 		 }
+private: System::Void easyButton_CheckedChanged(System::Object^  sender, System::EventArgs^  e) 
+{
+	easy = true;
+	button1->Enabled = true;
+	button3->Enabled = true;
+}
+private: System::Void hardButton_CheckedChanged(System::Object^  sender, System::EventArgs^  e)
+{
+	easy = false;
+	button1->Enabled = true;
+	button3->Enabled = true;
+}
 };
 }
 
