@@ -62,9 +62,13 @@ namespace CasinoSimulator {
 	private: System::Windows::Forms::Button^  button3;
 	private: System::Windows::Forms::Button^  button4;
 	private: System::Windows::Forms::PictureBox^  pictureBox1;
-	private: System::Windows::Forms::TextBox^  textBox4;
-	private: System::Windows::Forms::TextBox^  textBox5;
-	private: System::Windows::Forms::TextBox^  textBox6;
+	private: System::Windows::Forms::TextBox^  compMove0;
+	private: System::Windows::Forms::TextBox^  compMove1;
+
+
+
+	private: System::Windows::Forms::TextBox^  compMove2;
+
 	private: System::Windows::Forms::Timer^  timer1;
 	private: System::ComponentModel::IContainer^  components;
 
@@ -105,9 +109,9 @@ namespace CasinoSimulator {
 			this->button3 = (gcnew System::Windows::Forms::Button());
 			this->button4 = (gcnew System::Windows::Forms::Button());
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
-			this->textBox4 = (gcnew System::Windows::Forms::TextBox());
-			this->textBox5 = (gcnew System::Windows::Forms::TextBox());
-			this->textBox6 = (gcnew System::Windows::Forms::TextBox());
+			this->compMove0 = (gcnew System::Windows::Forms::TextBox());
+			this->compMove1 = (gcnew System::Windows::Forms::TextBox());
+			this->compMove2 = (gcnew System::Windows::Forms::TextBox());
 			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->SuspendLayout();
@@ -329,33 +333,33 @@ namespace CasinoSimulator {
 			this->pictureBox1->TabIndex = 14;
 			this->pictureBox1->TabStop = false;
 			// 
-			// textBox4
+			// compMove0
 			// 
-			this->textBox4->Enabled = false;
-			this->textBox4->Location = System::Drawing::Point(111, 424);
-			this->textBox4->Name = L"textBox4";
-			this->textBox4->Size = System::Drawing::Size(67, 20);
-			this->textBox4->TabIndex = 15;
-			this->textBox4->Visible = false;
+			this->compMove0->Enabled = false;
+			this->compMove0->Location = System::Drawing::Point(111, 424);
+			this->compMove0->Name = L"compMove0";
+			this->compMove0->Size = System::Drawing::Size(67, 20);
+			this->compMove0->TabIndex = 15;
+			this->compMove0->Visible = false;
 			// 
-			// textBox5
+			// compMove1
 			// 
-			this->textBox5->Enabled = false;
-			this->textBox5->Location = System::Drawing::Point(418, 205);
-			this->textBox5->Name = L"textBox5";
-			this->textBox5->Size = System::Drawing::Size(85, 20);
-			this->textBox5->TabIndex = 15;
-			this->textBox5->Visible = false;
+			this->compMove1->Enabled = false;
+			this->compMove1->Location = System::Drawing::Point(418, 205);
+			this->compMove1->Name = L"compMove1";
+			this->compMove1->Size = System::Drawing::Size(85, 20);
+			this->compMove1->TabIndex = 15;
+			this->compMove1->Visible = false;
 			// 
-			// textBox6
+			// compMove2
 			// 
-			this->textBox6->Enabled = false;
-			this->textBox6->Location = System::Drawing::Point(637, 424);
-			this->textBox6->Name = L"textBox6";
-			this->textBox6->Size = System::Drawing::Size(71, 20);
-			this->textBox6->TabIndex = 15;
-			this->textBox6->Visible = false;
-			this->textBox6->TextChanged += gcnew System::EventHandler(this, &MyForm::textBox6_TextChanged);
+			this->compMove2->Enabled = false;
+			this->compMove2->Location = System::Drawing::Point(637, 424);
+			this->compMove2->Name = L"compMove2";
+			this->compMove2->Size = System::Drawing::Size(71, 20);
+			this->compMove2->TabIndex = 15;
+			this->compMove2->Visible = false;
+			this->compMove2->TextChanged += gcnew System::EventHandler(this, &MyForm::textBox6_TextChanged);
 			// 
 			// timer1
 			// 
@@ -368,9 +372,9 @@ namespace CasinoSimulator {
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
 			this->ClientSize = System::Drawing::Size(800, 740);
-			this->Controls->Add(this->textBox6);
-			this->Controls->Add(this->textBox5);
-			this->Controls->Add(this->textBox4);
+			this->Controls->Add(this->compMove2);
+			this->Controls->Add(this->compMove1);
+			this->Controls->Add(this->compMove0);
 			this->Controls->Add(this->pictureBox1);
 			this->Controls->Add(this->label7);
 			this->Controls->Add(this->label6);
@@ -683,9 +687,9 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 
 		 Refresh();
 		 textBox2->Text = "";
-		 textBox4->Text = "";
-		 textBox5->Text = "";
-		 textBox6->Text = "";
+		 compMove0->Text = "";
+		 compMove1->Text = "";
+		 compMove2->Text = "";
 		 betButton->Enabled = true;
 		 checkButton->Enabled = true;
 		 foldButton->Enabled = true;
@@ -717,7 +721,9 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 	}
 		 void nextTurn()
 		 {
-			 
+			 compMove0->Text = "";
+			 compMove1->Text = "";
+			 compMove2->Text = "";
 			 if (turn == 0)
 			 {
 				 //if the first turn hasn't taken place then it draws three cards for the river
@@ -837,9 +843,9 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 		 }
 		 void startAction()
 		 {
-			 textBox4->Visible = true;
-			 textBox5->Visible = true;
-			 textBox6->Visible = true;
+			compMove0->Visible = true;
+			compMove1->Visible = true;
+			compMove2->Visible = true;
 			 
 			 //Initilizes the player and draws two cards for the players hand
 			 
@@ -1087,15 +1093,15 @@ private: System::Void timer1_Tick(System::Object^  sender, System::EventArgs^  e
 		}
 		if (intervel == 0)
 		{
-			textBox5->Text = pT->getAI(intervel)->getMove();
+			compMove1->Text = pT->getAI(intervel)->getMove();
 		}
 		else if (intervel == 1)
 		{
-			textBox6->Text = pT->getAI(intervel)->getMove();
+			compMove0->Text = pT->getAI(2)->getMove();
 		}
 		else if (intervel == 2)
 		{
-			textBox4->Text = pT->getAI(intervel)->getMove();
+			compMove2->Text = pT->getAI(1)->getMove();
 		}
 		if (pT->getAI(intervel)->intelligance() > 0)
 		{
@@ -1109,7 +1115,16 @@ private: System::Void timer1_Tick(System::Object^  sender, System::EventArgs^  e
 
 			}
 	}
+	
 }
+		 void loseScreen()
+		 {
+			 if (pT->getPlayer()->getTotal() <= 0)
+			 {
+				 MessageBox::Show("You Lose");
+				 Application::Exit();
+			 }
+		 }
 };
 }
 
