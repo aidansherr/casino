@@ -322,7 +322,7 @@ public:
 					}
 					if (CardCount == 1)
 					{
-						tieBreaker = hand2[i];
+						tieBreaker = hand2[j];
 						return true;
 					}
 
