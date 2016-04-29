@@ -6,7 +6,7 @@ ref class AI : public Player//inherits player
 	
 	bool canBet=false;
 	int anti = 0;
-	
+	String^ move;
 public:
 	void setHandValue(int x)
 	{
@@ -14,23 +14,23 @@ public:
 	}
 	void getAnti(int x)
 	{
-		anti = x;
+		total-= x;
 	}
 	int fold()
 	{
+		move = "Folded";
 		hasFold = true;
 		return 0;
 	}
 	int bet(int x)
 	{
-		
+		std::string temp = std::to_string(x);
+		String^ temp2 = gcnew String(temp.c_str());
+		move = "Bet "+temp2;
 		total -= x;
 		return x;
 	}
-	int AIbet(int x)
-	{
-		return x;
-	}
+	
 	int intelligance()
 	{
 		if (canBet)
@@ -47,16 +47,22 @@ public:
 
 			else if (x >= 10)
 			{
-
-				return bet(100);
 				canBet = true;
+				return bet(100);
+				
 
 			}
-			else
+			else if (anti==0)
 			{
+				move = "Check";
 				return 0;
 			}
+			return 0;
 		}
 		
+	}
+	String^ getMove()
+	{
+		return move;
 	}
 };

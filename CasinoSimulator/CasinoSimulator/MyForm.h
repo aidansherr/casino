@@ -62,6 +62,11 @@ namespace CasinoSimulator {
 	private: System::Windows::Forms::Button^  button3;
 	private: System::Windows::Forms::Button^  button4;
 	private: System::Windows::Forms::PictureBox^  pictureBox1;
+	private: System::Windows::Forms::TextBox^  textBox4;
+	private: System::Windows::Forms::TextBox^  textBox5;
+	private: System::Windows::Forms::TextBox^  textBox6;
+	private: System::Windows::Forms::Timer^  timer1;
+	private: System::ComponentModel::IContainer^  components;
 
 
 
@@ -71,7 +76,7 @@ namespace CasinoSimulator {
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
-		System::ComponentModel::Container ^components;
+
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -80,6 +85,7 @@ namespace CasinoSimulator {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			this->components = (gcnew System::ComponentModel::Container());
 			this->panel1 = (gcnew System::Windows::Forms::Panel());
 			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
@@ -99,6 +105,10 @@ namespace CasinoSimulator {
 			this->button3 = (gcnew System::Windows::Forms::Button());
 			this->button4 = (gcnew System::Windows::Forms::Button());
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
+			this->textBox4 = (gcnew System::Windows::Forms::TextBox());
+			this->textBox5 = (gcnew System::Windows::Forms::TextBox());
+			this->textBox6 = (gcnew System::Windows::Forms::TextBox());
+			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -246,7 +256,7 @@ namespace CasinoSimulator {
 			// label4
 			// 
 			this->label4->AutoSize = true;
-			this->label4->Location = System::Drawing::Point(645, 408);
+			this->label4->Location = System::Drawing::Point(650, 408);
 			this->label4->Name = L"label4";
 			this->label4->Size = System::Drawing::Size(58, 13);
 			this->label4->TabIndex = 10;
@@ -319,12 +329,42 @@ namespace CasinoSimulator {
 			this->pictureBox1->TabIndex = 14;
 			this->pictureBox1->TabStop = false;
 			// 
+			// textBox4
+			// 
+			this->textBox4->Location = System::Drawing::Point(111, 424);
+			this->textBox4->Name = L"textBox4";
+			this->textBox4->Size = System::Drawing::Size(67, 20);
+			this->textBox4->TabIndex = 15;
+			// 
+			// textBox5
+			// 
+			this->textBox5->Location = System::Drawing::Point(418, 205);
+			this->textBox5->Name = L"textBox5";
+			this->textBox5->Size = System::Drawing::Size(85, 20);
+			this->textBox5->TabIndex = 15;
+			// 
+			// textBox6
+			// 
+			this->textBox6->Location = System::Drawing::Point(637, 424);
+			this->textBox6->Name = L"textBox6";
+			this->textBox6->Size = System::Drawing::Size(71, 20);
+			this->textBox6->TabIndex = 15;
+			this->textBox6->TextChanged += gcnew System::EventHandler(this, &MyForm::textBox6_TextChanged);
+			// 
+			// timer1
+			// 
+			this->timer1->Interval = 1000;
+			this->timer1->Tick += gcnew System::EventHandler(this, &MyForm::timer1_Tick);
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
 			this->ClientSize = System::Drawing::Size(800, 740);
+			this->Controls->Add(this->textBox6);
+			this->Controls->Add(this->textBox5);
+			this->Controls->Add(this->textBox4);
 			this->Controls->Add(this->pictureBox1);
 			this->Controls->Add(this->label7);
 			this->Controls->Add(this->label6);
@@ -367,6 +407,8 @@ namespace CasinoSimulator {
 		//Draws a card with the given icon, and location
 		Logic^ playerLogic;
 		array<Logic^, 1> ^compLogics = gcnew array<Logic^, 1>(3);
+		int intervel = 0;
+		int anti = 100;
 		void DrawCard(System::Drawing::Icon^ icon, Location2^ loc, int side)
 		{//side refers if it is vertical(0) or horizantal(1)
 
@@ -492,9 +534,13 @@ private: System::Void button4_Click(System::Object^  sender, System::EventArgs^ 
 		textBox1->Text = totalValue;
 		for (int i = 0; i < 3; i++)
 		{
-			pT->getAI(i)->AIbet(value);
-			currentBets += value;
+			
+			{
+				
+				currentBets += value;
+			}
 		}
+		
 		//changes pot total to previous pot+bet amount
 		pT->addToPool(currentBets);
 		std::string sValue2 = std::to_string(pT->getBetPool());
@@ -566,7 +612,7 @@ private: System::Void checkButton_Click(System::Object^  sender, System::EventAr
 		{
 			MessageBox::Show("Player Wins");
 		}
-		else if (winner == pT->getAI(1))
+		else if (winner == pT->getAI(2))
 		{
 			MessageBox::Show("Computer0 Wins");
 		}
@@ -574,7 +620,7 @@ private: System::Void checkButton_Click(System::Object^  sender, System::EventAr
 		{
 			MessageBox::Show("Computer1 Wins");
 		}
-		else if (winner == pT->getAI(2))
+		else if (winner == pT->getAI(1))
 		{
 			MessageBox::Show("Computer2 Wins");
 		}
@@ -603,7 +649,7 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 		
 		Player^ winner = getWinner();
 		
-		if (winner == pT->getAI(1))
+		if (winner == pT->getAI(2))
 		{
 			MessageBox::Show("Computer0 Wins");
 		}
@@ -611,7 +657,7 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 		{
 			MessageBox::Show("Computer1 Wins");
 		}
-		else if( winner==pT->getAI(2))
+		else if( winner==pT->getAI(1))
 		{
 			MessageBox::Show("Computer2 Wins");
 		}
@@ -631,7 +677,9 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 
 		 Refresh();
 		 textBox2->Text = "";
-		 
+		 textBox4->Text = "";
+		 textBox5->Text = "";
+		 textBox6->Text = "";
 		 betButton->Enabled = true;
 		 checkButton->Enabled = true;
 		 foldButton->Enabled = true;
@@ -682,9 +730,9 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 				
 				
 				pT->addToPool(pT->getAI(i)->intelligance());
-				if (pT->getAI(i)->intelligance()>0)
+				if (!pT->getAI(i)->getHasFold())
 				{
-					checkButton->Enabled = false;
+					pT->getAI(i)->getAnti(anti);
 				}
 				displayBetPool();
 			}
@@ -697,10 +745,7 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 
 
 					 pT->addToPool(pT->getAI(i)->intelligance());
-					 if (pT->getAI(i)->intelligance()>0)
-					 {
-						 checkButton->Enabled = false;
-					 }
+					
 					 displayBetPool();
 				 }
 				 //draws one card afterwards
@@ -709,6 +754,12 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 				 pT->addRiverCard(temp);
 				 riverSize++;
 			 }
+			 if (!pT->getPlayer()->getHasFold())
+			 {
+				 pT->addToPool(anti);
+				 pT->getPlayer()->changeTotal(anti*-1);
+			 }
+			 timer1->Enabled = true;
 		 }
 		 void DrawWorld()
 		 {
@@ -828,6 +879,7 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 			}
 			else
 			{
+				winner = pT->getAI(0);
 				sValue = "0";
 			}
 			String^ totalValue;
@@ -837,24 +889,26 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 				 sValue += std::to_string(pT->getComputerLogic(i)->HandValue());
 				 
 				 totalValue = gcnew String(sValue.c_str());
-				
-				 if (pT->getComputerLogic(i)->HandValue() > winLogic->HandValue())
+				 if (!pT->getAI(i)->getHasFold())
 				 {
-					 winner = pT->getAI(i);
-					 winLogic = pT->getComputerLogic(i);
-				 }
-				 else if (pT->getComputerLogic(i)->HandValue() == winLogic->HandValue())
-				 {
-					 if (pT->getComputerLogic(i)->HighCard() > winLogic->HighCard())
+					 if (pT->getComputerLogic(i)->HandValue() > winLogic->HandValue())
 					 {
 						 winner = pT->getAI(i);
 						 winLogic = pT->getComputerLogic(i);
+					 }
+					 else if (pT->getComputerLogic(i)->HandValue() == winLogic->HandValue())
+					 {
+						 if (pT->getComputerLogic(i)->HighCard() > winLogic->HighCard())
+						 {
+							 winner = pT->getAI(i);
+							 winLogic = pT->getComputerLogic(i);
+						 }
 					 }
 				 }
 				 button3->Visible = true;
 			 }
 			// MessageBox::Show(totalValue);
-			 
+			 winner->addWin();
 			 return winner;
 		 }
 		 void fillHands()
@@ -1012,6 +1066,41 @@ private: System::Void button3_Click(System::Object^  sender, System::EventArgs^ 
 			 String^ totalValue2 = gcnew String(sValue2.c_str());
 			 textBox2->Text = totalValue2;
 		 }
+private: System::Void textBox6_TextChanged(System::Object^  sender, System::EventArgs^  e) {
+}
+private: System::Void timer1_Tick(System::Object^  sender, System::EventArgs^  e) 
+{
+	
+	{
+		if (pT->getAI(intervel)->intelligance()>0)
+		{
+			checkButton->Enabled = false;
+		}
+		if (intervel == 0)
+		{
+			textBox5->Text = pT->getAI(intervel)->getMove();
+		}
+		else if (intervel == 1)
+		{
+			textBox6->Text = pT->getAI(intervel)->getMove();
+		}
+		else if (intervel == 2)
+		{
+			textBox4->Text = pT->getAI(intervel)->getMove();
+		}
+		if (pT->getAI(intervel)->intelligance() > 0)
+		{
+			checkButton->Enabled = false;
+		}
+		intervel++;
+			if(intervel >2)
+			{
+				intervel = 0;
+				timer1->Enabled = false;
+
+			}
+	}
+}
 };
 }
 
