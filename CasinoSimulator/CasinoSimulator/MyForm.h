@@ -611,28 +611,35 @@ private: System::Void button4_Click(System::Object^  sender, System::EventArgs^ 
 			fillHands();
 			
 			Player^ winner = getWinner();
-			if (getWinner() == pT->getPlayer())
+			String^ handtype = getWinningHand();
+			if (winner == pT->getPlayer())
 			{
-				MessageBox::Show("Player Wins");
+				//Shows Winner and Hand Type
+				String^ msg = String::Concat("Player Wins\nWith a ", handtype);
+				msg = String::Concat(msg, "!");
+				MessageBox::Show(msg);
 			}
-			else
+			else if (winner == pT->getAI(2))
 			{
-				if (winner == pT->getAI(1))
-		{
-			MessageBox::Show("Computer0 Wins");
-		}
-		else if (winner == pT->getAI(0))
-		{
-			MessageBox::Show("Computer1 Wins");
-		}
-		else if( winner==pT->getAI(2))
-		{
-			MessageBox::Show("Computer2 Wins");
-		}
-				
-				
+				//Shows Winner and Hand Type
+				String^ msg = String::Concat("Computer0 Wins\nWith a ", handtype);
+				msg = String::Concat(msg, "!");
+				MessageBox::Show(msg);
 			}
-			
+			else if (winner == pT->getAI(0))
+			{
+				//Shows Winner and Hand Type
+				String^ msg = String::Concat("Computer1 Wins\nWith a ", handtype);
+				msg = String::Concat(msg, "!");
+				MessageBox::Show(msg);
+			}
+			else if (winner == pT->getAI(1))
+			{
+				//Shows Winner and Hand Type
+				String^ msg = String::Concat("Computer2 Wins\nWith a ", handtype);
+				msg = String::Concat(msg, "!");
+				MessageBox::Show(msg);
+			}
 			getWinner()->changeTotal(pT->getBetPool());
 			std::string sValue = std::to_string(pT->getPlayer()->getTotal());
 			String^ totalValue = gcnew String(sValue.c_str());
@@ -641,7 +648,6 @@ private: System::Void button4_Click(System::Object^  sender, System::EventArgs^ 
 			betButton->Enabled = false;
 			checkButton->Enabled = false;
 			foldButton->Enabled = false;
-			//restart();
 		}
 	}
 	else
@@ -661,22 +667,35 @@ private: System::Void checkButton_Click(System::Object^  sender, System::EventAr
 		DrawWinScreen();
 		fillHands();
 		Player^ winner = getWinner(); 
+		String^ handtype = getWinningHand();
 		
-		if (getWinner() == pT->getPlayer())
+		if (winner == pT->getPlayer())
 		{
-			MessageBox::Show("Player Wins");
+			//Shows Winner and Hand Type
+			String^ msg = String::Concat("Player Wins\nWith a ", handtype);
+			msg = String::Concat(msg, "!");
+			MessageBox::Show(msg);
 		}
 		else if (winner == pT->getAI(2))
 		{
-			MessageBox::Show("Computer0 Wins");
+			//Shows Winner and Hand Type
+			String^ msg = String::Concat("Computer0 Wins\nWith a ", handtype);
+			msg = String::Concat(msg, "!");
+			MessageBox::Show(msg);
 		}
 		else if (winner == pT->getAI(0))
 		{
-			MessageBox::Show("Computer1 Wins");
+			//Shows Winner and Hand Type
+			String^ msg = String::Concat("Computer1 Wins\nWith a ", handtype);
+			msg = String::Concat(msg, "!");
+			MessageBox::Show(msg);
 		}
 		else if (winner == pT->getAI(1))
 		{
-			MessageBox::Show("Computer2 Wins");
+			//Shows Winner and Hand Type
+			String^ msg = String::Concat("Computer2 Wins\nWith a ", handtype);
+			msg = String::Concat(msg, "!");
+			MessageBox::Show(msg);
 		}
 
 		getWinner()->changeTotal(pT->getBetPool());
@@ -684,7 +703,7 @@ private: System::Void checkButton_Click(System::Object^  sender, System::EventAr
 		betButton->Enabled = false;
 		checkButton->Enabled = false;
 		foldButton->Enabled = false;
-		//restart();
+
 	}
 }
 private: System::Void foldButton_Click(System::Object^  sender, System::EventArgs^  e) 
@@ -702,18 +721,28 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 		fillHands();
 		
 		Player^ winner = getWinner();
+		String^ handtype = getWinningHand();
 		
 		if (winner == pT->getAI(2))
 		{
-			MessageBox::Show("Computer0 Wins");
+			//Shows Winner and Hand Type
+			String^ msg = String::Concat("Computer0 Wins\nWith a ", handtype);
+			msg = String::Concat(msg, "!");
+			MessageBox::Show(msg);
 		}
 		else if (winner == pT->getAI(0))
 		{
-			MessageBox::Show("Computer1 Wins");
+			//Shows Winner and Hand Type
+			String^ msg = String::Concat("Computer1 Wins\nWith a ", handtype);
+			msg = String::Concat(msg, "!");
+			MessageBox::Show(msg);
 		}
 		else if( winner==pT->getAI(1))
 		{
-			MessageBox::Show("Computer2 Wins");
+			//Shows Winner and Hand Type
+			String^ msg = String::Concat("Computer2 Wins\nWith a ", handtype);
+			msg = String::Concat(msg, "!");
+			MessageBox::Show(msg);
 		}
 
 		getWinner()->changeTotal(pT->getBetPool());
@@ -721,7 +750,6 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 		betButton->Enabled = false;
 		checkButton->Enabled = false;
 		foldButton->Enabled = false;
-		//restart();
 	}
 	
 }
@@ -984,10 +1012,72 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 					 }
 				 }
 				 button3->Visible = true;
+				 button3->Enabled = true;
 			 }
 			// MessageBox::Show(totalValue);
 			 winner->addWin();
 			 return winner;
+		 }
+		 String^ getWinningHand()
+		 {
+			 Player^ winner = getWinner();
+			 int hand;
+			 String^ handtype;
+
+			 if (winner == pT->getPlayer())
+			 {
+				 hand = pT->getPlayerLogic()->HandValue();
+			 }
+			 else if (winner == pT->getAI(1))
+			 {
+				 hand = pT->getComputerLogic(1)->HandValue();
+			 }
+			 else if (winner == pT->getAI(0))
+			 {
+				 hand = pT->getComputerLogic(0)->HandValue();
+			 }
+			 else if (winner == pT->getAI(2))
+			 {
+				 hand = pT->getComputerLogic(2)->HandValue();
+			 }
+
+			 switch (hand)
+			 {
+			 case 24:
+				 handtype = "Royal Flush";
+				 break;
+			 case 23:
+				 handtype = "Straight Flush";
+				 break;
+			 case 22:
+				 handtype = "Four of a Kind";
+				 break;
+			 case 21:
+				 handtype = "Full House";
+				 break;
+			 case 20:
+				 handtype = "Flush";
+				 break;
+			 case 19:
+				 handtype = "Royal Straight";
+				 break;
+			 case 18:
+				 handtype = "Straight";
+				 break;
+			 case 17:
+				 handtype = "Three of a Kind";
+				 break;
+			 case 16:
+				 handtype = "Two Pairs";
+				 break;
+			 case 15:
+				 handtype = "Pair";
+				 break;
+			 default:
+				 handtype = "High Card";
+				 break;
+			 }
+			 return handtype;
 		 }
 		 void fillHands()
 		 {
