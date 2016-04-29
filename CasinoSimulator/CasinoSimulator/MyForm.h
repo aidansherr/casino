@@ -331,24 +331,30 @@ namespace CasinoSimulator {
 			// 
 			// textBox4
 			// 
+			this->textBox4->Enabled = false;
 			this->textBox4->Location = System::Drawing::Point(111, 424);
 			this->textBox4->Name = L"textBox4";
 			this->textBox4->Size = System::Drawing::Size(67, 20);
 			this->textBox4->TabIndex = 15;
+			this->textBox4->Visible = false;
 			// 
 			// textBox5
 			// 
+			this->textBox5->Enabled = false;
 			this->textBox5->Location = System::Drawing::Point(418, 205);
 			this->textBox5->Name = L"textBox5";
 			this->textBox5->Size = System::Drawing::Size(85, 20);
 			this->textBox5->TabIndex = 15;
+			this->textBox5->Visible = false;
 			// 
 			// textBox6
 			// 
+			this->textBox6->Enabled = false;
 			this->textBox6->Location = System::Drawing::Point(637, 424);
 			this->textBox6->Name = L"textBox6";
 			this->textBox6->Size = System::Drawing::Size(71, 20);
 			this->textBox6->TabIndex = 15;
+			this->textBox6->Visible = false;
 			this->textBox6->TextChanged += gcnew System::EventHandler(this, &MyForm::textBox6_TextChanged);
 			// 
 			// timer1
@@ -831,6 +837,9 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 		 }
 		 void startAction()
 		 {
+			 textBox4->Visible = true;
+			 textBox5->Visible = true;
+			 textBox6->Visible = true;
 			 
 			 //Initilizes the player and draws two cards for the players hand
 			 
