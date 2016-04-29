@@ -42,7 +42,11 @@ public:
 		else
 		{
 			int x = handValue;
-			if (x <= minSize)
+			if (maxSize==12&&hand[0]->getValue() == hand[1]->getValue())
+			{
+				bet(300);
+			}
+			else if (x <= minSize)
 			{
 				return fold();
 			}
