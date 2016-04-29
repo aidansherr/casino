@@ -8,6 +8,7 @@ ref class Logic
 	// creates an array to check for certain hands
 	array <int, 1>^test = gcnew array<int, 1>(5);
 	Player^ player;
+	Card^ tieBreaker;
 public:
 	// creates the players hand to check for posiibilities
 	Logic(Player^ newPlayer)
@@ -260,6 +261,7 @@ public:
 					}
 					if (CardCount == 2)
 					{
+						tieBreaker = hand2[i];
 						return true;
 					}
 					
@@ -294,6 +296,7 @@ public:
 						}
 						if (CardCount == 1 && CardCount2 == 1)
 						{
+							tieBreaker = hand2[i];
 							return true;
 						}
 					
@@ -319,6 +322,7 @@ public:
 					}
 					if (CardCount == 1)
 					{
+						tieBreaker = hand2[i];
 						return true;
 					}
 
@@ -401,5 +405,9 @@ public:
 	{
 		setHand();
 		player->setHandValue(HandValue());
+	}
+	int getTieBreaker()
+	{
+		return tieBreaker->getValue();
 	}
 };

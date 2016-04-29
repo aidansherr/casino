@@ -968,10 +968,18 @@ private: System::Void foldButton_Click(System::Object^  sender, System::EventArg
 					 }
 					 else if (pT->getComputerLogic(i)->HandValue() == winLogic->HandValue())
 					 {
-						 if (pT->getComputerLogic(i)->HighCard() > winLogic->HighCard())
+						 if (pT->getComputerLogic(i)->getTieBreaker() > winLogic->getTieBreaker())
 						 {
 							 winner = pT->getAI(i);
 							 winLogic = pT->getComputerLogic(i);
+						 }
+						 else if (pT->getComputerLogic(i)->getTieBreaker() == winLogic->getTieBreaker())
+						 {
+							 if (pT->getComputerLogic(i)->HighCard() > winLogic->HighCard())
+							 {
+								 winner = pT->getAI(i);
+								 winLogic = pT->getComputerLogic(i);
+							 }
 						 }
 					 }
 				 }
