@@ -676,7 +676,7 @@ private: System::Void checkButton_Click(System::Object^  sender, System::EventAr
 			msg = String::Concat(msg, "!");
 			MessageBox::Show(msg);
 		}
-		else if (winner == pT->getAI(2))
+		else if (winner == pT->getAI(1))
 		{
 			//Shows Winner and Hand Type
 			String^ msg = String::Concat("Computer0 Wins\nWith a ", handtype);
@@ -690,7 +690,7 @@ private: System::Void checkButton_Click(System::Object^  sender, System::EventAr
 			msg = String::Concat(msg, "!");
 			MessageBox::Show(msg);
 		}
-		else if (winner == pT->getAI(1))
+		else if (winner == pT->getAI(2))
 		{
 			//Shows Winner and Hand Type
 			String^ msg = String::Concat("Computer2 Wins\nWith a ", handtype);
